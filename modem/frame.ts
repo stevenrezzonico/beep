@@ -66,6 +66,10 @@ export function headerSymbols(h: PhyHeader, sf: number, n: number): number[] {
 
 export interface HeaderDecode {
   header: PhyHeader | null;
+  /** Common bin offset δ the header was found at (carrier drift since the preamble), bins. */
+  offset: number;
+  /** Mean fractional residual of the header chirps that peaked exactly at codeword+δ, bins. */
+  residual: number;
   /** Σ normalised power at the chosen codeword's bins (noise mean n). */
   evidence: number;
   /** Acceptance threshold for `evidence`. */
@@ -75,34 +79,65 @@ export interface HeaderDecode {
   reason?: string;
 }
 
+/** Largest common bin offset searched (±10 Hz at SF8 ≈ ±0.2 m/s of velocity change), D-024. */
+export const HEADER_MAX_OFFSET = 2;
+
 /**
  * Soft ML header decode from per-symbol power spectra normalised to noise mean 1 per bin.
- * `es` is the estimated peak excess (signal energy) per symbol in the same units.
+ * `es` is the estimated peak excess (signal energy) per symbol in the same units. `frac` holds
+ * each symbol's fractional peak offset (bins) at its argmax.
+ *
+ * In chirp modulation a carrier offset of one whole bin is indistinguishable from data value +1,
+ * so if the carrier drifted by ≥ ½ bin between the preamble and the header (a hand-held phone
+ * swaying by a few cm/s at SF8), every header chirp would read one bin off. The search therefore
+ * also covers a common offset δ ∈ [−HEADER_MAX_OFFSET, HEADER_MAX_OFFSET]; the decoded δ then
+ * re-anchors the receiver's carrier estimate for the payload.
  */
-export function decodeHeader(powers: Float64Array[], sf: number, n: number, es: number, threshold: number): HeaderDecode {
+export function decodeHeader(powers: Float64Array[], frac: number[], sf: number, n: number, es: number, threshold: number): HeaderDecode {
   const shift = sf - 8;
+  const N = 1 << sf;
   const a = 2 * Math.sqrt(Math.max(es, 1e-3));
   const metric = powers.slice(0, n).map((p) => {
-    const m = new Float64Array(256);
-    for (let v = 0; v < 256; v++) m[v] = lnI0(a * Math.sqrt(p[v << shift]));
+    const m = new Float64Array(N);
+    for (let v = 0; v < N; v++) m[v] = lnI0(a * Math.sqrt(p[v]));
     return m;
   });
   const cws = codewords(n);
-  let best = -Infinity, second = -Infinity, bi = 0;
-  for (let info = 0; info < cws.length; info++) {
-    const cw = cws[info];
-    let sum = 0;
-    for (let i = 0; i < n; i++) sum += metric[i][cw[i]];
-    if (sum > best) {
-      second = best;
-      best = sum;
-      bi = info;
-    } else if (sum > second) second = sum;
+  let best = -Infinity, second = -Infinity, bi = 0, bo = 0;
+  for (let off = -HEADER_MAX_OFFSET; off <= HEADER_MAX_OFFSET; off++) {
+    for (let info = 0; info < cws.length; info++) {
+      const cw = cws[info];
+      let sum = 0;
+      for (let i = 0; i < n; i++) sum += metric[i][((cw[i] << shift) + off + N) % N];
+      if (sum > best) {
+        second = best;
+        best = sum;
+        bi = info;
+        bo = off;
+      } else if (sum > second) second = sum;
+    }
   }
-  let evidence = 0;
-  for (let i = 0; i < n; i++) evidence += powers[i][cws[bi][i] << shift];
-  const out: HeaderDecode = { header: null, evidence, threshold, margin: best - second };
+  let evidence = 0, agree = 0, rsum = 0;
+  for (let i = 0; i < n; i++) {
+    const p = powers[i];
+    const bin = ((cws[bi][i] << shift) + bo + N) % N;
+    evidence += p[bin];
+    let m = 0;
+    for (let k = 1; k < N; k++) if (p[k] > p[m]) m = k;
+    // within ±1 bin: the carrier may drift by up to a bin across the header under hand motion
+    const dist = Math.min((m - bin + N) % N, (bin - m + N) % N);
+    if (dist <= 1) agree++;
+    if (dist === 0) rsum += frac[i];
+  }
+  const out: HeaderDecode = { header: null, offset: bo, residual: agree ? rsum / agree : 0, evidence, threshold, margin: best - second };
   if (evidence < threshold) return { ...out, reason: 'weak' };
+  // Real chirps read at the wrong alignment (a sync one symbol off, another packet) are strong,
+  // and with k = 2 some codeword matches any two of them, so evidence alone is not enough: most
+  // header chirps must actually peak at (±1 bin of) the decoded codeword. At −14 dB (SER ≈ 12%,
+  // the long-range limit) fewer than ⌊n/2⌋+1 agreeing chirps out of n = 8 has probability
+  // ≈ 0.3%; for misaligned chirps, chance agreement beyond the 2 the code can force is
+  // ≈ C(6,3)·(3/256)³ ≈ 3·10⁻⁵.
+  if (agree < Math.floor(n / 2) + 1) return { ...out, reason: 'inconsistent' };
   if ((bi & 3) !== 0) return { ...out, reason: 'reserved bits set (newer version?)' };
   return { ...out, header: { profile: bi >> 10, length: ((bi >> 2) & 0xff) + 1 } };
 }

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" font-family="system-ui,sans-serif" font-size="12">
+<rect width="760" height="440" fill="#fff"/>
+<text x="275" y="20" text-anchor="middle" font-size="14" font-weight="600">Modem PER (32 B) — Hand motion ±0.3 m/s (2 s period) in RT60 0.3 s room</text>
+<line x1="60" x2="550" y1="394" y2="394" stroke="#e5e7eb"/><text x="54" y="398" text-anchor="end">1e-2</text>
+<line x1="60" x2="550" y1="215" y2="215" stroke="#e5e7eb"/><text x="54" y="219" text-anchor="end">1e-1</text>
+<line x1="60" x2="550" y1="36" y2="36" stroke="#e5e7eb"/><text x="54" y="40" text-anchor="end">1e0</text>
+<line x1="60" x2="60" y1="36" y2="394" stroke="#f3f4f6"/><text x="60" y="410" text-anchor="middle">2</text>
+<line x1="109.00000000000004" x2="109.00000000000004" y1="36" y2="394" stroke="#f3f4f6"/><text x="109.00000000000004" y="410" text-anchor="middle">2.1</text>
+<line x1="158.00000000000009" x2="158.00000000000009" y1="36" y2="394" stroke="#f3f4f6"/><text x="158.00000000000009" y="410" text-anchor="middle">2.2</text>
+<line x1="207.00000000000014" x2="207.00000000000014" y1="36" y2="394" stroke="#f3f4f6"/><text x="207.00000000000014" y="410" text-anchor="middle">2.3</text>
+<line x1="256.00000000000017" x2="256.00000000000017" y1="36" y2="394" stroke="#f3f4f6"/><text x="256.00000000000017" y="410" text-anchor="middle">2.4</text>
+<line x1="305.0000000000002" x2="305.0000000000002" y1="36" y2="394" stroke="#f3f4f6"/><text x="305.0000000000002" y="410" text-anchor="middle">2.5</text>
+<line x1="354.0000000000003" x2="354.0000000000003" y1="36" y2="394" stroke="#f3f4f6"/><text x="354.0000000000003" y="410" text-anchor="middle">2.6</text>
+<line x1="403.0000000000003" x2="403.0000000000003" y1="36" y2="394" stroke="#f3f4f6"/><text x="403.0000000000003" y="410" text-anchor="middle">2.7</text>
+<line x1="452.00000000000034" x2="452.00000000000034" y1="36" y2="394" stroke="#f3f4f6"/><text x="452.00000000000034" y="410" text-anchor="middle">2.8</text>
+<line x1="501.0000000000004" x2="501.0000000000004" y1="36" y2="394" stroke="#f3f4f6"/><text x="501.0000000000004" y="410" text-anchor="middle">2.9</text>
+<line x1="550.0000000000005" x2="550.0000000000005" y1="36" y2="394" stroke="#f3f4f6"/><text x="550.0000000000005" y="410" text-anchor="middle">3</text>
+<text x="305" y="432" text-anchor="middle">SNR (dB, peak-ref, 1.5 kHz)</text>
+<text x="14" y="215" text-anchor="middle" transform="rotate(-90 14 215)">PER</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="1.8" points="550.0,36.0 60.0,36.0"/>
+<line x1="560" x2="578" y1="42" y2="42" stroke="#2563eb" stroke-width="2.5"/><text x="583" y="46">long-range</text>
+<polyline fill="none" stroke="#dc2626" stroke-width="1.8" points="550.0,36.0 60.0,36.0"/>
+<line x1="560" x2="578" y1="58" y2="58" stroke="#dc2626" stroke-width="2.5"/><text x="583" y="62">balanced</text>
+<polyline fill="none" stroke="#16a34a" stroke-width="1.8" points="550.0,36.0 60.0,36.0"/>
+<line x1="560" x2="578" y1="74" y2="74" stroke="#16a34a" stroke-width="2.5"/><text x="583" y="78">fast</text>
+</svg>

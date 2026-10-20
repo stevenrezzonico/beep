@@ -1,7 +1,7 @@
 import { bandInfo } from './band.ts';
 import { Baseband } from './baseband.ts';
 import { dechirpFft, type ChirpKind } from './css.ts';
-import { decodeHeader, decodePayload, payloadSymbolCount, payloadSymbols, type PhyHeader } from './frame.ts';
+import { decodeHeader, decodePayload, payloadSymbolCount, payloadSymbols, HEADER_MAX_OFFSET, type PhyHeader } from './frame.ts';
 import { DEFAULT_CONFIG, profileById, type ModemConfig, type Profile } from './profiles.ts';
 import { grayEncode } from './gray.ts';
 import { mAryLlr } from './candidates/types.ts';
@@ -46,8 +46,12 @@ export interface PacketDiag {
   /** Payload symbols whose argmax disagreed with the re-encoded codeword (≈ symbol errors). */
   symbolErrors: number;
   symbols: number;
-  /** Cumulative timing correction applied by the tracking loop (ms). */
+  /** Carrier drift rate the tracking loop ended with (Hz/s): non-zero under acceleration. */
+  cfoRateHzPerSec: number;
+  /** Cumulative timing correction applied by the timing loop (ms). */
   timingTrackMs: number;
+  /** Whole-bin offset the payload was decoded at (0 unless motion shifted the lock), bins. */
+  binShift: number;
   /** Air time of the packet (s). */
   duration: number;
 }
@@ -159,8 +163,12 @@ export class Receiver {
   private header: PhyHeader | null = null;
   private profile: Profile | null = null;
   private headerMargin = 0;
-  private trackT = 0;
-  private nuEps = 0;
+  /** Tracked carrier drift rate, Hz/s (integral path of the carrier loop). */
+  private cfoRate = 0;
+  /** Tracked timing drift per symbol, s (integral path of the timing loop). */
+  private timingRate = 0;
+  /** Cumulative timing correction by the timing loop, s. */
+  private timingTrack = 0;
 
   // scratch
   private zr: Float64Array;
@@ -179,9 +187,9 @@ export class Receiver {
     this.TsPre = this.Npre / this.bw;
     // detection: sum over K windows of adjacent-bin pairs → Gamma(2K) under noise
     this.thrDet = cfarThreshold(2 * cfg.detWindows, this.Npre, cfg.pfa);
-    // header: the ML codeword's summed bin powers vs the best of 4096 codewords under noise
-    // (≈ Gamma(n) maximised over 4096 candidates), false accept 1e-4 per sync
-    this.thrHeader = cfarThreshold(cfg.nHeader, 1 << 12, 1e-4);
+    // header: the ML codeword's summed bin powers vs the best of 4096 codewords × offsets under
+    // noise (≈ Gamma(n) maximised over all candidates), false accept 1e-4 per sync
+    this.thrHeader = cfarThreshold(cfg.nHeader, (1 << 12) * (2 * HEADER_MAX_OFFSET + 1), 1e-4);
     const maxN = 1 << Math.max(cfg.sfPre, ...cfg.profiles.map((p) => p.sf));
     this.zr = new Float64Array(maxN);
     this.zi = new Float64Array(maxN);
@@ -346,7 +354,9 @@ export class Receiver {
     // difference of two noisy windows.
     const score = (delta: number, B: number, P: number) => {
       let up = 0, down = 0;
-      for (let k = 1; k < this.cfg.nUp; k++) up += this.alignedPeak(B - k * P, 'up', delta);
+      // all nUp up-chirps: a hypothesis one symbol early then includes a pre-preamble (noise)
+      // window and loses a down-chirp, i.e. two symbols of evidence, not one
+      for (let k = 1; k <= this.cfg.nUp; k++) up += this.alignedPeak(B - k * P, 'up', delta);
       for (let k = 0; k < this.cfg.nDown; k++) down += this.alignedPeak(B + k * P, 'down', delta);
       return { up, down };
     };
@@ -365,7 +375,7 @@ export class Receiver {
         const B = tLast + g.phase + j * g.P;
         if (B > lim) continue;
         let up = 0;
-        for (let k = 1; k < this.cfg.nUp; k++) up += this.alignedPeak(B - k * g.P, 'up', guess);
+        for (let k = 1; k <= this.cfg.nUp; k++) up += this.alignedPeak(B - k * g.P, 'up', guess);
         const S = new Float64Array(N);
         for (let k = 0; k < this.cfg.nDown; k++) {
           this.window(B + k * g.P, this.cfg.sfPre, 'down', 1 / (this.bw * sc), guess / sc);
@@ -428,8 +438,9 @@ export class Receiver {
     this.cfoHz = (delta * this.bw) / N;
     this.cfoHz0 = this.cfoHz;
     this.eps = this.cfoHz / this.fc;
-    this.nuEps = 0;
-    this.trackT = 0;
+    this.cfoRate = 0;
+    this.timingRate = 0;
+    this.timingTrack = 0;
     this.syncTime = B;
     this.tNext = B + (this.cfg.nDown * Ts) / (1 + this.eps);
     this.hdrSyms = [];
@@ -465,12 +476,23 @@ export class Receiver {
 
   // ------------------------------------------------------------------ symbols
 
-  /** Demodulate one tracked symbol at SF sf; advances tNext and updates the tracking loop. */
+  /** Energy of bins b−2…b+2 of the last window (insensitive to the peak's fractional position). */
+  private peakEnergy(N: number, b: number): number {
+    let e = 0;
+    for (let d = -2; d <= 2; d++) {
+      const k = (b + d + N) % N;
+      e += this.fr[k] * this.fr[k] + this.fi[k] * this.fi[k];
+    }
+    return e;
+  }
+
+  /** Demodulate one tracked symbol at SF sf; advances tNext and updates the tracking loops. */
   private demodSymbol(sf: number): SymbolResult {
     const N = 1 << sf;
     const Ts = N / this.bw / (1 + this.eps);
     const dt = Ts / N;
-    this.window(this.tNext, sf, 'up', dt, this.cfoHz * Ts);
+    const cfoBins = this.cfoHz * Ts;
+    this.window(this.tNext, sf, 'up', dt, cfoBins);
     const p = this.power(N);
     const m = argmax(p);
     // noise mean excluding the peak and its immediate sidelobes (fractional offsets leak there)
@@ -481,18 +503,32 @@ export class Receiver {
     const ratio = p[m] / mu;
     const r = fracPeak(this.fr.subarray(0, N) as Float64Array, this.fi.subarray(0, N) as Float64Array, m);
     for (let k = 0; k < N; k++) p[k] /= mu;
-    // Tracking: type-2 loop on the residual bin offset r. The proportional path corrects the
-    // carrier (de-rotation), the integral path the time-scale ε, so window timing follows
-    // Doppler/clock drift. Only confident decisions update it (peak ≥ 4·ln N × noise mean: a
-    // noise bin exceeds that with probability ≈ N·N^-4 per symbol), because a wrong decision
-    // carries a random fractional offset. Gains: D-012.
+    // Two decision-directed loops, updated only on confident symbols (peak ≥ 4·ln N × noise
+    // mean: a noise bin exceeds that with probability ≈ N·N^-4), because a wrong decision carries
+    // a random offset. Gains: D-012.
+    //  - Timing (early/late gate). A fractional timing error δ puts a 2π·δ phase jump into the
+    //    de-chirped tone at the chirp's frequency wrap, splitting the peak, so the energy around
+    //    the peak is largest at the right timing. Windows ±¼ chip early/late give the sign; this is
+    //    independent of the carrier error. Type 2: the integral follows timing drift (motion).
+    //  - Carrier (de-rotation) from the residual bin offset r once timing is right. Type 2: the
+    //    integral follows carrier ramps (acceleration).
+    // The time scale ε stays at the preamble estimate; hand motion makes velocity oscillate, and
+    // the timing loop absorbs the bounded displacement it causes.
     if (ratio > 4 * Math.log(N)) {
+      this.window(this.tNext - dt / 4, sf, 'up', dt, cfoBins);
+      const early = this.peakEnergy(N, m);
+      this.window(this.tNext + dt / 4, sf, 'up', dt, cfoBins);
+      const late = this.peakEnergy(N, m);
+      const e = (late - early) / (late + early); // > 0: late window better ⇒ we are early
+      this.tNext += (this.cfg.trackT * e) / this.bw;
+      this.timingRate += (this.cfg.trackTI * e) / this.bw;
       this.cfoHz += (this.cfg.trackP * r) / Ts;
-      this.nuEps += (this.cfg.trackI * r) / N;
-      this.eps += (this.cfg.trackI * r) / N;
+      this.cfoRate += (this.cfg.trackI * r) / (Ts * Ts);
+      this.timingTrack += (this.cfg.trackT * e) / this.bw;
     }
-    this.tNext += Ts;
-    this.trackT += Ts * this.nuEps;
+    this.cfoHz += this.cfoRate * Ts;
+    this.tNext += Ts + this.timingRate;
+    this.timingTrack += this.timingRate;
     return { power: p, peak: m, ratio, frac: r };
   }
 
@@ -507,6 +543,7 @@ export class Receiver {
     const es = this.hdrSyms.reduce((a, x) => a + Math.max(x.power[x.peak] - 1, 1e-3), 0) / n;
     const h = decodeHeader(
       this.hdrSyms.map((x) => x.power),
+      this.hdrSyms.map((x) => x.frac),
       sf,
       n,
       es,
@@ -519,6 +556,10 @@ export class Receiver {
       this.toSearch(this.tNext);
       return true;
     }
+    // re-anchor the carrier on the decoded header: the common offset δ plus the mean fractional
+    // residual of the chirps that agreed (the time scale stays at the preamble estimate, see
+    // demodSymbol)
+    this.cfoHz += (h.offset + h.residual) / Ts;
     this.header = h.header;
     this.profile = prof;
     this.events.push({ type: 'header', time: this.syncTime, header: h.header, profile: prof.name });
@@ -535,13 +576,28 @@ export class Receiver {
     this.paySyms.push(this.demodSymbol(p.sf));
     this.bb.discardBefore(this.tNext - 2 * this.TsPre);
     if (this.paySyms.length < n) return true;
-    const llr = softBits(this.paySyms, p.sf);
-    const dec = decodePayload(h, llr, p.rate);
+    // A carrier error of one bin is indistinguishable from data +1 (and from one chip of timing
+    // error), so after the tracking loop has locked the payload may sit a whole bin off — e.g.
+    // after hand motion changed the timing between preamble and payload. The loop keeps that
+    // offset constant, so try the shifts 0, −1, +1 and keep the one whose CRC passes. Cost: the
+    // chance that a corrupt block passes CRC-16 rises from 2^-16 to 3·2^-16 per failed packet.
+    const N = 1 << p.sf;
+    let dec = decodePayload(h, softBits(this.paySyms, p.sf), p.rate);
+    let shift = 0;
+    for (const o of [-1, 1]) {
+      if (dec.data) break;
+      const shifted = this.paySyms.map((x) => ({ ...x, power: x.power.map((_, k) => x.power[(k + o + N) % N]), peak: (x.peak - o + N) % N }));
+      const d2 = decodePayload(h, softBits(shifted, p.sf), p.rate);
+      if (d2.data) {
+        dec = d2;
+        shift = o;
+      }
+    }
     // symbol errors: compare argmax to the re-encoded symbols (only meaningful if CRC passed)
     let symErr = 0;
     if (dec.data) {
       const ref = reencodeSymbols(h, dec.data, p);
-      for (let i = 0; i < n; i++) if (ref[i] !== this.paySyms[i].peak) symErr++;
+      for (let i = 0; i < n; i++) if ((ref[i] + shift + N) % N !== this.paySyms[i].peak) symErr++;
     }
     const all = [...this.hdrSyms, ...this.paySyms];
     const snrLin = all.reduce((a, s) => a + Math.max(s.ratio - 1, 1e-3) / s.power.length, 0) / all.length;
@@ -560,7 +616,9 @@ export class Receiver {
       codedBits: dec.codedBits,
       symbolErrors: symErr,
       symbols: n,
-      timingTrackMs: this.trackT * 1000,
+      cfoRateHzPerSec: this.cfoRate,
+      timingTrackMs: this.timingTrack * 1000,
+      binShift: shift,
       duration: this.tNext - this.syncTime + this.TsPre * this.cfg.nUp,
     };
     if (dec.data) this.events.push({ type: 'packet', ok: true, data: dec.data, diag });

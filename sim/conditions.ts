@@ -12,8 +12,8 @@ import { join } from 'node:path';
  *    RT60 is shorter than mid-band because of air and soft-furnishing absorption). Replace with
  *    bench echo-test values.
  *  - DRR +6 dB ≈ 1 m in a living room, −3 dB ≈ beyond the critical distance (several metres).
- *  - 0.5 m/s ≈ walking slowly towards the other device (≈26 Hz at 17.75 kHz); 0.3 m/s peak
- *    sinusoidal ≈ a phone waved in the hand.
+ *  - 0.5 m/s ≈ walking slowly towards the other device (≈26 Hz at 17.75 kHz); ±0.1 m/s sway
+ *    (±3 cm) ≈ a phone held in the hand; ±0.3 m/s (±10 cm every 2 s) ≈ a phone being waved.
  *  - 50 ppm: typical consumer audio clock mismatch.
  *  - k3 = 0.05, −6 dB tilt: a mildly overdriven phone speaker whose response falls off towards
  *    18.5 kHz.
@@ -49,8 +49,13 @@ export const CONDITIONS: Condition[] = [
   },
   { id: 'doppler', label: 'Constant 0.5 m/s (≈26 Hz) + 50 ppm', make: () => ({ velocity: 0.5, clockPpm: 50 }) },
   {
+    id: 'hand-held',
+    label: 'Hand-held sway ±0.1 m/s (2 s period) in RT60 0.3 s room',
+    make: (s, fs) => ({ ir: room(0.3, 6, fs, s), motion: { peakVel: 0.1, period: 2 }, clockPpm: 50 }),
+  },
+  {
     id: 'motion-room',
-    label: 'Hand motion ±0.3 m/s (2 s period) in RT60 0.3 s room',
+    label: 'Waving ±0.3 m/s (2 s period) in RT60 0.3 s room',
     make: (s, fs) => ({ ir: room(0.3, 6, fs, s), motion: { peakVel: 0.3, period: 2 }, clockPpm: 50 }),
   },
 ];

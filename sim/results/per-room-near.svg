@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" font-family="system-ui,sans-serif" font-size="12">
+<rect width="760" height="440" fill="#fff"/>
+<text x="275" y="20" text-anchor="middle" font-size="14" font-weight="600">Modem PER (32 B) — Room RT60 0.3 s, DRR +6 dB, speaker k3/tilt</text>
+<line x1="60" x2="550" y1="394" y2="394" stroke="#e5e7eb"/><text x="54" y="398" text-anchor="end">1e-2</text>
+<line x1="60" x2="550" y1="215" y2="215" stroke="#e5e7eb"/><text x="54" y="219" text-anchor="end">1e-1</text>
+<line x1="60" x2="550" y1="36" y2="36" stroke="#e5e7eb"/><text x="54" y="40" text-anchor="end">1e0</text>
+<line x1="87.22222222222223" x2="87.22222222222223" y1="36" y2="394" stroke="#f3f4f6"/><text x="87.22222222222223" y="410" text-anchor="middle">-14</text>
+<line x1="141.66666666666666" x2="141.66666666666666" y1="36" y2="394" stroke="#f3f4f6"/><text x="141.66666666666666" y="410" text-anchor="middle">-12</text>
+<line x1="196.11111111111111" x2="196.11111111111111" y1="36" y2="394" stroke="#f3f4f6"/><text x="196.11111111111111" y="410" text-anchor="middle">-10</text>
+<line x1="250.55555555555557" x2="250.55555555555557" y1="36" y2="394" stroke="#f3f4f6"/><text x="250.55555555555557" y="410" text-anchor="middle">-8</text>
+<line x1="305" x2="305" y1="36" y2="394" stroke="#f3f4f6"/><text x="305" y="410" text-anchor="middle">-6</text>
+<line x1="359.44444444444446" x2="359.44444444444446" y1="36" y2="394" stroke="#f3f4f6"/><text x="359.44444444444446" y="410" text-anchor="middle">-4</text>
+<line x1="413.88888888888886" x2="413.88888888888886" y1="36" y2="394" stroke="#f3f4f6"/><text x="413.88888888888886" y="410" text-anchor="middle">-2</text>
+<line x1="468.33333333333337" x2="468.33333333333337" y1="36" y2="394" stroke="#f3f4f6"/><text x="468.33333333333337" y="410" text-anchor="middle">0</text>
+<line x1="522.7777777777778" x2="522.7777777777778" y1="36" y2="394" stroke="#f3f4f6"/><text x="522.7777777777778" y="410" text-anchor="middle">2</text>
+<text x="305" y="432" text-anchor="middle">SNR (dB, peak-ref, 1.5 kHz)</text>
+<text x="14" y="215" text-anchor="middle" transform="rotate(-90 14 215)">PER</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="1.8" points="550.0,394.0 522.8,394.0 495.6,394.0 468.3,394.0 441.1,394.0 413.9,394.0 386.7,394.0 359.4,394.0 332.2,394.0 305.0,394.0 277.8,246.5 250.6,394.0 223.3,300.4 196.1,161.1 168.9,101.0 141.7,60.1 114.4,38.6 87.2,36.0 60.0,36.0"/>
+<line x1="560" x2="578" y1="42" y2="42" stroke="#2563eb" stroke-width="2.5"/><text x="583" y="46">long-range</text>
+<polyline fill="none" stroke="#dc2626" stroke-width="1.8" points="550.0,394.0 522.8,394.0 495.6,394.0 468.3,394.0 441.1,394.0 413.9,394.0 386.7,394.0 359.4,394.0 332.2,192.6 305.0,192.6 277.8,215.0 250.6,215.0 223.3,107.2 196.1,38.6 168.9,36.0 141.7,36.0"/>
+<line x1="560" x2="578" y1="58" y2="58" stroke="#dc2626" stroke-width="2.5"/><text x="583" y="62">balanced</text>
+<polyline fill="none" stroke="#16a34a" stroke-width="1.8" points="550.0,394.0 522.8,246.5 495.6,300.4 468.3,215.0 441.1,138.8 413.9,107.2 386.7,67.5 359.4,38.6 332.2,36.0 305.0,36.0"/>
+<line x1="560" x2="578" y1="74" y2="74" stroke="#16a34a" stroke-width="2.5"/><text x="583" y="78">fast</text>
+</svg>

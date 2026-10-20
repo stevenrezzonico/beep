@@ -26,11 +26,14 @@ export interface ModemConfig {
   /** PHY header length in chirps: Reed–Solomon (nHeader, 2) over GF(256). */
   nHeader: number;
   /**
-   * Decision-directed tracking loop gains (D-012): proportional gain on the per-symbol bin offset
-   * and integral gain on the time-scale ε. 0/0 disables tracking.
+   * Decision-directed tracking loop gains (D-012). Carrier: proportional/integral gain on the
+   * per-symbol residual bin offset. Timing: proportional/integral gain (chips per unit of the
+   * early/late error) of the early/late gate. 0 disables a path.
    */
   trackP: number;
   trackI: number;
+  trackT: number;
+  trackTI: number;
   /** Up-chirp windows integrated for detection (≤ nUp − 1 so a full window always fits). */
   detWindows: number;
   /** Per-window false-alarm probability used to derive the detection threshold. */
@@ -56,6 +59,8 @@ export const DEFAULT_CONFIG: ModemConfig = {
   nHeader: 8,
   trackP: 0.3,
   trackI: 0.03,
+  trackT: 0.3,
+  trackTI: 0.02,
   detWindows: 7,
   pfa: 1e-6,
   glide: 0.002,

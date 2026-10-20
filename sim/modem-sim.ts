@@ -154,29 +154,32 @@ export async function runFec(pool: Pool, o: { quick: boolean; outDir: string }) 
 /** Tracking-loop gain study under motion (D-012): PER of a long balanced-profile packet. */
 export async function runTracking(pool: Pool, o: { quick: boolean; outDir: string }) {
   const gains = [
-    { p: 0, i: 0 },
-    { p: 0.15, i: 0.01 },
-    { p: 0.3, i: 0.03 },
-    { p: 0.5, i: 0.05 },
-    { p: 0.3, i: 0.1 },
+    { label: 'off', cfg: { trackP: 0, trackI: 0, trackT: 0, trackTI: 0 } },
+    { label: 'carrier only (0.3/0.03)', cfg: { trackT: 0, trackTI: 0 } },
+    { label: 'timing only (0.3/0.02)', cfg: { trackP: 0, trackI: 0 } },
+    { label: 'chosen: carrier 0.3/0.03 + timing 0.3/0.02', cfg: {} },
+    { label: 'fast timing 1/0.1', cfg: { trackT: 1, trackTI: 0.1 } },
   ];
-  const conds = ['doppler', 'motion-room'];
-  const profiles = ['balanced', 'fast'];
+  const cases = [
+    { profile: 'long-range', cond: 'awgn' },
+    { profile: 'balanced', cond: 'hand-held' },
+    { profile: 'fast', cond: 'hand-held' },
+    { profile: 'fast', cond: 'motion-room' },
+  ];
   const snrs: number[] = [];
-  for (let s = 6; s >= -12; s -= o.quick ? 3 : 2) snrs.push(s);
+  for (let s = 6; s >= -16; s -= o.quick ? 3 : 1) snrs.push(s);
   const jobs = [];
   for (const g of gains)
-    for (const c of conds)
-      for (const p of profiles)
-        jobs.push(pool.run<PerPoint[]>('modemPer', { profile: p, cond: c, snrs, packets: o.quick ? 10 : 40, payloadBytes: 64, cfg: { trackP: g.p, trackI: g.i }, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, p, pts })));
+    for (const c of cases)
+      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: c.profile, cond: c.cond, snrs, packets: o.quick ? 10 : 30, payloadBytes: 32, cfg: g.cfg, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, pts })));
   const res = await Promise.all(jobs);
   const rows = [
-    'Tracking loop gains vs PER for 64-byte packets under motion. Cells: SNR for PER ≤ 10% (n/a = never reached).',
+    'Tracking loops vs PER for 32-byte packets. Carrier loop = proportional/integral on the residual bin offset; timing loop = early/late gate. Cells: SNR (dB) for PER ≤ 10% (n/a = never reached).',
     '',
-    `| trackP / trackI | ${conds.flatMap((c) => profiles.map((p) => `${c} ${p}`)).join(' | ')} |`,
-    `|---|${conds.flatMap(() => profiles.map(() => '---|')).join('')}`,
+    `| Loops | ${cases.map((c) => `${c.profile} / ${c.cond}`).join(' | ')} |`,
+    `|---|${cases.map(() => '---|').join('')}`,
   ];
-  for (const g of gains) rows.push(`| ${g.p} / ${g.i} | ${conds.flatMap((c) => profiles.map((p) => f(perCrossing(res.find((x) => x.g === g && x.c === c && x.p === p)!.pts, 0.1)))).join(' | ')} |`);
+  for (const g of gains) rows.push(`| ${g.label} | ${cases.map((c) => f(perCrossing(res.find((x) => x.g === g && x.c === c)!.pts, 0.1))).join(' | ')} |`);
   writeFileSync(join(o.outDir, 'tracking.md'), rows.join('\n') + '\n');
   console.log(rows.join('\n'));
 }
