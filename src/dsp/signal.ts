@@ -71,3 +71,40 @@ export function concat(parts: Float32Array[]): Float32Array {
 export function silence(durSec: number, fs: number): Float32Array {
   return new Float32Array(Math.round(durSec * fs));
 }
+
+/**
+ * Render a constant-envelope waveform from an instantaneous-frequency trajectory (Hz per
+ * sample). The trajectory is first smoothed with a normalised Hann kernel of `smoothSec`
+ * (GFSK-style), which turns every frequency step into a short glide: linear chirp segments are
+ * unchanged (a symmetric kernel preserves straight lines) and only ±smoothSec/2 around each step
+ * is altered, but the spectral skirt of the step falls off far faster, keeping energy out of the
+ * audible range. Phase is integrated with the trapezoid rule, exact for linear segments.
+ */
+export function renderFrequency(freq: Float64Array, fs: number, smoothSec: number, amp = 1, phase0 = 0): Float32Array {
+  let f = freq;
+  const half = Math.floor((smoothSec * fs) / 2);
+  if (half >= 1) {
+    const L = 2 * half + 1;
+    const k = new Float64Array(L);
+    let s = 0;
+    for (let i = 0; i < L; i++) s += k[i] = 0.5 - 0.5 * Math.cos((2 * Math.PI * (i + 1)) / (L + 1));
+    for (let i = 0; i < L; i++) k[i] /= s;
+    f = new Float64Array(freq.length);
+    for (let i = 0; i < freq.length; i++) {
+      let acc = 0;
+      for (let j = -half; j <= half; j++) {
+        const idx = Math.min(freq.length - 1, Math.max(0, i + j)); // hold the edge value
+        acc += k[j + half] * freq[idx];
+      }
+      f[i] = acc;
+    }
+  }
+  const y = new Float32Array(f.length);
+  let ph = phase0;
+  for (let i = 0; i < f.length; i++) {
+    if (i > 0) ph += (Math.PI * (f[i - 1] + f[i])) / fs;
+    if (ph > 1e6) ph %= 2 * Math.PI;
+    y[i] = amp * Math.cos(ph);
+  }
+  return y;
+}
