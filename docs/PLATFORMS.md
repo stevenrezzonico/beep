@@ -80,10 +80,15 @@ detects this.
 
 ## Known limitations (current)
 
-- The long-range profile needs the phones to be roughly still. The simulated moving-hand case
-  (±0.3 m/s) fails at SF ≥ 7 because the symbols are longer than the Doppler stays constant.
-  The fast profile tolerates hand motion. See `sim/results/modem.md`, condition
-  `motion-room`.
+- **Hold still for long-range and balanced.** In simulation:
+  - constant motion (walking at 0.5 m/s) is fully compensated;
+  - slow sway (±0.05 m/s, 4 s period) decodes;
+  - hand-held sway of ±0.1 m/s every 2 s defeats the long-symbol profiles (SF7/SF8, 98–197 ms
+    symbols): the velocity changes within one symbol;
+  - the fast profile (25 ms symbols) tolerates that sway;
+  - waving (±0.3 m/s) defeats every profile.
+
+  See `sim/results/modem.md` (hand-held, motion-room) and D-012. For range, put the phones down.
 - 17 kHz is audible to many children and teenagers, and to some pets. Raise `fLow` for those
   audiences, but only if the bench shows both devices have usable response there.
 - Throughput is physics-limited: about 1.3 kHz of usable band with robust non-coherent
