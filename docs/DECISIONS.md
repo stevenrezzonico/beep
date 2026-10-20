@@ -106,20 +106,24 @@ below 16 kHz, and smoothed transitions −105 dBc.
 ### D-008 Preamble: SF8, 8 up-chirps + 4 down-chirps, 8-chirp header, no LoRa quarter chirp — *sim*
 
 **Evidence.** [`sim/results/preamble.md`](../sim/results/preamble.md): the long-range profile
-with 8-byte payloads, 50 packets per point. The SNR where ≥ 90% of packets decode:
+with 8-byte payloads, 50 packets per point, final receiver. Cells are the SNR (dB) where
+≥ 90% of packets sync / decode the header / decode the packet:
 
 | Preamble (+ header) | air time | AWGN | far room |
 |---|---|---|---|
-| 6↑ 2↓, header 5 | 2.56 s | −13 dB | −9 dB |
-| 6↑ 4↓, header 6 | 3.15 s | −13 dB | −10 dB |
-| **8↑ 4↓, header 8 (chosen)** | **3.94 s** | **−14 dB** | **−10 dB** |
-| 10↑ 4↓, header 8 | 4.33 s | −12 dB | −9 dB |
-| SF9 5↑ 3↓, header 5 | 5.12 s | −14 dB | −10 dB |
+| 6↑ 2↓, header 5 | 2.56 s | −13 / −13 / −13 | −9 / −9 / −9 |
+| 6↑ 4↓, header 6 | 3.15 s | −14 / −13 / −13 | −11 / −10 / −10 |
+| 6↑ 4↓, header 8 | 3.54 s | −14 / −14 / −14 | −11 / −10 / −10 |
+| **8↑ 4↓, header 8 (chosen)** | **3.94 s** | **−15 / −14 / −14** | **−11 / −11 / −10** |
+| 10↑ 4↓, header 8 | 4.33 s | −15 / −14 / −14 | −11 / −10 / −10 |
+| SF9 5↑ 3↓, header 5 | 5.12 s | −16 / −16 / −14 | −12 / −12 / −10 |
 
-The chosen setting is the most sensitive SF8 option, so the preamble no longer limits the
-long-range payload. The SF9 preamble syncs 1 dB lower, but the packet is then limited by the
-SF8 payload anyway, and it costs 1.2 s more per packet. Differences of ±1 dB are within the
-study's resolution (1 dB steps, 50 packets).
+- Going from 2 to 4 down-chirps and from 5 to 8 header chirps buys about 1 dB each.
+- 8 up-chirps sync 1 dB below 6, a margin for longer packets and for real rooms. They decode
+  8-byte packets at the same SNR, and cost 0.4 s more per packet. Distance comes first, so 8.
+  The difference is at the edge of the study's resolution (1 dB steps, 50 packets).
+- An SF9 preamble syncs 1 dB lower again, but the packet is then limited by the SF8 payload and
+  it costs 1.2 s more.
 
 The up-chirps give detection and Δ−d (carrier offset minus timing). The down-chirps give Δ+d.
 More down-chirps help most: two down-chirps were the bottleneck, because sync must choose among
