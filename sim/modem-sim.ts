@@ -167,11 +167,11 @@ export async function runTracking(pool: Pool, o: { quick: boolean; outDir: strin
     { profile: 'fast', cond: 'motion-room' },
   ];
   const snrs: number[] = [];
-  for (let s = 6; s >= -16; s -= o.quick ? 3 : 1) snrs.push(s);
+  for (let s = 6; s >= -16; s -= o.quick ? 3 : 2) snrs.push(s);
   const jobs = [];
   for (const g of gains)
     for (const c of cases)
-      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: c.profile, cond: c.cond, snrs, packets: o.quick ? 10 : 30, payloadBytes: 32, cfg: g.cfg, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, pts })));
+      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: c.profile, cond: c.cond, snrs, packets: o.quick ? 10 : 20, payloadBytes: 32, cfg: g.cfg, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, pts })));
   const res = await Promise.all(jobs);
   const rows = [
     'Tracking loops vs PER for 32-byte packets. Carrier loop = proportional/integral on the residual bin offset; timing loop = early/late gate. Cells: SNR (dB) for PER ≤ 10% (n/a = never reached).',

@@ -29,10 +29,11 @@ a single network, and the header code plus the CRC-16 reject foreign or false pa
 | length | 8 | payload bytes − 1 (1…256) | Needed to know how many symbols to collect. One byte covers the per-profile caps (32/64/192) with headroom. |
 | rsv | 2 | 0 in v1 | Version escape at zero cost to v1 senders. A v1 receiver rejects non-zero values. |
 
-These 12 bits form two GF(256) symbols of a **Reed–Solomon (nHeader, 2)** codeword, one symbol
-per chirp (bin = v·2^(SF−8)). They are decoded by **soft maximum likelihood over all 4,096
-headers**. A header is accepted only if its evidence beats the noise maximum at false-accept
-10⁻⁴ (D-011).
+These 12 bits form two GF(256) symbols of a **Reed–Solomon (8, 2)** codeword, one symbol per
+chirp (bin = v·2^(SF−8)), 8 chirps in total. They are decoded by **soft maximum likelihood over
+all 4,096 headers and a common bin offset of ±2** (carrier drift since the preamble). A header
+is accepted only if its evidence beats the noise maximum at false-accept 10⁻⁴ and at least 5 of
+the 8 chirps peak at (±1 bin of) the codeword (D-011).
 
 There is no header CRC. The ML acceptance test plays that role, and the payload CRC-16 covers
 the header fields too. A false header therefore costs a wasted payload decode, never a corrupt
@@ -53,7 +54,8 @@ data (L bytes) ‖ CRC-16/CCITT (over header fields ‖ data)
 The FEC choice is [D-013](DECISIONS.md) with data in
 [`sim/results/fec.md`](../sim/results/fec.md). CRC-16 has Hamming distance 4 up to 32,767 bits,
 far beyond the 2,064-bit maximum here. Its undetected-error probability for a corrupted block is
-2⁻¹⁶. No silent corruption has been observed in any simulation (the `corrupt` column of
+2⁻¹⁶. The receiver also tries whole-bin shifts ±1 when decoding fails (D-012), which makes the
+bound 3·2⁻¹⁶. No silent corruption has been observed in any simulation (the `corrupt` column of
 [`sim/results/modem.md`](../sim/results/modem.md)).
 
 ## 4. Protocol frame (the PHY payload)

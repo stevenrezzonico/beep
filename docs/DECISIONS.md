@@ -155,39 +155,102 @@ of more level is distortion of the amplifier and transducer, not audibility.
 **Range trade.** Every +6 dB of level is worth about +6 dB of link margin. The app warns above
 −1 dBFS. The bench audibility test with self-recorded IMD measures the real limit per device.
 
-### D-011 PHY header: 12 bits, Reed–Solomon (n, 2) over GF(256), soft ML decoding — *sim*
+### D-011 PHY header: 12 bits, Reed–Solomon (8, 2) over GF(256), soft ML decoding — *sim*
 
 **Decision.** The header carries profile (2), length−1 (8) and reserved (2). The two bytes are
-the information symbols of an RS(nHeader, 2) codeword, one GF(256) symbol per chirp (bin
-v·2^(SF−8)). It is decoded by maximum likelihood over all 4,096 headers using the non-coherent
-symbol metrics ln I0(·), then accepted only if its evidence beats noise (D-009). The payload
-CRC-16 also covers the header fields, so a wrongly accepted header cannot produce a corrupt
-packet.
+the information symbols of an RS(8, 2) codeword, one GF(256) symbol per chirp (bin
+v·2^(SF−8)). It is decoded by maximum likelihood over all 4,096 headers and over a common bin
+offset δ ∈ {−2…+2}, using the non-coherent symbol metrics ln I0(·). It is accepted only if all
+of these hold:
 
-**Evidence.** The first design was 20 bits (with CRC-8) under a rate-1/2 tail-biting
-convolutional code, giving 5 SF8 chirps. It failed 20–30% of headers at SNRs where payloads
-decoded. With so few symbols, one wrong chirp corrupts 8 of 40 coded bits, a burst no
-bit-level code fixes. The RS header removed header failures as the limiting factor at −14 dB
-(see the preamble study).
+1. the evidence beats noise (D-009);
+2. at least 5 of the 8 chirps peak within ±1 bin of the decoded codeword;
+3. the reserved bits are 0.
+
+The payload CRC-16 also covers the header fields, so a wrongly accepted header cannot produce a
+corrupt packet.
+
+**Why each part.**
+- *Symbol-level code.* The first design was 20 bits (with CRC-8) under a rate-½ tail-biting
+  convolutional code, giving 5 SF8 chirps. It failed 20–30% of headers at SNRs where payloads
+  decoded: with so few symbols, one wrong chirp corrupts 8 of 40 coded bits, a burst no
+  bit-level code fixes. Any two RS(8,2) headers differ in at least 7 chirps.
+- *Offset δ.* In chirp modulation, a carrier offset of one whole bin is indistinguishable from
+  data +1. At SF8 (5 Hz bins) a velocity change of 0.05 m/s between preamble and header shifts
+  every header chirp by a bin. Measured: 0/12 headers at ±0.05 m/s sway before, 12/12 after.
+  The decoded δ re-anchors the carrier estimate for the payload.
+- *Consistency check.* Real chirps read at the wrong alignment (a sync one symbol off, another
+  packet's chirps) are strong. With k = 2, *some* codeword matches any two of them, so evidence
+  alone accepted them (measured once in 16 packets, blocking the receiver for a wrong payload
+  length). Requiring 5 of 8 agreeing chirps rejects that. The ±1-bin tolerance allows for the
+  carrier drifting within the 1.6 s header under sway.
 
 **Rejected.**
 - Conv code + CRC-8 (above).
 - LoRa's Hamming-coded header, for the same reason plus weak distance.
+- Per-chirp ±1 tolerance inside the ML metric itself: three times as many noise candidates per
+  chirp, costing sensitivity in the static case that matters most for range.
 
-### D-012 Tracking loop — *sim* **(gains from [`sim/results/tracking.md`](../sim/results/tracking.md))**
+### D-012 Tracking: time scale from the preamble, early/late timing loop, carrier loop on de-rotation — *sim* (gains: [`sim/results/tracking.md`](../sim/results/tracking.md))
 
 Doppler and clock offset are one physical effect, a time scaling 1+ε. The preamble estimates ε
 (carrier offset / fc). The sync search uses ε-consistent window spacing and chip rates; without
 it the boundary drifts ε·N chips per symbol and biases the estimate (measured: −3.4 Hz bias at
-0.4 m/s before the fix, 0.1 Hz after). During the payload a type-2 decision-directed loop:
+0.4 m/s before the fix, 0.1 Hz after).
 
-- corrects the residual bin offset (proportional path, de-rotation);
-- corrects ε (integral path, symbol timing);
-- updates only on confident symbols.
+Inside the packet, ε stays at the preamble value, and two decision-directed type-2 loops run on
+confident symbols:
+
+1. **Timing: early/late gate.** It compares the energy around the decided peak in windows ¼ chip
+   early and late. A fractional timing error δ puts a 2π·δ phase jump into the de-chirped tone at
+   the chirp's frequency wrap. That splits the peak in a data-dependent way, which de-rotation
+   cannot fix. Measured: ±0.6–1.5 bins of data-dependent jitter at ±0.05 m/s without this loop,
+   ±0.1 with it. Gains 0.3 chip and 0.02 chip per unit of normalised early/late error.
+2. **Carrier: de-rotation.** Proportional and integral paths on the residual fractional bin
+   offset. Gains 0.3 and 0.03.
+
+**Rejected: feeding the carrier loop back into ε**, i.e. "velocity ⇒ timing". It looks
+physically right, but hand motion makes velocity oscillate. The timing error stays bounded by
+the displacement (±1–3 cm ⇒ ±0.04–0.1 chips), whereas integrating transient carrier estimates
+into ε grows without bound. Measured: 1.5 chips after 4 s at ±0.05 m/s.
+
+**Gain choice.** Higher timing gains (1 / 0.1) track sway slightly better but cost about 1 dB
+at the long-range sensitivity limit through timing jitter. Distance comes first, so 0.3 / 0.02.
+
+**Residual whole-bin lock.** If the loops lock one bin off after a timing jump, the payload is
+decoded at shifts 0, −1 and +1 and kept only if the CRC passes. That raises the CRC-16
+undetected-error bound from 2⁻¹⁶ to 3·2⁻¹⁶ per failed packet.
 
 ### D-013 Payload FEC: K=7 rate-½ convolutional, soft Viterbi, bit-interleaved (BICM) — *sim*
 
-See [`sim/results/fec.md`](../sim/results/fec.md). **(Filled in from the FEC study.)**
+**Evidence.** [`sim/results/fec.md`](../sim/results/fec.md): SF7 CSS with genie timing,
+32-byte payloads, 100 packets per point. Cells are the SNR (dB) for PER ≤ 10%:
+
+| Scheme | rate | AWGN | far room |
+|---|---|---|---|
+| uncoded + CRC | 1 | −8.8 | −3.2 |
+| Hamming(7,4) soft ML + interleaver | 0.57 | −10.3 | −4.4 |
+| RS shortened n = 2k (hard, errors-only) | 0.5 | −11.2 | −5.4 |
+| K=7 conv ½, soft Viterbi, **no** interleaver | 0.5 | −10.5 | −4.0 |
+| **K=7 conv ½, soft Viterbi + interleaver** | 0.5 | **−12.1** | **−7.1** |
+| K=7 conv ⅔ (punctured) + interleaver | 0.67 | −11.2 | −6.3 |
+
+Soft decisions over non-coherent M-ary metrics, combined with interleaving, win by 0.9 dB over RS
+in AWGN and by 1.7 dB in reverb. RS works on hard byte decisions. One wrong chirp corrupts 1–2
+bytes, but reverb produces bursts that exceed its correction capability.
+
+The interleaver alone is worth 1.6 dB (AWGN) to 3.1 dB (far room). This is the measured case for
+D-019.
+
+The punctured ⅔ code costs about 0.9 dB for 33% more throughput, so it is used only by the fast
+profile, where speed is the point.
+
+**Rejected.**
+- RS as the inner code.
+- Hamming / LoRa-style codes.
+- An outer RS on top of the conv code: the per-packet CRC plus the rateless erasure code across
+  packets (D-016) already turn residual errors into erasures, which is the efficient way to use
+  extra redundancy here.
 
 ### D-014 Profiles — *sim* **(from [`sim/results/modem.md`](../sim/results/modem.md))**
 

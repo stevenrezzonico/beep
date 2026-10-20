@@ -1,0 +1,1790 @@
+[
+ {
+  "scheme": "none",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 97,
+    "corrupt": 0,
+    "per": 0.030000000000000027,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 88,
+    "corrupt": 0,
+    "per": 0.12,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 40,
+    "corrupt": 0,
+    "per": 0.6,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 6,
+    "corrupt": 0,
+    "per": 0.94,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "none",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 94,
+    "corrupt": 0,
+    "per": 0.06000000000000005,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 74,
+    "corrupt": 0,
+    "per": 0.26,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.54,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 16,
+    "corrupt": 0,
+    "per": 0.84,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 3,
+    "corrupt": 0,
+    "per": 0.97,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "hamming74",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 98,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 66,
+    "corrupt": 0,
+    "per": 0.33999999999999997,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 10,
+    "corrupt": 0,
+    "per": 0.9,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "hamming74",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 98,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 79,
+    "corrupt": 0,
+    "per": 0.20999999999999996,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.52,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 8,
+    "corrupt": 0,
+    "per": 0.92,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "rs",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 53,
+    "corrupt": 0,
+    "per": 0.47,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.99,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "rs",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 98,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 78,
+    "corrupt": 0,
+    "per": 0.21999999999999997,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 22,
+    "corrupt": 0,
+    "per": 0.78,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 2,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv12-noint",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 97,
+    "corrupt": 0,
+    "per": 0.030000000000000027,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 83,
+    "corrupt": 0,
+    "per": 0.17000000000000004,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 39,
+    "corrupt": 0,
+    "per": 0.61,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.99,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv12-noint",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 98,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 92,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 90,
+    "corrupt": 0,
+    "per": 0.09999999999999998,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 71,
+    "corrupt": 0,
+    "per": 0.29000000000000004,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 44,
+    "corrupt": 0,
+    "per": 0.56,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 13,
+    "corrupt": 0,
+    "per": 0.87,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv12",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 97,
+    "corrupt": 0,
+    "per": 0.030000000000000027,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 44,
+    "corrupt": 0,
+    "per": 0.56,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv12",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 97,
+    "corrupt": 0,
+    "per": 0.030000000000000027,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 35,
+    "corrupt": 0,
+    "per": 0.65,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv23",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 54,
+    "corrupt": 0,
+    "per": 0.45999999999999996,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 2,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv23",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 99,
+    "corrupt": 0,
+    "per": 0.010000000000000009,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 68,
+    "corrupt": 0,
+    "per": 0.31999999999999995,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 9,
+    "corrupt": 0,
+    "per": 0.91,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ }
+]
