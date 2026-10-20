@@ -1,0 +1,292 @@
+# Design decisions
+
+Each entry gives the decision, the evidence for it (a simulation result in `sim/results/`, a
+measurement, or an argument from physics), and what was rejected. If a later real-device
+measurement contradicts an entry, the measurement wins and the entry is revised.
+
+Status labels: **sim** = backed by the simulator; **analysis** = derived from physics or
+standards; **pending-bench** = must be confirmed on devices.
+
+---
+
+### D-001 Modulation: chirp spread spectrum (LoRa-style), all profiles — *sim, pending-bench*
+
+**Decision.** CSS with data as cyclic shift, de-chirp + FFT detection. Spreading factor selects
+the robustness/speed trade-off.
+
+**Evidence.**
+- Under the uncoded comparison in [`sim/results/candidates.md`](../sim/results/candidates.md),
+  CSS is the only family that still works in the reverberant far-field room.
+- CSS ties MFSK in AWGN at equal rate, as theory predicts (both are orthogonal M-ary signalling).
+- It keeps a constant envelope, so PAPR is 3 dB (a sine).
+- It has no intermodulation: the leakage after the cubic speaker model equals the clean
+  leakage.
+
+**Rejected.**
+- OOK: it loses its PAPR in range, and reverb fills the "off" symbols.
+- GMSK, DBPSK and coherent schemes: they need phase coherence and an equaliser in rooms.
+- DSSS: carrier offset destroys despreading coherence, and shaped chips are not constant
+  envelope.
+- OFDM: 13 dB PAPR charged against a peak-limited speaker, plus audible intermodulation.
+- MFSK: it fails in reverb unless hopping or guard time is added, and its narrow tones fall into
+  standing-wave nulls.
+
+Full analysis: [MODULATION_EVALUATION.md](MODULATION_EVALUATION.md).
+
+### D-002 Band 17.0–18.5 kHz, 100 Hz guards, occupied 17.1–18.4 kHz (BW = 1.3 kHz) — *analysis, pending-bench*
+
+**Decision.** `fLow`/`fHigh` default to the brief's limits and are parameters (`modem/band.ts`).
+The guard is the receive filter's transition band: the filter passes ±650 Hz around 17.75 kHz
+and rejects ±750 Hz by ≥ 60 dB (`src/dsp/dsp.test.ts`). So nothing outside 17.0–18.5 kHz reaches
+detection, and the transmitter's own skirt is attenuated before 17.0 kHz.
+
+**Rejected.** Occupying the full 1.5 kHz: it needs a brick-wall filter, and puts the chirp
+edges, where spectral splatter lives, right at 17.0 kHz.
+
+**To confirm.** Use the bench frequency-response test to find the best sub-band per device
+pair. The band may be shifted up (e.g. 17.5–19.0 kHz) where both devices respond. Never shift
+it down by default.
+
+### D-003 SNR convention: peak-referenced, 1.5 kHz noise band — *analysis*
+
+All SNRs in this repo are the power of a full-peak sine (A²/2) over the noise power in
+17.0–18.5 kHz. Referencing the **peak** charges every waveform for its peak-to-average ratio. A
+phone speaker is peak-limited, so OOK or OFDM must back off by their PAPR and lose that much
+range. That loss is real, and an average-power SNR would hide it.
+
+### D-004 Sample-rate agnostic DSP — *analysis, sim*
+
+**Decision.** Everything is specified in Hz and seconds. The receiver downconverts to complex
+baseband and reads it at arbitrary instants with a Kaiser-windowed-sinc interpolator, so chip
+instants never need to fall on device samples.
+
+**Evidence.** Every simulation transmits at 48 kHz and receives at 44.1 kHz. Unit tests check
+both rates.
+
+**Rejected.** Integer samples per chip. That forces BW to divide both 44.1 and 48 kHz, ties the
+band to the device, and breaks under clock offset.
+
+### D-005 Receive band-pass = complex downconversion + two-stage Kaiser decimation — *analysis, tested*
+
+Stage 1 decimates cheaply while protecting ±750 Hz. Stage 2 is the sharp channel filter (pass
+±650 Hz, 60 dB at ±750 Hz). Filters are designed at run time from the spec in Hz. The
+downconverter is stateful and chunk-invariant: its output is bit-identical for any chunking
+(tested), which detection determinism depends on.
+
+### D-006 Half-duplex — *analysis, pending-bench*
+
+**Decision.** Never hold a mic track while transmitting.
+
+**Why.**
+- iOS routes output to the earpiece in play-and-record mode.
+- Broadcast-first (user decision) makes transfers one-way anyway.
+
+An ACK/NEED back-channel exists in the protocol. It is only enabled where the bench shows the
+link can be turned around.
+
+### D-007 Frequency glide 2 ms at every frequency step — *sim*
+
+**Decision.** Phase continuity alone is not enough. The chirp's frequency wrap (18.4 → 17.1 kHz)
+is still a step in instantaneous frequency, and its spectral skirt reached −38 dBc below 16 kHz
+at SF5. Smoothing the frequency trajectory with a 2 ms Hann kernel (GFSK-style) leaves the
+linear chirp segments untouched and pushes the skirt down.
+
+**Evidence** ([`sim/results/smoothing.md`](../sim/results/smoothing.md)):
+- Leakage below 16 kHz falls from −38 to −69 dBc (SF5), from −45 to −75 (SF7) and from −50 to
+  −80 (SF9).
+- The AWGN cost is not measurable.
+- 1.5 ms is the shortest glide that keeps SF5 ≤ −60 dBc below 16 kHz. 2 ms adds margin.
+
+The bench audibility test independently found the same: phase-continuous hops leaked −48 dBc
+below 16 kHz, and smoothed transitions −105 dBc.
+
+**Rejected.** Longer glides. They cost a larger fraction of an SF5 symbol (2.6 of 32 chips at
+2 ms) for leakage already far below hearing thresholds.
+
+### D-008 Preamble: SF8, 8 up-chirps + 4 down-chirps, 8-chirp header, no LoRa quarter chirp — *sim*
+
+**Evidence.** [`sim/results/preamble.md`](../sim/results/preamble.md): the long-range profile
+with 8-byte payloads, 50 packets per point. The SNR where ≥ 90% of packets decode:
+
+| Preamble (+ header) | air time | AWGN | far room |
+|---|---|---|---|
+| 6↑ 2↓, header 5 | 2.56 s | −13 dB | −9 dB |
+| 6↑ 4↓, header 6 | 3.15 s | −13 dB | −10 dB |
+| **8↑ 4↓, header 8 (chosen)** | **3.94 s** | **−14 dB** | **−10 dB** |
+| 10↑ 4↓, header 8 | 4.33 s | −12 dB | −9 dB |
+| SF9 5↑ 3↓, header 5 | 5.12 s | −14 dB | −10 dB |
+
+The chosen setting is the most sensitive SF8 option, so the preamble no longer limits the
+long-range payload. The SF9 preamble syncs 1 dB lower, but the packet is then limited by the
+SF8 payload anyway, and it costs 1.2 s more per packet. Differences of ±1 dB are within the
+study's resolution (1 dB steps, 50 packets).
+
+The up-chirps give detection and Δ−d (carrier offset minus timing). The down-chirps give Δ+d.
+More down-chirps help most: two down-chirps were the bottleneck, because sync must choose among
+about 1,700 carrier×boundary hypotheses with only two symbols of evidence. LoRa's 0.25
+down-chirp exists so that one full window lands inside the down-chirps. Our aligned search does
+not need it, so it is dropped (saves 49 ms).
+
+### D-009 Detection thresholds derived from false-alarm probability (CFAR) — *analysis, sim*
+
+No level-based constants.
+
+- **Detection.** Sum over K = nUp−1 up-chirp windows of adjacent-bin pairs, divided by the
+  window's own mean bin power. Under noise this is ≈ Gamma(2K). The threshold solves
+  N·Q(2K, x) = 10⁻⁶ per window.
+- **Sync validation.** The down-chirp evidence (best of ±1 bin in each of nDown windows) uses a
+  union bound over all hypotheses searched, at 10⁻³.
+- **Header acceptance.** The ML codeword's summed bin power must beat the best of 4,096 noise
+  codewords at 10⁻⁴.
+
+**Evidence.** The noise-only soak in
+[`sim/results/false-alarm.md`](../sim/results/false-alarm.md) (white noise, a strong 17.6 kHz
+tone, clicks) produces no false packet. Because the statistics are ratios within one FFT,
+detection is independent of absolute level, of AGC (if the platform refuses to disable it) and
+of the noise floor.
+
+### D-010 Transmit level: −6 dBFS peak by default, user-adjustable — *analysis, pending-bench*
+
+**Decision.** Default peak amplitude 0.5. Output chains (browser limiter, OS mixer, amplifier)
+start compressing near full scale, and speaker excursion nonlinearity rises with level. The
+cubic model shows a single-tone signal has no audible IMD even when overdriven, so the main risk
+of more level is distortion of the amplifier and transducer, not audibility.
+
+**Range trade.** Every +6 dB of level is worth about +6 dB of link margin. The app warns above
+−1 dBFS. The bench audibility test with self-recorded IMD measures the real limit per device.
+
+### D-011 PHY header: 12 bits, Reed–Solomon (n, 2) over GF(256), soft ML decoding — *sim*
+
+**Decision.** The header carries profile (2), length−1 (8) and reserved (2). The two bytes are
+the information symbols of an RS(nHeader, 2) codeword, one GF(256) symbol per chirp (bin
+v·2^(SF−8)). It is decoded by maximum likelihood over all 4,096 headers using the non-coherent
+symbol metrics ln I0(·), then accepted only if its evidence beats noise (D-009). The payload
+CRC-16 also covers the header fields, so a wrongly accepted header cannot produce a corrupt
+packet.
+
+**Evidence.** The first design was 20 bits (with CRC-8) under a rate-1/2 tail-biting
+convolutional code, giving 5 SF8 chirps. It failed 20–30% of headers at SNRs where payloads
+decoded. With so few symbols, one wrong chirp corrupts 8 of 40 coded bits, a burst no
+bit-level code fixes. The RS header removed header failures as the limiting factor at −14 dB
+(see the preamble study).
+
+**Rejected.**
+- Conv code + CRC-8 (above).
+- LoRa's Hamming-coded header, for the same reason plus weak distance.
+
+### D-012 Tracking loop — *sim* **(gains from [`sim/results/tracking.md`](../sim/results/tracking.md))**
+
+Doppler and clock offset are one physical effect, a time scaling 1+ε. The preamble estimates ε
+(carrier offset / fc). The sync search uses ε-consistent window spacing and chip rates; without
+it the boundary drifts ε·N chips per symbol and biases the estimate (measured: −3.4 Hz bias at
+0.4 m/s before the fix, 0.1 Hz after). During the payload a type-2 decision-directed loop:
+
+- corrects the residual bin offset (proportional path, de-rotation);
+- corrects ε (integral path, symbol timing);
+- updates only on confident symbols.
+
+### D-013 Payload FEC: K=7 rate-½ convolutional, soft Viterbi, bit-interleaved (BICM) — *sim*
+
+See [`sim/results/fec.md`](../sim/results/fec.md). **(Filled in from the FEC study.)**
+
+### D-014 Profiles — *sim* **(from [`sim/results/modem.md`](../sim/results/modem.md))**
+
+| Profile | Payload | Why |
+|---|---|---|
+| long-range | SF8, r=½ | The most robust setting that keeps a short message near the ≈10 s soft ceiling. SF9 is about 2.5–3 dB better but doubles air time. |
+| balanced | SF7, r=½ | About 3 dB less sensitive, 1.75× faster. |
+| fast | SF5, r=⅔ | About 4× faster than balanced. It also tolerates hand motion: its 25 ms symbols are short enough that Doppler barely changes within one. |
+
+The preamble and header are identical for all profiles, at SF8, so any receiver decodes any
+profile without configuration.
+
+### D-015 Packet size caps per profile: 32 / 64 / 192 bytes — *analysis*
+
+Keep a packet near 15 s or less on air. A lost packet then costs little, the carousel re-sends
+quickly, and timing drift or motion within one packet stays within what the tracking loop
+handles. Long-range: 32 B → 70 SF8 symbols ≈ 13.8 s. Balanced: 64 B ≈ 15 s. Fast: 192 B ≈ 11 s.
+The PHY length field allows 1–256 B, so the caps can be raised once bench data shows long
+packets survive.
+
+### D-016 Multi-packet: systematic rateless erasure code over GF(256) — *analysis, tested*
+
+**Decision.** Fragments 0…k−1 are the data. Fragment indices ≥ k are random GF(256)
+combinations whose coefficients come from (message id, index). Any k independent fragments
+decode, in any order, with duplicates ignored.
+
+**Why.** It fits broadcast with no back-channel (user decision). A sender can run a carousel of
+fresh repair fragments, and each one helps every receiver whatever it lost. A late joiner
+finishes after any k receptions.
+
+**Rejected.**
+- RS over fragments: n ≤ 255, fixed in advance.
+- Plain repetition: each copy helps only receivers that lost exactly that fragment.
+- ARQ-only: it needs a back-channel, which iOS makes awkward and broadcast makes impossible.
+
+### D-017 Text codec: static order-1 arithmetic coding + small dictionary, UTF-8 fallback — *measured on held-out text*
+
+**Evidence.** [`protocol/text/results.md`](../protocol/text/results.md) gives bits per char:
+
+| Codec | bits/char |
+|---|---|
+| UTF-8 | 8.2 |
+| 6-bit alphabet | 6.8 |
+| static Huffman | 5.7 |
+| order-1 arithmetic | 4.9 |
+| + dictionary (chosen) | 4.7 |
+| sender's best-of (compact vs UTF-8 per message) | 4.5 |
+
+On chat-style messages the chosen codec reaches 3.6 bits/char. The model is built from a 7 KB
+original corpus at load time with integer quantisation, so every device derives an identical
+table (tested).
+
+**Rejected.**
+- smaz/shoco-style pure dictionaries: dominated by order-1 at these lengths.
+- unishox2: similar idea, larger tables, and gains mostly on longer text.
+- A non-Latin script mode: the sender simply picks UTF-8 for such messages (8.5 vs 11 bits/char
+  for compact).
+
+### D-018 Protocol frame layout — *analysis*
+
+- A single-packet message costs an 8-bit header.
+- A fragment costs 12 bits plus two Exp-Golomb integers (14–30 bits).
+- Control frames cost 11 bits plus an optional count.
+- The `11` frame type is the version escape.
+
+Rationale per field: [PROTOCOL.md](PROTOCOL.md).
+
+### D-019 Interleaving: pseudo-random bit permutation per block length — *sim*
+
+Reverb smears energy into neighbouring symbols, and clicks wipe out a few consecutive symbols.
+Both produce bursts at the symbol level. A fixed pseudo-random permutation (seeded by the block
+length, so it is never signalled) spreads each burst across the codeword. Measured benefit:
+[`sim/results/fec.md`](../sim/results/fec.md), "no interleaver" row.
+
+### D-020 Sync search covers ±2 m/s; coarse-to-fine — *sim*
+
+±2 m/s (a brisk walk towards the other device, about ±100 Hz) bounds the carrier hypotheses. A
+coarse pass reads the carrier from the summed down-chirp spectrum per boundary candidate, twice,
+the second time on the time scale implied by the first estimate. An exact aligned search then
+runs only around it. That is about 100× fewer FFTs than exhaustive scoring, with identical
+low-SNR results (checked) and exact estimates from −1.5 to +1.9 m/s (0.1 Hz, a few µs).
+
+### D-021 Receiver on the main thread; AudioWorklet only captures — *analysis*
+
+The receiver costs 0.7% of real time in Node (60 s of audio in 0.4 s). A worklet-hosted
+receiver would complicate the code: no module imports in older WebKit worklets, and transfer of
+results. The capture worklet only forwards blocks. If phones show UI jank, the receiver moves to
+a Web Worker unchanged, since it is a pure class.
+
+### D-022 Tooling and hosting — *user decision*
+
+Plain TypeScript, Vite (multi-page static build), Vitest, tsx for the simulator. No frameworks.
+GitHub Actions runs typecheck, tests, the quick simulator sweep and the build, and deploys to
+GitHub Pages from `main` (HTTPS for phones with no certificates to install).
+
+### D-023 Bench markers — *sim*
+
+The two-device tests start with a 0.25 s 17.1→18.4 kHz chirp matched filter, normalised by
+local energy. Its threshold |ρ|² ≥ 0.1 is about 30× the noise mean of 1/(T·B), and it detects
+down to about −10 dB in-band. The BER mode needs to reach −17 dB and to be immune to the timing
+error a linear chirp turns clock offset into, so it uses a 1 s up-then-down (V) chirp whose two
+halves cancel that error (±13 µs at 40 ppm).

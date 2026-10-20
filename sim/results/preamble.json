@@ -1,0 +1,1401 @@
+[
+ {
+  "label": "SF8 6↑ 2↓ hdr 5",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 2,
+   "nHeader": 5,
+   "detWindows": 5
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -8.30005769313974,
+    "meanAbsVelErr": 0.0034735362564592355
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -9.33333415284489,
+    "meanAbsVelErr": 0.004986950911755695
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -10.337216664276378,
+    "meanAbsVelErr": 0.005366765538162749
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -11.346999078503597,
+    "meanAbsVelErr": 0.0060063119929818646
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 48,
+    "headerOk": 45,
+    "ok": 45,
+    "corrupt": 0,
+    "per": 0.09999999999999998,
+    "meanSnrEst": -12.479212615999522,
+    "meanAbsVelErr": 0.005071961593713514
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 46,
+    "headerOk": 45,
+    "ok": 45,
+    "corrupt": 0,
+    "per": 0.09999999999999998,
+    "meanSnrEst": -13.42954411340299,
+    "meanAbsVelErr": 0.005735894593423887
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 30,
+    "headerOk": 30,
+    "ok": 30,
+    "corrupt": 0,
+    "per": 0.4,
+    "meanSnrEst": -14.322132912023909,
+    "meanAbsVelErr": 0.005573467163912217
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 22,
+    "headerOk": 22,
+    "ok": 14,
+    "corrupt": 0,
+    "per": 0.72,
+    "meanSnrEst": -15.095677800238986,
+    "meanAbsVelErr": 0.004260034565314252
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 7,
+    "headerOk": 6,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -15.909316406629731,
+    "meanAbsVelErr": 0.00760888729749501
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 3,
+    "headerOk": 2,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 6↑ 2↓ hdr 5",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 2,
+   "nHeader": 5,
+   "detWindows": 5
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -12.234274076485455,
+    "meanAbsVelErr": 0.03345000563649687
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 46,
+    "headerOk": 45,
+    "ok": 45,
+    "corrupt": 0,
+    "per": 0.09999999999999998,
+    "meanSnrEst": -13.126871702317414,
+    "meanAbsVelErr": 0.03317009879774981
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 37,
+    "headerOk": 36,
+    "ok": 35,
+    "corrupt": 0,
+    "per": 0.30000000000000004,
+    "meanSnrEst": -14.034219742404916,
+    "meanAbsVelErr": 0.034246976073163515
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 26,
+    "headerOk": 26,
+    "ok": 22,
+    "corrupt": 0,
+    "per": 0.56,
+    "meanSnrEst": -14.794563518186397,
+    "meanAbsVelErr": 0.03624037301137323
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 14,
+    "headerOk": 14,
+    "ok": 4,
+    "corrupt": 0,
+    "per": 0.92,
+    "meanSnrEst": -15.59279680449448,
+    "meanAbsVelErr": 0.0333507135018845
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 4,
+    "headerOk": 4,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 6↑ 4↓ hdr 6",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 4,
+   "nHeader": 6,
+   "detWindows": 5
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -8.282884632677778,
+    "meanAbsVelErr": 0.003881266860340255
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -9.396839190619,
+    "meanAbsVelErr": 0.0049673913975995425
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -10.302174139475344,
+    "meanAbsVelErr": 0.004379610842428595
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 47,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -11.347521947869705,
+    "meanAbsVelErr": 0.0059684184861937386
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -12.344758151745902,
+    "meanAbsVelErr": 0.00585580714059959
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 47,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -13.522059395992104,
+    "meanAbsVelErr": 0.005628375107512963
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 46,
+    "headerOk": 42,
+    "ok": 42,
+    "corrupt": 0,
+    "per": 0.16000000000000003,
+    "meanSnrEst": -14.453623873031503,
+    "meanAbsVelErr": 0.005593376399814158
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 35,
+    "headerOk": 31,
+    "ok": 24,
+    "corrupt": 0,
+    "per": 0.52,
+    "meanSnrEst": -15.112719175507882,
+    "meanAbsVelErr": 0.005471400002141747
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 24,
+    "headerOk": 21,
+    "ok": 4,
+    "corrupt": 0,
+    "per": 0.92,
+    "meanSnrEst": -15.746931614974253,
+    "meanAbsVelErr": 0.0011998252728021097
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 6,
+    "headerOk": 6,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 6↑ 4↓ hdr 6",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 4,
+   "nHeader": 6,
+   "detWindows": 5
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -12.248042331507266,
+    "meanAbsVelErr": 0.03229075976710447
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -13.168345479916082,
+    "meanAbsVelErr": 0.033506646840623294
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 48,
+    "headerOk": 47,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -13.980931576573099,
+    "meanAbsVelErr": 0.034230555584009614
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 47,
+    "headerOk": 42,
+    "ok": 38,
+    "corrupt": 0,
+    "per": 0.24,
+    "meanSnrEst": -14.83961697141754,
+    "meanAbsVelErr": 0.03340302124252091
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 27,
+    "headerOk": 25,
+    "ok": 11,
+    "corrupt": 0,
+    "per": 0.78,
+    "meanSnrEst": -15.384147041336655,
+    "meanAbsVelErr": 0.03322432257853444
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 11,
+    "headerOk": 10,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -15.594137741254816,
+    "meanAbsVelErr": 0.029574589114224427
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 2,
+    "headerOk": 2,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 6↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 5
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -8.273614311115008,
+    "meanAbsVelErr": 0.004305598341550272
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -9.279949391146484,
+    "meanAbsVelErr": 0.003354484030616609
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -10.238607616690489,
+    "meanAbsVelErr": 0.005448707113111973
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 47,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -11.293491513404843,
+    "meanAbsVelErr": 0.005089142019233386
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 45,
+    "corrupt": 0,
+    "per": 0.09999999999999998,
+    "meanSnrEst": -12.454346781070525,
+    "meanAbsVelErr": 0.00560645712844984
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 47,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -13.366312740885867,
+    "meanAbsVelErr": 0.0052371409678960016
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 47,
+    "headerOk": 44,
+    "ok": 42,
+    "corrupt": 0,
+    "per": 0.16000000000000003,
+    "meanSnrEst": -14.411086719670797,
+    "meanAbsVelErr": 0.005127547020396357
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 39,
+    "headerOk": 33,
+    "ok": 24,
+    "corrupt": 0,
+    "per": 0.52,
+    "meanSnrEst": -15.264038210700603,
+    "meanAbsVelErr": 0.004761875294121518
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 21,
+    "headerOk": 19,
+    "ok": 6,
+    "corrupt": 0,
+    "per": 0.88,
+    "meanSnrEst": -15.662320693157625,
+    "meanAbsVelErr": 0.0029974005808845725
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 8,
+    "headerOk": 8,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 6↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 5
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 47,
+    "corrupt": 0,
+    "per": 0.06000000000000005,
+    "meanSnrEst": -12.234753242240751,
+    "meanAbsVelErr": 0.032496873256628526
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -13.165420874277425,
+    "meanAbsVelErr": 0.032868653871154445
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 47,
+    "headerOk": 44,
+    "ok": 42,
+    "corrupt": 0,
+    "per": 0.16000000000000003,
+    "meanSnrEst": -13.990496114830343,
+    "meanAbsVelErr": 0.03436694471657919
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 44,
+    "headerOk": 40,
+    "ok": 35,
+    "corrupt": 0,
+    "per": 0.30000000000000004,
+    "meanSnrEst": -14.86206804378781,
+    "meanAbsVelErr": 0.034307339021073385
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 25,
+    "headerOk": 22,
+    "ok": 8,
+    "corrupt": 0,
+    "per": 0.84,
+    "meanSnrEst": -15.515976149677929,
+    "meanAbsVelErr": 0.031094734651403867
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 10,
+    "headerOk": 9,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 5,
+    "headerOk": 3,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 8↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 8,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 7
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -8.290815617749223,
+    "meanAbsVelErr": 0.004623029264151857
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -9.265044581623485,
+    "meanAbsVelErr": 0.004323008893104989
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -10.343902749409008,
+    "meanAbsVelErr": 0.005076599613501111
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 47,
+    "corrupt": 0,
+    "per": 0.06000000000000005,
+    "meanSnrEst": -11.341908227617933,
+    "meanAbsVelErr": 0.005331903434359147
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -12.308826265886816,
+    "meanAbsVelErr": 0.004843941999731587
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 49,
+    "headerOk": 47,
+    "ok": 47,
+    "corrupt": 0,
+    "per": 0.06000000000000005,
+    "meanSnrEst": -13.397272484223427,
+    "meanAbsVelErr": 0.004818115686392268
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 49,
+    "headerOk": 48,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -14.451784641572646,
+    "meanAbsVelErr": 0.004300825333745759
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 45,
+    "headerOk": 42,
+    "ok": 34,
+    "corrupt": 0,
+    "per": 0.31999999999999995,
+    "meanSnrEst": -15.229377744704754,
+    "meanAbsVelErr": 0.005431353209701243
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 34,
+    "headerOk": 31,
+    "ok": 11,
+    "corrupt": 0,
+    "per": 0.78,
+    "meanSnrEst": -15.764862010410651,
+    "meanAbsVelErr": 0.003543618599274269
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 7,
+    "headerOk": 6,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 3,
+    "headerOk": 3,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 8↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 8,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 7
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -12.246232423337979,
+    "meanAbsVelErr": 0.034624532762076825
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -13.150222120757993,
+    "meanAbsVelErr": 0.03426516191176078
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 47,
+    "corrupt": 0,
+    "per": 0.06000000000000005,
+    "meanSnrEst": -14.080854452768715,
+    "meanAbsVelErr": 0.03401911113973777
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 47,
+    "headerOk": 42,
+    "ok": 41,
+    "corrupt": 0,
+    "per": 0.18000000000000005,
+    "meanSnrEst": -14.805698839823009,
+    "meanAbsVelErr": 0.033394009418915085
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 37,
+    "headerOk": 33,
+    "ok": 14,
+    "corrupt": 0,
+    "per": 0.72,
+    "meanSnrEst": -15.379575768642122,
+    "meanAbsVelErr": 0.035536792263566985
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 19,
+    "headerOk": 14,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -16.36098946886423,
+    "meanAbsVelErr": 0.031843263872442476
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 3,
+    "headerOk": 3,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -15.815657246660294,
+    "meanAbsVelErr": 0.042388897559620345
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 2,
+    "headerOk": 1,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 10↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 10,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 9
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -8.284546615854866,
+    "meanAbsVelErr": 0.004611491382382382
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -9.288926001694742,
+    "meanAbsVelErr": 0.00430875292573708
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -10.35252520023174,
+    "meanAbsVelErr": 0.004850943708342587
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 46,
+    "ok": 44,
+    "corrupt": 0,
+    "per": 0.12,
+    "meanSnrEst": -11.32239035488343,
+    "meanAbsVelErr": 0.006710785739677583
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -12.407831789036747,
+    "meanAbsVelErr": 0.0056368678986588525
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 46,
+    "ok": 44,
+    "corrupt": 0,
+    "per": 0.12,
+    "meanSnrEst": -13.51933775054685,
+    "meanAbsVelErr": 0.006036974887233606
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 49,
+    "headerOk": 44,
+    "ok": 42,
+    "corrupt": 0,
+    "per": 0.16000000000000003,
+    "meanSnrEst": -14.345041478574025,
+    "meanAbsVelErr": 0.005305269886372299
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 46,
+    "headerOk": 42,
+    "ok": 28,
+    "corrupt": 0,
+    "per": 0.43999999999999995,
+    "meanSnrEst": -15.124453582706623,
+    "meanAbsVelErr": 0.0044607217301079
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 33,
+    "headerOk": 31,
+    "ok": 12,
+    "corrupt": 0,
+    "per": 0.76,
+    "meanSnrEst": -15.791032413766535,
+    "meanAbsVelErr": 0.004301110255030848
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 16,
+    "headerOk": 12,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 6,
+    "headerOk": 3,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 10↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 10,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 9
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -12.30036799062473,
+    "meanAbsVelErr": 0.033709652817773446
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 48,
+    "ok": 47,
+    "corrupt": 0,
+    "per": 0.06000000000000005,
+    "meanSnrEst": -13.158970832781177,
+    "meanAbsVelErr": 0.0327163044003619
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 43,
+    "ok": 43,
+    "corrupt": 0,
+    "per": 0.14,
+    "meanSnrEst": -14.08233410504595,
+    "meanAbsVelErr": 0.034675275607462454
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 48,
+    "headerOk": 43,
+    "ok": 38,
+    "corrupt": 0,
+    "per": 0.24,
+    "meanSnrEst": -14.809267807493667,
+    "meanAbsVelErr": 0.03301292143630928
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 36,
+    "headerOk": 33,
+    "ok": 18,
+    "corrupt": 0,
+    "per": 0.64,
+    "meanSnrEst": -15.402249800828875,
+    "meanAbsVelErr": 0.03371375622279297
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 21,
+    "headerOk": 18,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 11,
+    "headerOk": 8,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF9 5↑ 3↓ hdr 5",
+  "cfg": {
+   "sfPre": 9,
+   "nUp": 5,
+   "nDown": 3,
+   "nHeader": 5,
+   "detWindows": 4
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -8.327435964977353,
+    "meanAbsVelErr": 0.0033408229929271327
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -9.242920431111674,
+    "meanAbsVelErr": 0.00378281785908525
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -10.332077856168494,
+    "meanAbsVelErr": 0.004986668572692021
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -11.342939348816238,
+    "meanAbsVelErr": 0.0051983066236666745
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -12.209499196662378,
+    "meanAbsVelErr": 0.004920405021195573
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -13.289905284207856,
+    "meanAbsVelErr": 0.0039914975127121185
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -14.272891712673013,
+    "meanAbsVelErr": 0.0031883898051881083
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 49,
+    "headerOk": 45,
+    "ok": 37,
+    "corrupt": 0,
+    "per": 0.26,
+    "meanSnrEst": -15.193768864179471,
+    "meanAbsVelErr": 0.0026919687993193675
+   },
+   {
+    "snr": -16,
+    "sent": 50,
+    "synced": 46,
+    "headerOk": 43,
+    "ok": 14,
+    "corrupt": 0,
+    "per": 0.72,
+    "meanSnrEst": -15.594306629225906,
+    "meanAbsVelErr": 0.0029688367140601854
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 39,
+    "headerOk": 36,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -15.473344580542301,
+    "meanAbsVelErr": 0.001312661574834922
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 22,
+    "headerOk": 19,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -19,
+    "sent": 50,
+    "synced": 8,
+    "headerOk": 7,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF9 5↑ 3↓ hdr 5",
+  "cfg": {
+   "sfPre": 9,
+   "nUp": 5,
+   "nDown": 3,
+   "nHeader": 5,
+   "detWindows": 4
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -12.194854544363672,
+    "meanAbsVelErr": 0.03426796368371612
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 49,
+    "ok": 48,
+    "corrupt": 0,
+    "per": 0.040000000000000036,
+    "meanSnrEst": -13.129291751646683,
+    "meanAbsVelErr": 0.0345137673464429
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -13.93763389977425,
+    "meanAbsVelErr": 0.03317994045920917
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 41,
+    "corrupt": 0,
+    "per": 0.18000000000000005,
+    "meanSnrEst": -14.746753515710278,
+    "meanAbsVelErr": 0.03424841735761885
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 46,
+    "headerOk": 44,
+    "ok": 33,
+    "corrupt": 0,
+    "per": 0.33999999999999997,
+    "meanSnrEst": -15.511742770977682,
+    "meanAbsVelErr": 0.03485810302803219
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 40,
+    "headerOk": 38,
+    "ok": 6,
+    "corrupt": 0,
+    "per": 0.88,
+    "meanSnrEst": -15.980866789522965,
+    "meanAbsVelErr": 0.03461109267424376
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 25,
+    "headerOk": 24,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 9,
+    "headerOk": 8,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ }
+]

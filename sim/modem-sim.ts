@@ -23,7 +23,7 @@ const f = (v: number | null) => (v === null ? 'n/a' : v === -Infinity ? '< min' 
 
 export async function runModem(pool: Pool, o: { quick: boolean; outDir: string }) {
   const snrs: number[] = [];
-  for (let s = 6; s >= -28; s -= o.quick ? 3 : 1) snrs.push(s);
+  for (let s = 3; s >= -24; s -= o.quick ? 3 : 1) snrs.push(s);
   const conds = allConditions();
   const profiles = DEFAULT_CONFIG.profiles;
   const payloadBytes = 32;
@@ -32,7 +32,7 @@ export async function runModem(pool: Pool, o: { quick: boolean; outDir: string }
     for (const k of conds)
       jobs.push(
         pool
-          .run<PerPoint[]>('modemPer', { profile: p.name, cond: k.id, snrs, packets: o.quick ? 10 : 50, payloadBytes, fsTx: 48000, fsRx: 44100 })
+          .run<PerPoint[]>('modemPer', { profile: p.name, cond: k.id, snrs, packets: o.quick ? 10 : 30, payloadBytes, fsTx: 48000, fsRx: 44100 })
           .then((pts) => {
             process.stdout.write('.');
             return { profile: p.name, cond: k.id, pts };
@@ -77,14 +77,13 @@ export async function runPreamble(pool: Pool, o: { quick: boolean; outDir: strin
   });
   const variants: { label: string; cfg: Partial<ModemConfig> }[] = [
     v(8, 6, 2, 5),
-    v(8, 6, 4, 5),
     v(8, 6, 4, 6),
-    v(8, 8, 4, 6),
+    v(8, 6, 4, 8),
     v(8, 8, 4, 8),
-    v(8, 10, 4, 6),
-    v(8, 10, 6, 8),
+    v(8, 10, 4, 8),
     v(9, 5, 3, 5),
   ];
+
 
 
   const snrs: number[] = [];
@@ -93,7 +92,7 @@ export async function runPreamble(pool: Pool, o: { quick: boolean; outDir: strin
   const jobs = [];
   for (const v of variants)
     for (const c of conds)
-      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: 'long-range', cond: c, snrs, packets: o.quick ? 25 : 80, payloadBytes: 8, cfg: v.cfg, fsTx: 48000, fsRx: 44100, stopAfterZero: 2 }).then((pts) => ({ v, c, pts })));
+      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: 'long-range', cond: c, snrs, packets: o.quick ? 25 : 50, payloadBytes: 8, cfg: v.cfg, fsTx: 48000, fsRx: 44100, stopAfterZero: 2 }).then((pts) => ({ v, c, pts })));
   const res = await Promise.all(jobs);
   const rows = ['| Preamble | preamble+header s | ' + conds.map((c) => `${c}: SNR sync ≥90% / header ≥90% / PER≤10% (8 B)`).join(' | ') + ' |', '|---|---|' + conds.map(() => '---|').join('')];
   const at = (pts: PerPoint[], key: 'synced' | 'headerOk' | 'ok') => {

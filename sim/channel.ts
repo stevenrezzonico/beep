@@ -121,11 +121,14 @@ function applyTilt(x: Float32Array, fs: number, tiltDb: number, fA: number, fB: 
 }
 
 /**
- * Speaker model: memoryless cubic compression evaluated at 4× oversampling (so harmonics do not
- * alias back into the simulation band), then a 20 kHz low-pass for the transducer roll-off.
+ * Speaker model: memoryless cubic compression evaluated at 2× oversampling, then a 20 kHz
+ * low-pass for the transducer roll-off. 2× is enough for signals in 16–19 kHz: the in-band
+ * intermodulation products (2f1−f2, f1+f2−f3 …) are below the oversampled Nyquist and real, while
+ * the third harmonics (48–57 kHz) alias to 39–48 kHz, above the 20 kHz low-pass, so nothing
+ * spurious lands in the audible or signal band.
  */
 function speaker(x: Float32Array, fs: number, k3: number, peak: number): Float32Array {
-  const os = 4;
+  const os = 2;
   const fsu = fs * os;
   const h = designLowpass({ fs: fsu, passHz: 20000, stopHz: fs / 2, attenDb: 70 });
   const half = (h.length - 1) / 2;
