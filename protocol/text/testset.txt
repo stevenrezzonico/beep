@@ -1,0 +1,41 @@
+# Held-out evaluation messages (one per line, not in the training corpus). Categories in [brackets].
+[chat] On my way, be there in 15 min
+[chat] Did you see the game last night? What a finish!
+[chat] Can you grab some bananas and a loaf of bread?
+[chat] I'll call you after work, probably around 6.
+[chat] Thanks!! That was so kind of you :)
+[chat] Running late, traffic is terrible on the bridge.
+[chat] Where did you park? I can't find the car.
+[chat] Let's do dinner on Friday instead, Thursday is busy.
+[chat] Good night, talk tomorrow.
+[chat] Are we still on for the hike on Sunday morning?
+[wifi] WiFi: Guest-Net-2.4 / pass: blueberry77
+[wifi] SSID: TheLibrary_Public  Key: readmore!
+[wifi] network Lab-5G password Xq7#mP2v
+[code] Door code 2580, flat 3B
+[code] Your one-time code is 418273
+[code] Locker 16, combination 9-21-4
+[url] https://example.com/r/8fK2
+[url] https://www.example.org/events/spring-fair
+[url] see http://example.net/docs/setup.html for details
+[contact] Maria Gomez, maria.gomez@example.com, +44 20 7946 0958
+[contact] Call me on 555 0147 or email sam@example.org
+[address] 221 Baker Street, London NW1 6XE
+[address] Meet at gate 3, Central Station, by the big clock.
+[note] Shopping: apples, rice, olive oil, soap, toothpaste
+[note] Pay rent, renew passport, book dentist appointment
+[note] Meeting notes: launch moved to May; need new budget by Monday.
+[event] Party at our place Saturday 8pm, bring something to drink!
+[event] Yoga class is cancelled today, see you next week.
+[event] Concert tickets: row K, seats 14 and 15, doors at 7:30.
+[prose] The wind was cold, but the sky over the mountains was perfectly clear.
+[prose] Nobody knew exactly where the old road led, so we decided to find out.
+[prose] Every evening the fishermen came back with their boats full of silver fish.
+[prose] A single lamp was burning in the window of the house at the end of the lane.
+[intl] Café crème à 8h, rendez-vous devant la gare.
+[intl] Grüße aus München! Das Wetter ist schön.
+[intl] ¿Dónde está la estación de tren?
+[intl] Привет! Как дела?
+[intl] 明天见，谢谢！
+[emoji] See you there 👋🎉
+[mixed] Order #A-1192 ready ✔ pick up at desk 2

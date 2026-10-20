@@ -4,3 +4,4 @@ dist/
 .DS_Store
 sim/out/
 *.pem
+sim/scratch/

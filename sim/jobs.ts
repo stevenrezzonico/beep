@@ -55,3 +55,106 @@ export function candidateBer(a: CandidateBerArgs): BerPoint[] {
   }
   return out;
 }
+
+import { modulatePacket } from '../modem/tx.ts';
+import { Receiver, type RxEvent } from '../modem/rx.ts';
+import { DEFAULT_CONFIG, type ModemConfig } from '../modem/profiles.ts';
+
+export interface ModemPerArgs {
+  profile: string;
+  cond: string;
+  snrs: number[]; // descending
+  packets: number;
+  payloadBytes: number;
+  cfg?: Partial<ModemConfig>;
+  fsTx: number;
+  fsRx: number;
+  /** stop after this many consecutive points with zero successes */
+  stopAfterZero?: number;
+}
+
+export interface PerPoint {
+  snr: number;
+  sent: number;
+  synced: number;
+  headerOk: number;
+  ok: number;
+  /** Packets that passed CRC with wrong content — must be 0. */
+  corrupt: number;
+  per: number;
+  meanSnrEst: number | null;
+  meanAbsVelErr: number | null;
+}
+
+export function modemPer(a: ModemPerArgs): PerPoint[] {
+  const cfg: ModemConfig = { ...DEFAULT_CONFIG, ...(a.cfg ?? {}) };
+  const prof = cfg.profiles.find((p) => p.name === a.profile)!;
+  const cond = allConditions().find((x) => x.id === a.cond)!;
+  const out: PerPoint[] = [];
+  let zeros = 0;
+  for (const snr of a.snrs) {
+    let synced = 0, headerOk = 0, ok = 0, corrupt = 0, snrSum = 0, velErr = 0;
+    for (let k = 0; k < a.packets; k++) {
+      const seed = hashSeed('modem', a.profile, a.cond, snr, k, JSON.stringify(a.cfg ?? {}));
+      const rng = new Rng(seed);
+      const data = rng.bytes(a.payloadBytes);
+      const x = modulatePacket(data, prof, a.fsTx, cfg, { level: 0.5, padSec: 0 });
+      const lead = 0.3 + rng.next() * 1.0;
+      const chan = cond.make(seed, a.fsTx);
+      const { y } = applyChannel(x, { fsTx: a.fsTx, fsRx: a.fsRx, snrDb: snr, txPeak: 0.5, leadSec: lead, tailSec: 0.5, seed, ...chan });
+      const rx = new Receiver(a.fsRx, cfg);
+      const ev: RxEvent[] = [];
+      for (let i = 0; i < y.length; i += 4096) ev.push(...rx.push(y.subarray(i, i + 4096)));
+      ev.push(...rx.flush());
+      if (ev.some((e) => e.type === 'sync')) synced++;
+      if (ev.some((e) => e.type === 'header')) headerOk++;
+      const pk = ev.find((e) => e.type === 'packet' && e.ok) as Extract<RxEvent, { type: 'packet'; ok: true }> | undefined;
+      if (pk) {
+        const same = pk.data.length === data.length && pk.data.every((v, i) => v === data[i]);
+        if (same) {
+          ok++;
+          snrSum += pk.diag.snrDb;
+          const v = (chan.velocity ?? 0) + 343 * (chan.clockPpm ?? 0) * 1e-6;
+          velErr += Math.abs(pk.diag.velocity - v);
+        } else corrupt++;
+      }
+    }
+    out.push({ snr, sent: a.packets, synced, headerOk, ok, corrupt, per: 1 - ok / a.packets, meanSnrEst: ok ? snrSum / ok : null, meanAbsVelErr: ok ? velErr / ok : null });
+    if (ok === 0) {
+      if (++zeros >= (a.stopAfterZero ?? 2)) break;
+    } else zeros = 0;
+  }
+  return out;
+}
+
+export interface FalseAlarmArgs {
+  seconds: number;
+  fs: number;
+  kind: 'white' | 'tone' | 'clicks';
+  seed: number;
+  cfg?: Partial<ModemConfig>;
+}
+
+/** Noise-only soak: count receiver events that should never happen without a transmitter. */
+export function falseAlarms(a: FalseAlarmArgs): Record<string, number> {
+  const cfg: ModemConfig = { ...DEFAULT_CONFIG, ...(a.cfg ?? {}) };
+  const rx = new Receiver(a.fs, cfg);
+  const rng = new Rng(a.seed);
+  const counts: Record<string, number> = { detect: 0, sync: 0, header: 0, packet: 0 };
+  const block = a.fs;
+  const buf = new Float32Array(block);
+  let phase = 0;
+  for (let s = 0; s < a.seconds; s++) {
+    for (let i = 0; i < block; i++) {
+      let v = 0.05 * rng.gauss();
+      if (a.kind === 'tone') {
+        v += 0.2 * Math.cos(phase);
+        phase += (2 * Math.PI * 17600) / a.fs;
+      }
+      if (a.kind === 'clicks' && rng.next() < 3 / a.fs) v += 0.8 * (rng.next() - 0.5);
+      buf[i] = v;
+    }
+    for (const e of rx.push(buf)) if (e.type in counts) counts[e.type]++;
+  }
+  return counts;
+}
