@@ -1,0 +1,29 @@
+{
+  "name": "beep",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Near-ultrasonic (17.0–18.5 kHz) acoustic data transfer in the browser",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "vite",
+    "dev:lan": "vite --host",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sim": "tsx sim/run.ts",
+    "sim:quick": "tsx sim/run.ts --quick"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  }
+}
