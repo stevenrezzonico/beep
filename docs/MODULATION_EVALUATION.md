@@ -301,8 +301,8 @@ Reading the table:
   compensated as a time scaling.
 - **Hand-held sway** (±0.1 m/s every 2 s) is tolerated by balanced and fast, at about 0 dB. The
   long-range profile's 197 ms symbols smear when the velocity changes within a symbol, so
-  **long-range needs the phones at rest** (e.g. on a table). Slower sway (±0.05 m/s, 4 s) decodes
-  on all profiles in targeted runs (D-012).
+  **long-range needs the phones at rest** (e.g. on a table). Slower sway (±0.05 m/s) decodes 12/12
+  on balanced and fast in targeted runs (D-012). Long-range was not tested under sway.
 - **Waving** (±0.3 m/s every 2 s) defeats every profile, because the SF8 preamble and header
   cannot follow it.
 - **Open item.** Long-range is only about 1.7 dB more sensitive than balanced in AWGN, where SF8
@@ -311,14 +311,13 @@ Reading the table:
   the 8-byte preamble study (−14 dB).
 
 **Fallback: interleaved-hopping MFSK.** 16-FSK with 2 hop groups at 24.6 ms, wrapped in the same
-preamble, header and FEC. The case for it:
+preamble, header and FEC.
 
-- it is the best non-CSS candidate in the reverberant conditions and under Doppler;
-- it tolerates more motion at short symbols;
-- the tone-set approach is simpler to tune per device if the bench finds narrow dead spots in a
-  device pair's response;
-- the modem's preamble, header, FEC and protocol are independent of the payload modulation, so
-  switching costs one demodulator.
+- **Why it.** It is the best non-CSS candidate across the board: near room (0.4 dB), uncorrected
+  Doppler (1.7 dB) and hand motion (−3.7 dB). In the far room all MFSK variants hit an error
+  floor. Only DSSS also survives there, and DSSS collapses under any Doppler.
+- **Switching cost.** The modem's preamble, header, FEC and protocol are independent of the
+  payload modulation, so switching costs one demodulator.
 
 Choose it if the bench shows CSS failing in a way the simulator missed: for example a speaker
 whose response collapses across part of the band, which a CSS chirp must cross and an MFSK
