@@ -4,17 +4,17 @@
 <line x1="60" x2="550" y1="394" y2="394" stroke="#e5e7eb"/><text x="54" y="398" text-anchor="end">1e-2</text>
 <line x1="60" x2="550" y1="215" y2="215" stroke="#e5e7eb"/><text x="54" y="219" text-anchor="end">1e-1</text>
 <line x1="60" x2="550" y1="36" y2="36" stroke="#e5e7eb"/><text x="54" y="40" text-anchor="end">1e0</text>
-<line x1="60" x2="60" y1="36" y2="394" stroke="#f3f4f6"/><text x="60" y="410" text-anchor="middle">2</text>
-<line x1="109.00000000000004" x2="109.00000000000004" y1="36" y2="394" stroke="#f3f4f6"/><text x="109.00000000000004" y="410" text-anchor="middle">2.1</text>
-<line x1="158.00000000000009" x2="158.00000000000009" y1="36" y2="394" stroke="#f3f4f6"/><text x="158.00000000000009" y="410" text-anchor="middle">2.2</text>
-<line x1="207.00000000000014" x2="207.00000000000014" y1="36" y2="394" stroke="#f3f4f6"/><text x="207.00000000000014" y="410" text-anchor="middle">2.3</text>
-<line x1="256.00000000000017" x2="256.00000000000017" y1="36" y2="394" stroke="#f3f4f6"/><text x="256.00000000000017" y="410" text-anchor="middle">2.4</text>
-<line x1="305.0000000000002" x2="305.0000000000002" y1="36" y2="394" stroke="#f3f4f6"/><text x="305.0000000000002" y="410" text-anchor="middle">2.5</text>
-<line x1="354.0000000000003" x2="354.0000000000003" y1="36" y2="394" stroke="#f3f4f6"/><text x="354.0000000000003" y="410" text-anchor="middle">2.6</text>
-<line x1="403.0000000000003" x2="403.0000000000003" y1="36" y2="394" stroke="#f3f4f6"/><text x="403.0000000000003" y="410" text-anchor="middle">2.7</text>
-<line x1="452.00000000000034" x2="452.00000000000034" y1="36" y2="394" stroke="#f3f4f6"/><text x="452.00000000000034" y="410" text-anchor="middle">2.8</text>
-<line x1="501.0000000000004" x2="501.0000000000004" y1="36" y2="394" stroke="#f3f4f6"/><text x="501.0000000000004" y="410" text-anchor="middle">2.9</text>
-<line x1="550.0000000000005" x2="550.0000000000005" y1="36" y2="394" stroke="#f3f4f6"/><text x="550.0000000000005" y="410" text-anchor="middle">3</text>
+<line x1="60" x2="60" y1="36" y2="394" stroke="#f3f4f6"/><text x="60" y="410" text-anchor="middle">11</text>
+<line x1="108.99999999999983" x2="108.99999999999983" y1="36" y2="394" stroke="#f3f4f6"/><text x="108.99999999999983" y="410" text-anchor="middle">11.1</text>
+<line x1="157.99999999999966" x2="157.99999999999966" y1="36" y2="394" stroke="#f3f4f6"/><text x="157.99999999999966" y="410" text-anchor="middle">11.2</text>
+<line x1="206.9999999999995" x2="206.9999999999995" y1="36" y2="394" stroke="#f3f4f6"/><text x="206.9999999999995" y="410" text-anchor="middle">11.3</text>
+<line x1="255.99999999999932" x2="255.99999999999932" y1="36" y2="394" stroke="#f3f4f6"/><text x="255.99999999999932" y="410" text-anchor="middle">11.4</text>
+<line x1="304.9999999999991" x2="304.9999999999991" y1="36" y2="394" stroke="#f3f4f6"/><text x="304.9999999999991" y="410" text-anchor="middle">11.5</text>
+<line x1="353.999999999999" x2="353.999999999999" y1="36" y2="394" stroke="#f3f4f6"/><text x="353.999999999999" y="410" text-anchor="middle">11.6</text>
+<line x1="402.9999999999988" x2="402.9999999999988" y1="36" y2="394" stroke="#f3f4f6"/><text x="402.9999999999988" y="410" text-anchor="middle">11.7</text>
+<line x1="451.99999999999864" x2="451.99999999999864" y1="36" y2="394" stroke="#f3f4f6"/><text x="451.99999999999864" y="410" text-anchor="middle">11.8</text>
+<line x1="500.9999999999984" x2="500.9999999999984" y1="36" y2="394" stroke="#f3f4f6"/><text x="500.9999999999984" y="410" text-anchor="middle">11.9</text>
+<line x1="549.9999999999982" x2="549.9999999999982" y1="36" y2="394" stroke="#f3f4f6"/><text x="549.9999999999982" y="410" text-anchor="middle">12</text>
 <text x="305" y="432" text-anchor="middle">SNR (dB, peak-ref, 1.5 kHz)</text>
 <text x="14" y="215" text-anchor="middle" transform="rotate(-90 14 215)">PER</text>
 <polyline fill="none" stroke="#2563eb" stroke-width="1.8" points="550.0,36.0 60.0,36.0"/>

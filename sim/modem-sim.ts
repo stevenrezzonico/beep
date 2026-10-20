@@ -154,13 +154,14 @@ export async function runFec(pool: Pool, o: { quick: boolean; outDir: string }) 
 /** Tracking-loop gain study under motion (D-012): PER of a long balanced-profile packet. */
 export async function runTracking(pool: Pool, o: { quick: boolean; outDir: string }) {
   const gains = [
-    { label: 'off', cfg: { trackP: 0, trackI: 0, trackT: 0, trackTI: 0 } },
-    { label: 'carrier only (0.3/0.03)', cfg: { trackT: 0, trackTI: 0 } },
-    { label: 'timing only (0.3/0.02)', cfg: { trackP: 0, trackI: 0 } },
-    { label: 'chosen: carrier 0.3/0.03 + timing 0.3/0.02, gate 8', cfg: {} },
-    { label: 'chosen gains, gate 4', cfg: { trackGate: 4 } },
-    { label: 'fast timing 1/0.1', cfg: { trackT: 1, trackTI: 0.1 } },
+    { label: 'off', cfg: { trackT: 0, trackTI: 0 } },
+    { label: 'carrier loop only (0.3/0.03)', cfg: { trackP: 0.3, trackI: 0.03, trackT: 0, trackTI: 0 } },
+    { label: 'carrier 0.3/0.03 + timing 0.3/0.02', cfg: { trackP: 0.3, trackI: 0.03 } },
+    { label: 'chosen: timing loop only (0.3/0.02), gate 4', cfg: {} },
+    { label: 'timing only, gate 8', cfg: { trackGate: 8 } },
+    { label: 'timing only, fast gains 1/0.1', cfg: { trackT: 1, trackTI: 0.1 } },
   ];
+
   const cases = [
     { profile: 'long-range', cond: 'awgn' },
     { profile: 'balanced', cond: 'hand-held' },
@@ -168,7 +169,7 @@ export async function runTracking(pool: Pool, o: { quick: boolean; outDir: strin
     { profile: 'fast', cond: 'motion-room' },
   ];
   const snrs: number[] = [];
-  for (let s = 6; s >= -16; s -= o.quick ? 3 : 2) snrs.push(s);
+  for (let s = 12; s >= -16; s -= o.quick ? 3 : 2) snrs.push(s);
   const jobs = [];
   for (const g of gains)
     for (const c of cases)
