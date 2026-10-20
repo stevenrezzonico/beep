@@ -282,31 +282,33 @@ The convolutional code with soft decisions and interleaving wins in both conditi
 Measured modem performance (own synchronisation, header, tracking and FEC):
 [`sim/results/modem.md`](../sim/results/modem.md).
 
-**Simulated modem PER.** Packet error rate of the full modem (own sync, header, tracking, Viterbi, CRC) for 32-byte payloads, 48 kHz TX → 44.1 kHz RX. SNR is peak-referenced in the 1.5 kHz band (sim/channel.ts). Cells: SNR for PER ≤ 10% / ≤ 1%.
+**Simulated modem PER.** packet error rate of the full modem (own sync, header, tracking, Viterbi, CRC) for 32-byte payloads, 48 kHz TX → 44.1 kHz RX. SNR is peak-referenced in the 1.5 kHz band (sim/channel.ts). Cells: SNR for PER ≤ 10% / ≤ 1%.
 
 | Profile | SF | code | net bit/s | air time 32 B (s) | awgn | room-near | room-far | doppler | hand-held | motion-room | silent corruptions |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| long-range | 8 | 1/2 | 20.3 | 17.72 | -13.0 / -11.3 | -9.6 / -9.1 | -8.4 / -8.0 | -13.0 / -10.3 | n/a / n/a | n/a / n/a | 0 |
-| balanced | 7 | 1/2 | 35.5 | 11.82 | -12.0 / -11.1 | -8.3 / -7.2 | -7.6 / -7.1 | -11.7 / -10.3 | n/a / n/a | n/a / n/a | 0 |
-| fast | 5 | 2/3 | 135.4 | 6.01 | -5.3 / -0.3 | -2.1 / 3.9 | 2.0 / 3.9 | -5.3 / -4.3 | 11.0 / n/a | n/a / n/a | 0 |
+| long-range | 8 | 1/2 | 20.3 | 17.72 | -12.7 / -11.3 | -10.0 / -9.1 | -8.3 / -7.3 | -13.0 / -11.2 | n/a / n/a | n/a / n/a | 0 |
+| balanced | 7 | 1/2 | 35.5 | 11.82 | -11.0 / -10.1 | -8.0 / -6.3 | -7.5 / -7.0 | -10.5 / -9.3 | -0.0 / n/a | n/a / n/a | 0 |
+| fast | 5 | 2/3 | 135.4 | 6.01 | -5.2 / -3.1 | -1.3 / -1.0 | 2.0 / 5.7 | -5.1 / -2.1 | -0.0 / 6.7 | n/a / n/a | 0 |
 
 Reading the table:
 
-- **Static devices.** In AWGN the profiles reach PER ≤ 10% at −13.0 (long-range), −12.0
-  (balanced) and −5.3 dB (fast). In the simulated rooms, where reverb and the speaker model
-  apply, the figures are −8 to −9.6 dB. No packet in any condition passed CRC with wrong
-  content.
-- **Constant motion** (0.5 m/s) costs nothing: Doppler is estimated and tracked.
-- **Hand-held sway** (±0.1 m/s every 2 s) is tolerated only by the fast profile, whose 25 ms
-  symbols see almost no Doppler change. Long symbols (SF7/SF8, 98–197 ms) smear when the
-  velocity changes within a symbol. **The long-range and balanced profiles need the phones
-  roughly at rest**, for example on a table or held still. In separate runs (D-012), sway of
-  ±0.05 m/s with a 4 s period decoded 12/12 packets on balanced.
+- **Static devices.** In AWGN the profiles reach PER ≤ 10% at −12.7 (long-range), −11.0
+  (balanced) and −5.2 dB (fast). In the simulated rooms, where reverb and the speaker model
+  apply, long-range and balanced reach −7.5 to −10 dB. Fast drops to +2 dB in the far room: its
+  25 ms symbols are short against a 0.6 s reverberation.
+- **No silent corruption.** No packet in any condition passed its CRC with wrong content.
+- **Constant motion** (0.5 m/s) costs nothing: Doppler is estimated from the preamble and
+  compensated as a time scaling.
+- **Hand-held sway** (±0.1 m/s every 2 s) is tolerated by balanced and fast, at about 0 dB. The
+  long-range profile's 197 ms symbols smear when the velocity changes within a symbol, so
+  **long-range needs the phones at rest** (e.g. on a table). Slower sway (±0.05 m/s, 4 s) decodes
+  on all profiles in targeted runs (D-012).
 - **Waving** (±0.3 m/s every 2 s) defeats every profile, because the SF8 preamble and header
   cannot follow it.
-- **Open item.** Long-range is only about 1 dB more sensitive than balanced in AWGN, where SF8
-  should be about 2.5–3 dB better. Roughly 1.5 dB of implementation loss remains in the SF8
-  path. Suspects are the soft-metric scaling at low SNR and loop jitter over 70 symbols.
+- **Open item.** Long-range is only about 1.7 dB more sensitive than balanced in AWGN, where SF8
+  should be about 2.5–3 dB better. Roughly 1 dB of implementation loss remains in the SF8
+  path. Suspects are the soft-metric scaling at low SNR and the 70-symbol packet length against
+  the 8-byte preamble study (−14 dB).
 
 **Fallback: interleaved-hopping MFSK.** 16-FSK with 2 hop groups at 24.6 ms, wrapped in the same
 preamble, header and FEC. The case for it:

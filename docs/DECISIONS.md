@@ -274,13 +274,13 @@ profile, where speed is the point.
   packets (D-016) already turn residual errors into erasures, which is the efficient way to use
   extra redundancy here.
 
-### D-014 Profiles — *sim* **(from [`sim/results/modem.md`](../sim/results/modem.md))**
+### D-014 Profiles — *sim* ([`sim/results/modem.md`](../sim/results/modem.md))
 
-| Profile | Payload | Why |
-|---|---|---|
-| long-range | SF8, r=½ | The most robust setting that keeps a short message near the ≈10 s soft ceiling. SF9 is about 2.5–3 dB better but doubles air time. |
-| balanced | SF7, r=½ | About 3 dB less sensitive, 1.75× faster. |
-| fast | SF5, r=⅔ | About 4× faster than balanced. It also tolerates hand motion: its 25 ms symbols are short enough that Doppler barely changes within one. |
+| Profile | Payload | Net bit/s | PER ≤ 10%: AWGN / far room / hand-held | Why |
+|---|---|---|---|---|
+| long-range | SF8, r=½ | 20 | −12.7 / −8.3 / — dB | The most robust setting that keeps a short message near the ≈10 s soft ceiling (11 s). SF9 would gain about 2.5–3 dB but double the air time. |
+| balanced | SF7, r=½ | 36 | −11.0 / −7.5 / 0 dB | 1.75× faster, and tolerates hand-held sway. |
+| fast | SF5, r=⅔ | 135 | −5.2 / +2.0 / 0 dB | About 4× faster than balanced, for close range. Short symbols tolerate motion; long reverb hurts it. |
 
 The preamble and header are identical for all profiles, at SF8, so any receiver decodes any
 profile without configuration.
