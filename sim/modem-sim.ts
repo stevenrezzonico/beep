@@ -122,3 +122,62 @@ export async function runFalseAlarm(pool: Pool, o: { quick: boolean; outDir: str
   writeFileSync(join(o.outDir, 'false-alarm.md'), rows.join('\n') + '\n');
   console.log(rows.join('\n'));
 }
+
+/** FEC comparison on genie-synchronised CSS (D-013). */
+export async function runFec(pool: Pool, o: { quick: boolean; outDir: string }) {
+  const schemes = [
+    { id: 'none', label: 'uncoded (CRC only)', rate: 1 },
+    { id: 'hamming74', label: 'Hamming(7,4) soft ML + interleaver', rate: 4 / 7 },
+    { id: 'rs', label: 'RS shortened, n=2k (hard, errors-only)', rate: 0.5 },
+    { id: 'conv12-noint', label: 'K=7 conv r=1/2 soft Viterbi, no interleaver', rate: 0.5 },
+    { id: 'conv12', label: 'K=7 conv r=1/2 soft Viterbi + interleaver', rate: 0.5 },
+    { id: 'conv23', label: 'K=7 conv r=2/3 (punctured) + interleaver', rate: 2 / 3 },
+  ];
+  const conds = ['awgn', 'room-far'];
+  const snrs: number[] = [];
+  for (let s = 0; s >= -22; s -= 1) snrs.push(s);
+  const jobs = [];
+  for (const sc of schemes)
+    for (const c of conds) jobs.push(pool.run<PerPoint[]>('fecPer', { scheme: sc.id, sf: 7, cond: c, snrs, packets: o.quick ? 20 : 100, payloadBytes: 32 }).then((pts) => ({ sc, c, pts })));
+  const res = await Promise.all(jobs);
+  const rows = [
+    'Payload FEC comparison on SF7 CSS with genie timing (32-byte payloads). Cells: SNR (dB) for PER ≤ 10% / ≤ 1%, and the code rate.',
+    '',
+    `| Scheme | rate | ${conds.join(' | ')} |`,
+    `|---|---|${conds.map(() => '---|').join('')}`,
+  ];
+  for (const sc of schemes) rows.push(`| ${sc.label} | ${sc.rate.toFixed(2)} | ${conds.map((c) => { const r = res.find((x) => x.sc === sc && x.c === c)!; return `${f(perCrossing(r.pts, 0.1))} / ${f(perCrossing(r.pts, 0.01))}`; }).join(' | ')} |`);
+  writeFileSync(join(o.outDir, 'fec.md'), rows.join('\n') + '\n');
+  writeFileSync(join(o.outDir, 'fec.json'), JSON.stringify(res.map((r) => ({ scheme: r.sc.id, cond: r.c, pts: r.pts })), null, 1));
+  console.log(rows.join('\n'));
+}
+
+/** Tracking-loop gain study under motion (D-012): PER of a long balanced-profile packet. */
+export async function runTracking(pool: Pool, o: { quick: boolean; outDir: string }) {
+  const gains = [
+    { p: 0, i: 0 },
+    { p: 0.15, i: 0.01 },
+    { p: 0.3, i: 0.03 },
+    { p: 0.5, i: 0.05 },
+    { p: 0.3, i: 0.1 },
+  ];
+  const conds = ['doppler', 'motion-room'];
+  const profiles = ['balanced', 'fast'];
+  const snrs: number[] = [];
+  for (let s = 6; s >= -12; s -= o.quick ? 3 : 2) snrs.push(s);
+  const jobs = [];
+  for (const g of gains)
+    for (const c of conds)
+      for (const p of profiles)
+        jobs.push(pool.run<PerPoint[]>('modemPer', { profile: p, cond: c, snrs, packets: o.quick ? 10 : 40, payloadBytes: 64, cfg: { trackP: g.p, trackI: g.i }, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, p, pts })));
+  const res = await Promise.all(jobs);
+  const rows = [
+    'Tracking loop gains vs PER for 64-byte packets under motion. Cells: SNR for PER ≤ 10% (n/a = never reached).',
+    '',
+    `| trackP / trackI | ${conds.flatMap((c) => profiles.map((p) => `${c} ${p}`)).join(' | ')} |`,
+    `|---|${conds.flatMap(() => profiles.map(() => '---|')).join('')}`,
+  ];
+  for (const g of gains) rows.push(`| ${g.p} / ${g.i} | ${conds.flatMap((c) => profiles.map((p) => f(perCrossing(res.find((x) => x.g === g && x.c === c && x.p === p)!.pts, 0.1)))).join(' | ')} |`);
+  writeFileSync(join(o.outDir, 'tracking.md'), rows.join('\n') + '\n');
+  console.log(rows.join('\n'));
+}

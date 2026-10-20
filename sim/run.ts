@@ -6,7 +6,7 @@ import { allConditions } from './conditions.ts';
 import type { BerPoint } from './jobs.ts';
 import { paprDb, leakageDbc } from './metrics.ts';
 import { svgPlot } from './plot.ts';
-import { runModem, runPreamble, runFalseAlarm } from './modem-sim.ts';
+import { runModem, runPreamble, runFalseAlarm, runFec, runTracking } from './modem-sim.ts';
 import { Rng } from '../src/dsp/prng.ts';
 
 /**
@@ -119,6 +119,8 @@ try {
   if (only === 'all' || only === 'modem') await runModem(pool, { quick, outDir });
   if (only === 'all' || only === 'preamble') await runPreamble(pool, { quick, outDir });
   if (only === 'all' || only === 'falsealarm') await runFalseAlarm(pool, { quick, outDir });
+  if (only === 'all' || only === 'fec') await runFec(pool, { quick, outDir });
+  if (only === 'all' || only === 'tracking') await runTracking(pool, { quick, outDir });
 } finally {
   await pool.close();
 }

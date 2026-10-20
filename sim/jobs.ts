@@ -158,3 +158,67 @@ export function falseAlarms(a: FalseAlarmArgs): Record<string, number> {
   }
   return counts;
 }
+
+import { cssCandidate } from '../modem/candidates/css.ts';
+import { convEncode, viterbiDecode } from '../modem/fec/conv.ts';
+import { rsEncode, rsDecode } from '../modem/fec/rs.ts';
+import { hamming74Encode, hamming74Decode } from '../modem/fec/simple.ts';
+import { interleave, deinterleave } from '../modem/fec/interleave.ts';
+import { bytesToBits, bitsToBytes } from '../modem/fec/crc.ts';
+
+export type FecScheme = 'none' | 'hamming74' | 'rs' | 'conv12' | 'conv12-noint' | 'conv23';
+
+export interface FecPerArgs {
+  scheme: FecScheme;
+  sf: number;
+  cond: string;
+  snrs: number[];
+  packets: number;
+  payloadBytes: number;
+}
+
+/**
+ * Packet error rate of a payload FEC scheme on genie-synchronised CSS (soft LLRs), so only the code
+ * differs between schemes. RS is byte-oriented hard-decision (errors-only), shortened to the payload
+ * with as many parity bytes as data bytes (rate ≈ 1/2, like the convolutional code).
+ */
+export function fecPer(a: FecPerArgs): PerPoint[] {
+  const c = cssCandidate(a.sf);
+  const cond = allConditions().find((x) => x.id === a.cond)!;
+  const out: PerPoint[] = [];
+  let zeros = 0;
+  for (const snr of a.snrs) {
+    let ok = 0;
+    for (let k = 0; k < a.packets; k++) {
+      const seed = hashSeed('fec', a.scheme, a.sf, a.cond, snr, k);
+      const rng = new Rng(seed);
+      const data = rng.bytes(a.payloadBytes);
+      const bits = bytesToBits(data);
+      let coded: Uint8Array;
+      if (a.scheme === 'none') coded = bits;
+      else if (a.scheme === 'hamming74') coded = interleave(hamming74Encode(bits));
+      else if (a.scheme === 'rs') coded = bytesToBits(rsEncode(data, a.payloadBytes));
+      else if (a.scheme === 'conv12') coded = interleave(convEncode(bits, '1/2'));
+      else if (a.scheme === 'conv12-noint') coded = convEncode(bits, '1/2');
+      else coded = interleave(convEncode(bits, '2/3'));
+      const x = c.modulate(coded, 48000);
+      const { y, t0 } = applyChannel(x, { fsTx: 48000, fsRx: 44100, snrDb: snr, txPeak: 1, leadSec: 0.1, tailSec: 0.1, seed, ...cond.make(seed, 48000) });
+      const llr = c.demodulate(y, 44100, t0, coded.length);
+      let got: Uint8Array | null;
+      if (a.scheme === 'none') got = bitsToBytes(Array.from(llr, (v) => (v < 0 ? 1 : 0)));
+      else if (a.scheme === 'hamming74') got = bitsToBytes(hamming74Decode(deinterleave(llr), bits.length));
+      else if (a.scheme === 'rs') {
+        const r = rsDecode(bitsToBytes(Array.from(llr, (v) => (v < 0 ? 1 : 0))), a.payloadBytes);
+        got = r ? r.data : null;
+      } else if (a.scheme === 'conv12') got = bitsToBytes(viterbiDecode(deinterleave(llr), bits.length, '1/2').bits);
+      else if (a.scheme === 'conv12-noint') got = bitsToBytes(viterbiDecode(llr, bits.length, '1/2').bits);
+      else got = bitsToBytes(viterbiDecode(deinterleave(llr), bits.length, '2/3').bits);
+      if (got && got.length >= data.length && data.every((v, i) => v === got![i])) ok++;
+    }
+    out.push({ snr, sent: a.packets, synced: a.packets, headerOk: a.packets, ok, corrupt: 0, per: 1 - ok / a.packets, meanSnrEst: null, meanAbsVelErr: null });
+    if (ok === 0) {
+      if (++zeros >= 2) break;
+    } else zeros = 0;
+  }
+  return out;
+}
