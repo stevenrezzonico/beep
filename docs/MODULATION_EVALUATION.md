@@ -48,7 +48,59 @@ modulation's own robustness from synchronisation design.
 
 ## 3. Results (uncoded, genie timing, 48 kHz TX → 44.1 kHz RX)
 
-RESULTS_CANDIDATES
+Uncoded BER: SNR (dB, peak-referenced, 1.5 kHz band) needed for BER 1e-2 / 1e-3. "floor" = never reached in the sweep.
+
+| Candidate | Raw bit/s | Const. env. | PAPR dB | Leak dBc <16.9k / <16k / <16.9k after k3 | awgn @1e-2 / 1e-3 | room-near @1e-2 / 1e-3 | room-far @1e-2 / 1e-3 | doppler @1e-2 / 1e-3 | hand-held @1e-2 / 1e-3 | motion-room @1e-2 / 1e-3 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| OOK T=10 ms | 100.0 | no | 4.3 | -52 / -69 / -53 | 5.4 / 7.2 | floor / floor | floor / floor | 6.0 / 7.5 | floor / floor | floor / floor |
+| BFSK T=10.0 ms Δf=100.0 Hz | 100.0 | yes | 3.0 | -52 / -62 / -52 | -2.9 / -0.3 | 5.1 / 13.6 | floor / floor | 0.3 / 4.3 | 2.4 / 22.5 | 3.1 / 28.7 |
+| 32-FSK T=24.6 ms Δf=40.6 Hz | 203.1 | yes | 3.0 | -35 / -47 / -35 | -4.9 / -3.3 | 1.5 / 23.2 | floor / floor | floor / floor | -3.1 / 4.7 | -0.3 / 27.2 |
+| 16-FSK T=24.6 ms Δf=81.3 Hz | 162.5 | yes | 3.0 | -35 / -47 / -35 | -5.5 / -4.1 | 1.0 / 9.2 | floor / floor | 1.9 / 3.9 | -2.5 / 4.8 | -2.3 / 10.8 |
+| 16-FSK T=24.6 ms Δf=40.6 Hz hop×2 | 162.5 | yes | 3.0 | -34 / -47 / -34 | -5.0 / -3.7 | 0.4 / 3.1 | floor / floor | 1.7 / 3.8 | -3.7 / -2.0 | -2.5 / 4.0 |
+| 32-FSK T=24.6 ms Δf=40.6 Hz guard 10 ms | 144.4 | yes | 3.0 | -37 / -49 / -37 | -4.8 / -3.8 | 2.2 / 21.2 | floor / floor | floor / floor | -1.8 / 26.2 | 0.8 / 25.4 |
+| 128-FSK T=98.5 ms Δf=10.2 Hz | 71.1 | yes | 3.0 | -44 / -54 / -44 | -10.3 / -9.6 | -3.8 / 16.0 | floor / floor | floor / floor | 0.1 / floor | floor / floor |
+| GMSK 1000 b/s BT=0.5 | 1000.0 | yes | 3.0 | -35 / -72 / -35 | 7.7 / 10.3 | floor / floor | floor / floor | floor / floor | floor / floor | floor / floor |
+| DBPSK 800 Bd RRC β=0.5 | 800.0 | no | 6.4 | -58 / -63 / -49 | 6.5 / 8.1 | 20.2 / floor | floor / floor | floor / floor | 19.9 / floor | floor / floor |
+| DSSS L=31 @ 800 chip/s (DBPSK) | 25.8 | no | 6.2 | -58 / -63 / -49 | -8.1 / -6.0 | -5.1 / -3.8 | -4.5 / -1.7 | 18.3 / 20.1 | 29.4 / floor | floor / floor |
+| D-OFDM 32 carriers, T=24.6+10 ms CP | 898.5 | no | 13.4 | -33 / -60 / -33 | 21.9 / 24.7 | floor / floor | floor / floor | floor / floor | floor / floor | floor / floor |
+| CSS SF5 (24.6 ms) | 203.1 | yes | 3.0 | -25 / -39 / -25 | -4.4 / -2.5 | -0.5 / 0.3 | 6.3 / floor | floor / floor | -3.7 / -2.4 | floor / floor |
+| CSS SF6 (49.2 ms) | 121.9 | yes | 3.0 | -29 / -41 / -29 | -7.2 / -5.9 | -3.6 / -2.0 | -2.0 / 0.2 | floor / floor | -6.3 / -4.9 | floor / floor |
+| CSS SF7 (98.5 ms) | 71.1 | yes | 3.0 | -32 / -45 / -32 | -10.1 / -9.6 | -6.6 / -5.7 | -5.8 / -4.5 | floor / floor | -5.3 / 15.2 | floor / floor |
+| CSS SF8 (196.9 ms) | 40.6 | yes | 3.0 | -34 / -47 / -34 | -12.5 / -11.7 | -9.3 / -7.9 | -8.0 / -7.6 | floor / floor | floor / floor | floor / floor |
+| CSS SF9 (393.8 ms) | 22.9 | yes | 3.0 | -37 / -50 / -37 | -15.8 / -15.5 | -10.4 / 24.2 | -9.7 / 28.2 | floor / floor | floor / floor | floor / floor |
+
+How to read this table:
+
+- Rows are *uncoded* and use *genie timing with no carrier-offset correction*. They measure
+  each modulation's intrinsic robustness, not a finished modem.
+- The CSS rows here are **without** the 2 ms frequency glide, so their leakage columns show the
+  raw frequency-wrap splatter. With the glide (as transmitted by the modem) the leakage below
+  16 kHz is −69 to −80 dBc (§5).
+- 500 k–1.5 M bits per point at high SNR, fewer for the slow candidates (40 s of air time per
+  point at most). Differences under about 1 dB are not significant.
+
+Key observations:
+
+1. **AWGN.** CSS and orthogonal MFSK of the same size are equivalent, as theory predicts.
+   - SF5 −4.4 dB vs 32-FSK −4.9 dB.
+   - SF7 −10.1 dB vs 128-FSK −10.3 dB (BER 1e-2).
+   - Each SF step buys about 2.5–3 dB.
+   - Binary and short-symbol schemes need far more SNR: BFSK −2.9, OOK +5.4, DBPSK +6.5, GMSK
+     +7.7, OFDM +21.9 dB.
+2. **Reverb separates CSS from MFSK.**
+   - In the near room, CSS SF7 reaches −6.6 dB and 128-FSK −3.8 dB, with a 1e-3 floor at
+     +16 dB for MFSK.
+   - In the far room every MFSK variant, including the hopping and guard versions, hits an error
+     floor. CSS SF6–SF9 decode at −2.0 to −9.7 dB.
+   - Only DSSS (−4.5 dB at 26 bit/s) also survives, and CSS SF9 does better at similar rate
+     (−9.7 dB at 23 bit/s).
+3. **Uncorrected Doppler** (0.5 m/s) breaks every long-symbol scheme, CSS included. Only
+   short-symbol, wide-spaced schemes survive: BFSK, 16-FSK wide, hopping 16-FSK. The modem
+   estimates the offset, and its Doppler column (§8) matches its AWGN column.
+4. **Hand sway without tracking** favours short symbols: CSS SF5–SF6 and hopping MFSK.
+   Uncorrected waving defeats everything except BFSK and MFSK variants with short symbols.
+5. **PAPR is range.** OFDM's 13.4 dB PAPR costs about 10 dB against constant-envelope schemes,
+   on top of its intermodulation.
 
 Channel conditions (`sim/conditions.ts`):
 - **awgn:** noise only.
@@ -133,7 +185,34 @@ robust.
   (`sim/ir/*.json`).
 - **Frequency glide** (smoothing study, `sim/results/smoothing.md`):
 
-RESULTS_SMOOTHING
+  | SF | glide ms | leak <16.9k dBc | leak <16.0k dBc | leak <16.9k after k3=0.05 | SNR@1e-3 AWGN (dB) |
+  |---|---|---|---|---|---|
+  | 5 | 0 | -25.3 | -38.5 | -25.3 | -2.8 |
+  | 5 | 0.25 | -25.5 | -41.0 | -25.5 | -2.9 |
+  | 5 | 0.5 | -26.5 | -45.6 | -26.5 | -2.7 |
+  | 5 | 1 | -28.5 | -53.5 | -28.5 | -2.9 |
+  | 5 | 1.5 | -30.5 | -61.9 | -30.5 | -2.7 |
+  | 5 | 2 | -32.0 | -69.4 | -32.0 | -2.6 |
+  | 5 | 3 | -35.1 | -84.9 | -35.1 | -2.5 |
+  | 7 | 0 | -31.5 | -44.8 | -31.5 | -8.9 |
+  | 7 | 0.25 | -31.8 | -47.0 | -31.7 | -8.1 |
+  | 7 | 0.5 | -32.5 | -51.4 | -32.5 | -8.8 |
+  | 7 | 1 | -34.2 | -59.7 | -34.2 | -8.3 |
+  | 7 | 1.5 | -36.0 | -67.3 | -35.9 | -8.2 |
+  | 7 | 2 | -37.4 | -74.7 | -37.4 | -8.9 |
+  | 7 | 3 | -39.5 | -88.3 | -39.4 | -8.2 |
+  | 9 | 0 | -37.1 | -50.3 | -37.2 | -12.9 |
+  | 9 | 0.25 | -38.5 | -53.7 | -38.5 | -14.0 |
+  | 9 | 0.5 | -38.8 | -57.8 | -38.8 | -14.8 |
+  | 9 | 1 | -40.8 | -66.2 | -40.8 | -14.8 |
+  | 9 | 1.5 | -41.6 | -72.9 | -41.5 | -13.9 |
+  | 9 | 2 | -42.6 | -79.8 | -42.6 | -14.8 |
+  | 9 | 3 | -45.1 | -93.6 | -45.1 | -13.8 |
+
+  The glide lowers leakage below 16 kHz by about 15 dB per millisecond, while the AWGN SNR at
+  BER 1e-3 moves only within the ±1 dB resolution of the sweep. 2 ms is chosen (D-007). The
+  remaining "<16.9 kHz" figure is the chirp's own spectral skirt just below 17.1 kHz, inside the
+  100 Hz guard, not clicks.
 
 - **FEC and interleaving**: see [`sim/results/fec.md`](../sim/results/fec.md) and D-013.
 

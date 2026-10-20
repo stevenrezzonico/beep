@@ -191,35 +191,53 @@ corrupt packet.
 - Per-chirp ±1 tolerance inside the ML metric itself: three times as many noise candidates per
   chirp, costing sensitivity in the static case that matters most for range.
 
-### D-012 Tracking: time scale from the preamble, early/late timing loop, carrier loop on de-rotation — *sim* (gains: [`sim/results/tracking.md`](../sim/results/tracking.md))
+### D-012 Tracking: time scale from the preamble, early/late timing loop, carrier re-anchored at the header — *sim* ([`sim/results/tracking.md`](../sim/results/tracking.md))
 
 Doppler and clock offset are one physical effect, a time scaling 1+ε. The preamble estimates ε
 (carrier offset / fc). The sync search uses ε-consistent window spacing and chip rates; without
 it the boundary drifts ε·N chips per symbol and biases the estimate (measured: −3.4 Hz bias at
-0.4 m/s before the fix, 0.1 Hz after).
+0.4 m/s before the fix, 0.1 Hz after). Inside the packet:
 
-Inside the packet, ε stays at the preamble value, and two decision-directed type-2 loops run on
-confident symbols:
+1. **ε stays at the preamble value.**
+2. **Carrier.** Re-anchored once on the decoded header (common bin offset + residual, D-011).
+3. **Timing.** A decision-directed type-2 **early/late gate** runs on confident symbols (peak ≥
+   4·ln N × noise mean). It compares the energy around the decided peak in windows ¼ chip early
+   and late. A fractional timing error δ puts a 2π·δ phase jump into the de-chirped tone at the
+   chirp's frequency wrap, splitting the peak in a data-dependent way that de-rotation cannot
+   fix. Measured: ±0.6–1.5 bins of jitter at ±0.05 m/s without the loop, ±0.1 with it. Gains:
+   0.3 chip and 0.02 chip per unit of normalised early/late error.
+4. **Residual whole-bin lock.** If a timing jump leaves the payload one bin off, it is decoded at
+   shifts 0, −1 and +1 and kept only if the CRC passes. That raises the CRC-16 undetected-error
+   bound from 2⁻¹⁶ to 3·2⁻¹⁶ per failed packet.
 
-1. **Timing: early/late gate.** It compares the energy around the decided peak in windows ¼ chip
-   early and late. A fractional timing error δ puts a 2π·δ phase jump into the de-chirped tone at
-   the chirp's frequency wrap. That splits the peak in a data-dependent way, which de-rotation
-   cannot fix. Measured: ±0.6–1.5 bins of data-dependent jitter at ±0.05 m/s without this loop,
-   ±0.1 with it. Gains 0.3 chip and 0.02 chip per unit of normalised early/late error.
-2. **Carrier: de-rotation.** Proportional and integral paths on the residual fractional bin
-   offset. Gains 0.3 and 0.03.
+**Evidence for the loop configuration.** Targeted runs, 12–16 packets each:
 
-**Rejected: feeding the carrier loop back into ε**, i.e. "velocity ⇒ timing". It looks
-physically right, but hand motion makes velocity oscillate. The timing error stays bounded by
-the displacement (±1–3 cm ⇒ ±0.04–0.1 chips), whereas integrating transient carrier estimates
-into ε grows without bound. Measured: 1.5 chips after 4 s at ±0.05 m/s.
+| Loops (gate) | long-range AWGN, packets OK of 16 at −10 / −12 / −13 dB | fast, ±0.1 m/s sway | balanced, ±0.05 m/s sway |
+|---|---|---|---|
+| carrier only (4) | 15 / 15 / 14 | 1/12 | 3/12 |
+| carrier + timing 0.3/0.02 (4) | 16 / 16 / 14 | 10/12 | 12/12 |
+| carrier + timing 0.3/0.02 (8) | 16 / 15 / 15 | 10/12 | 12/12 |
+| carrier + timing 1/0.1 (4) | 13 / 11 / 12 | 12/12 | 12/12 |
+| timing only 0.3/0.02 (8) | 16 / 16 / 11 | 12/12 | 12/12 |
+| **timing only 0.3/0.02 (4), chosen** | **16 / 15 / 16** | **12/12** | **12/12** |
 
-**Gain choice.** Higher timing gains (1 / 0.1) track sway slightly better but cost about 1 dB
-at the long-range sensitivity limit through timing jitter. Distance comes first, so 0.3 / 0.02.
+The full sweep (`tracking.md`, 20 packets per point, 2 dB steps) points the same way. These
+statistics resolve differences of about 1 dB, not finer.
 
-**Residual whole-bin lock.** If the loops lock one bin off after a timing jump, the payload is
-decoded at shifts 0, −1 and +1 and kept only if the CRC passes. That raises the CRC-16
-undetected-error bound from 2⁻¹⁶ to 3·2⁻¹⁶ per failed packet.
+**Rejected.**
+- A per-symbol **carrier loop** (de-rotation driven by the residual fractional bin offset). It
+  adds noise near threshold and, under motion, chases offsets that are really timing. It is still
+  available (`trackP`/`trackI`).
+- **Feeding carrier changes back into ε** ("velocity ⇒ timing"). It looks physically right, but
+  hand motion makes velocity oscillate. The timing error stays bounded by the displacement (±1–3
+  cm ⇒ ±0.04–0.1 chips), whereas integrating transient carrier estimates into ε grows without
+  bound. Measured: 1.5 chips after 4 s at ±0.05 m/s.
+- **Higher timing gains** (1 / 0.1). They track sway marginally better but jitter the windows
+  near the sensitivity limit. Distance comes first.
+
+**Limit.** Long symbols (SF7/SF8, 98–197 ms) cannot follow sway of ±0.1 m/s every 2 s: the
+velocity changes within one symbol. Only the fast profile survives that (`modem.md`, hand-held
+column). Long-range and balanced need the devices roughly at rest.
 
 ### D-013 Payload FEC: K=7 rate-½ convolutional, soft Viterbi, bit-interleaved (BICM) — *sim*
 
