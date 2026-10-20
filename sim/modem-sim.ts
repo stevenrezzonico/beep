@@ -23,7 +23,7 @@ const f = (v: number | null) => (v === null ? 'n/a' : v === -Infinity ? '< min' 
 
 export async function runModem(pool: Pool, o: { quick: boolean; outDir: string }) {
   const snrs: number[] = [];
-  for (let s = 3; s >= -24; s -= o.quick ? 3 : 1) snrs.push(s);
+  for (let s = 12; s >= -24; s -= o.quick ? 3 : 1) snrs.push(s);
   const conds = allConditions();
   const profiles = DEFAULT_CONFIG.profiles;
   const payloadBytes = 32;
@@ -157,7 +157,8 @@ export async function runTracking(pool: Pool, o: { quick: boolean; outDir: strin
     { label: 'off', cfg: { trackP: 0, trackI: 0, trackT: 0, trackTI: 0 } },
     { label: 'carrier only (0.3/0.03)', cfg: { trackT: 0, trackTI: 0 } },
     { label: 'timing only (0.3/0.02)', cfg: { trackP: 0, trackI: 0 } },
-    { label: 'chosen: carrier 0.3/0.03 + timing 0.3/0.02', cfg: {} },
+    { label: 'chosen: carrier 0.3/0.03 + timing 0.3/0.02, gate 8', cfg: {} },
+    { label: 'chosen gains, gate 4', cfg: { trackGate: 4 } },
     { label: 'fast timing 1/0.1', cfg: { trackT: 1, trackTI: 0.1 } },
   ];
   const cases = [

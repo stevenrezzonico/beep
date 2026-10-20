@@ -503,9 +503,9 @@ export class Receiver {
     const ratio = p[m] / mu;
     const r = fracPeak(this.fr.subarray(0, N) as Float64Array, this.fi.subarray(0, N) as Float64Array, m);
     for (let k = 0; k < N; k++) p[k] /= mu;
-    // Two decision-directed loops, updated only on confident symbols (peak ≥ 4·ln N × noise
-    // mean: a noise bin exceeds that with probability ≈ N·N^-4), because a wrong decision carries
-    // a random offset. Gains: D-012.
+    // Two decision-directed loops, updated only on confident symbols (peak ≥ trackGate·ln N ×
+    // noise mean: a noise bin exceeds that with probability ≈ N^(1−trackGate)), because a wrong or
+    // marginal decision carries a random offset. Gate and gains: D-012.
     //  - Timing (early/late gate). A fractional timing error δ puts a 2π·δ phase jump into the
     //    de-chirped tone at the chirp's frequency wrap, splitting the peak, so the energy around
     //    the peak is largest at the right timing. Windows ±¼ chip early/late give the sign; this is
@@ -514,7 +514,7 @@ export class Receiver {
     //    integral follows carrier ramps (acceleration).
     // The time scale ε stays at the preamble estimate; hand motion makes velocity oscillate, and
     // the timing loop absorbs the bounded displacement it causes.
-    if (ratio > 4 * Math.log(N)) {
+    if (ratio > this.cfg.trackGate * Math.log(N)) {
       this.window(this.tNext - dt / 4, sf, 'up', dt, cfoBins);
       const early = this.peakEnergy(N, m);
       this.window(this.tNext + dt / 4, sf, 'up', dt, cfoBins);

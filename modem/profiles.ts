@@ -34,6 +34,8 @@ export interface ModemConfig {
   trackI: number;
   trackT: number;
   trackTI: number;
+  /** Loops update only when a symbol's peak exceeds trackGate·ln N × the noise mean. */
+  trackGate: number;
   /** Up-chirp windows integrated for detection (≤ nUp − 1 so a full window always fits). */
   detWindows: number;
   /** Per-window false-alarm probability used to derive the detection threshold. */
@@ -61,6 +63,7 @@ export const DEFAULT_CONFIG: ModemConfig = {
   trackI: 0.03,
   trackT: 0.3,
   trackTI: 0.02,
+  trackGate: 8,
   detWindows: 7,
   pfa: 1e-6,
   glide: 0.002,

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" font-family="system-ui,sans-serif" font-size="12">
 <rect width="760" height="440" fill="#fff"/>
-<text x="275" y="20" text-anchor="middle" font-size="14" font-weight="600">Modem PER (32 B) — Hand motion ±0.3 m/s (2 s period) in RT60 0.3 s room</text>
+<text x="275" y="20" text-anchor="middle" font-size="14" font-weight="600">Modem PER (32 B) — Waving ±0.3 m/s (2 s period) in RT60 0.3 s room</text>
 <line x1="60" x2="550" y1="394" y2="394" stroke="#e5e7eb"/><text x="54" y="398" text-anchor="end">1e-2</text>
 <line x1="60" x2="550" y1="215" y2="215" stroke="#e5e7eb"/><text x="54" y="219" text-anchor="end">1e-1</text>
 <line x1="60" x2="550" y1="36" y2="36" stroke="#e5e7eb"/><text x="54" y="40" text-anchor="end">1e0</text>
