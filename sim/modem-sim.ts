@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Pool } from './pool.ts';
-import type { PerPoint } from './jobs.ts';
+import type { LossPoint, PerPoint } from './jobs.ts';
 import { allConditions } from './conditions.ts';
 import { DEFAULT_CONFIG, describe as describeCfg, type ModemConfig } from '../modem/profiles.ts';
 import { airTime } from '../modem/tx.ts';
@@ -131,16 +131,17 @@ export async function runFec(pool: Pool, o: { quick: boolean; outDir: string }) 
     { id: 'conv12-noint', label: 'K=7 conv r=1/2 soft Viterbi, no interleaver', rate: 0.5 },
     { id: 'conv12', label: 'K=7 conv r=1/2 soft Viterbi + interleaver', rate: 0.5 },
     { id: 'conv23', label: 'K=7 conv r=2/3 (punctured) + interleaver', rate: 2 / 3 },
+    { id: 'conv12', label: 'K=7 conv r=1/2 soft Viterbi + interleaver, **SF8**', rate: 0.5, sf: 8 },
   ];
   const conds = ['awgn', 'room-far'];
   const snrs: number[] = [];
   for (let s = 0; s >= -22; s -= 1) snrs.push(s);
   const jobs = [];
   for (const sc of schemes)
-    for (const c of conds) jobs.push(pool.run<PerPoint[]>('fecPer', { scheme: sc.id, sf: 7, cond: c, snrs, packets: o.quick ? 20 : 100, payloadBytes: 32 }).then((pts) => ({ sc, c, pts })));
+    for (const c of conds) jobs.push(pool.run<PerPoint[]>('fecPer', { scheme: sc.id, sf: sc.sf ?? 7, cond: c, snrs, packets: o.quick ? 20 : 100, payloadBytes: 32 }).then((pts) => ({ sc, c, pts })));
   const res = await Promise.all(jobs);
   const rows = [
-    'Payload FEC comparison on SF7 CSS with genie timing (32-byte payloads). Cells: SNR (dB) for PER ≤ 10% / ≤ 1%, and the code rate.',
+    'Payload FEC comparison on CSS with genie timing (32-byte payloads), SF7 unless noted. Cells: SNR (dB) for PER ≤ 10% / ≤ 1%, and the code rate.',
     '',
     `| Scheme | rate | ${conds.join(' | ')} |`,
     `|---|---|${conds.map(() => '---|').join('')}`,
@@ -183,5 +184,44 @@ export async function runTracking(pool: Pool, o: { quick: boolean; outDir: strin
   ];
   for (const g of gains) rows.push(`| ${g.label} | ${cases.map((c) => f(perCrossing(res.find((x) => x.g === g && x.c === c)!.pts, 0.1))).join(' | ')} |`);
   writeFileSync(join(o.outDir, 'tracking.md'), rows.join('\n') + '\n');
+  console.log(rows.join('\n'));
+}
+
+/**
+ * Implementation-loss breakdown: per stage, the SNR where 90% of packets get through, next to a
+ * genie-timed decode of the same payload samples (the payload's own limit).
+ */
+export async function runLoss(pool: Pool, o: { quick: boolean; outDir: string }) {
+  const cases = [
+    { profile: 'long-range', cond: 'awgn', hi: -10 },
+    { profile: 'balanced', cond: 'awgn', hi: -8 },
+    { profile: 'long-range', cond: 'room-far', hi: -5 },
+    { profile: 'balanced', cond: 'room-far', hi: -4 },
+  ];
+  // one job per SNR point so the slow SF8 cases spread over all workers
+  const res = await Promise.all(
+    cases.map(async (c) => {
+      const snrs: number[] = [];
+      for (let s = c.hi; s >= c.hi - 8; s -= o.quick ? 2 : 1) snrs.push(s);
+      const pts = await Promise.all(snrs.map((snr) => pool.run<LossPoint[]>('modemLoss', { profile: c.profile, cond: c.cond, snrs: [snr], packets: o.quick ? 20 : 100, payloadBytes: 32, fsTx: 48000, fsRx: 44100 })));
+      return { c, pts: pts.flat() };
+    }),
+  );
+  const at = (pts: LossPoint[], key: 'synced' | 'headerOk' | 'ok' | 'genieOk') =>
+    f(perCrossing(pts.map((q) => ({ ...q, synced: 0, headerOk: 0, ok: 0, corrupt: 0, meanSnrEst: null, meanAbsVelErr: null, per: 1 - q[key] / q.sent })), 0.1));
+  const rows = [
+    'Where 32-byte packets are lost. Full receiver stages (sync, header, decoded packet) and a genie-timed decode of the same payload samples (true timing, time scale and carrier; the receiver\'s own normalisation, soft metric and Viterbi). Cells: SNR (dB) where ≥ 90% of packets pass that stage.',
+    '',
+    '| Profile | cond | sync | header | full modem (PER ≤ 10%) | genie payload (PER ≤ 10%) | implementation loss (dB) |',
+    '|---|---|---|---|---|---|---|',
+  ];
+  for (const { c, pts } of res) {
+    const full = at(pts, 'ok'), genie = at(pts, 'genieOk');
+    const gap = Number.isFinite(+full) && Number.isFinite(+genie) ? (+full - +genie).toFixed(1) : 'n/a';
+    rows.push(`| ${c.profile} | ${c.cond} | ${at(pts, 'synced')} | ${at(pts, 'headerOk')} | ${full} | ${genie} | ${gap} |`);
+  }
+  rows.push('', '| Profile | cond | SNR | sent | synced | header OK | packet OK | genie payload OK |', '|---|---|---|---|---|---|---|---|');
+  for (const { c, pts } of res) for (const q of pts) rows.push(`| ${c.profile} | ${c.cond} | ${q.snr} | ${q.sent} | ${q.synced} | ${q.headerOk} | ${q.ok} | ${q.genieOk} |`);
+  writeFileSync(join(o.outDir, 'loss.md'), rows.join('\n') + '\n');
   console.log(rows.join('\n'));
 }

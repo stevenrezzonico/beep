@@ -119,7 +119,7 @@ function agreesWith(pw: Float64Array, b: number): boolean {
   return Math.min((m - b + N) % N, (b - m + N) % N) <= 1;
 }
 
-interface SymbolResult {
+export interface SymbolResult {
   power: Float64Array; // normalised by its own noise mean
   peak: number;
   ratio: number; // peak / noise mean (linear)
@@ -169,6 +169,8 @@ export class Receiver {
   private timingRate = 0;
   /** Cumulative timing correction by the timing loop, s. */
   private timingTrack = 0;
+  /** Symbols since the tracking loops last updated (including the current one). */
+  private sinceUpdate = 0;
 
   // scratch
   private zr: Float64Array;
@@ -435,12 +437,48 @@ export class Receiver {
       delta += (ru + rd) / 2;
       B += (rd - ru) / 2 / this.bw;
     }
+    // The fractional-bin estimates above leave ≈ ±0.3 Hz of carrier error near the sensitivity
+    // limit. The carrier also sets the time scale ε, and 0.3 Hz ⇒ 17 ppm ⇒ 0.3 chips of timing
+    // drift over a 14 s packet, which the gated timing loop cannot follow at low SNR (D-012).
+    // Consecutive identical chirps differ only by the carrier phase advance 2π·Δf·P over one
+    // period P, so the phase of Σ X_{k+1}·X_k* over the aligned windows measures Δf modulo 1/P
+    // ≈ 5 Hz about ten times more precisely; the estimate above resolves the ambiguity.
+    {
+      const sc = 1 + delta / (this.fc * Ts);
+      const P = Ts / sc;
+      let cr = 0, ci = 0;
+      const acc = (starts: number[], kind: ChirpKind) => {
+        let pr: Float64Array | null = null, pi: Float64Array | null = null;
+        for (const t of starts) {
+          this.window(t, this.cfg.sfPre, kind, 1 / (this.bw * sc), delta / sc);
+          const xr = Float64Array.of(this.fr[N - 1], this.fr[0], this.fr[1]);
+          const xi = Float64Array.of(this.fi[N - 1], this.fi[0], this.fi[1]);
+          if (pr && pi)
+            for (let j = 0; j < 3; j++) {
+              cr += xr[j] * pr[j] + xi[j] * pi[j];
+              ci += xi[j] * pr[j] - xr[j] * pi[j];
+            }
+          pr = xr;
+          pi = xi;
+        }
+      };
+      const ups: number[] = [];
+      for (let k = this.cfg.nUp - 1; k >= 1; k--) ups.push(B - k * P);
+      acc(ups, 'up');
+      const downs: number[] = [];
+      for (let k = 0; k < this.cfg.nDown; k++) downs.push(B + k * P);
+      acc(downs, 'down');
+      const cyc = Math.atan2(ci, cr) / (2 * Math.PI); // Δf·P modulo 1
+      const coarseCyc = (delta * this.bw * P) / N;
+      delta = ((cyc + Math.round(coarseCyc - cyc)) * N) / (this.bw * P);
+    }
     this.cfoHz = (delta * this.bw) / N;
     this.cfoHz0 = this.cfoHz;
     this.eps = this.cfoHz / this.fc;
     this.cfoRate = 0;
     this.timingRate = 0;
     this.timingTrack = 0;
+    this.sinceUpdate = 0;
     this.syncTime = B;
     this.tNext = B + (this.cfg.nDown * Ts) / (1 + this.eps);
     this.hdrSyms = [];
@@ -514,16 +552,23 @@ export class Receiver {
     //    integral follows carrier ramps (acceleration).
     // The time scale ε stays at the preamble estimate; hand motion makes velocity oscillate, and
     // the timing loop absorbs the bounded displacement it causes.
+    // Near the sensitivity limit only a few symbols pass the gate. An error measured after g
+    // symbols without an update is the drift of g symbols, so the integral paths take 1/g of it:
+    // otherwise one noisy update sets a rate that then runs open-loop for the next g symbols
+    // (measured: timing ramps of 0.5 chip over a long-range packet at −12 dB, D-012).
+    this.sinceUpdate++;
     if (ratio > this.cfg.trackGate * Math.log(N)) {
       this.window(this.tNext - dt / 4, sf, 'up', dt, cfoBins);
       const early = this.peakEnergy(N, m);
       this.window(this.tNext + dt / 4, sf, 'up', dt, cfoBins);
       const late = this.peakEnergy(N, m);
       const e = (late - early) / (late + early); // > 0: late window better ⇒ we are early
+      const g = this.sinceUpdate;
+      this.sinceUpdate = 0;
       this.tNext += (this.cfg.trackT * e) / this.bw;
-      this.timingRate += (this.cfg.trackTI * e) / this.bw;
+      this.timingRate += (this.cfg.trackTI * e) / this.bw / g;
       this.cfoHz += (this.cfg.trackP * r) / Ts;
-      this.cfoRate += (this.cfg.trackI * r) / (Ts * Ts);
+      this.cfoRate += (this.cfg.trackI * r) / (Ts * Ts) / g;
       this.timingTrack += (this.cfg.trackT * e) / this.bw;
     }
     this.cfoHz += this.cfoRate * Ts;
@@ -633,7 +678,7 @@ function reencodeSymbols(h: PhyHeader, data: Uint8Array, p: Profile): number[] {
 }
 
 /** LLRs from normalised symbol spectra (noise mean = 1 per bin). */
-function softBits(syms: SymbolResult[], sf: number): Float64Array {
+export function softBits(syms: SymbolResult[], sf: number): Float64Array {
   let es = 0;
   for (const s of syms) es += Math.max(s.power[s.peak] - 1, 1e-3);
   es /= syms.length;

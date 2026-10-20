@@ -57,7 +57,11 @@ export function candidateBer(a: CandidateBerArgs): BerPoint[] {
 }
 
 import { modulatePacket } from '../modem/tx.ts';
-import { Receiver, type RxEvent } from '../modem/rx.ts';
+import { Receiver, softBits, type RxEvent, type SymbolResult } from '../modem/rx.ts';
+import { Baseband } from '../modem/baseband.ts';
+import { dechirpFft } from '../modem/css.ts';
+import { bandInfo } from '../modem/band.ts';
+import { decodePayload, payloadSymbolCount } from '../modem/frame.ts';
 import { DEFAULT_CONFIG, type ModemConfig } from '../modem/profiles.ts';
 
 export interface ModemPerArgs {
@@ -123,6 +127,84 @@ export function modemPer(a: ModemPerArgs): PerPoint[] {
     if (ok === 0) {
       if (++zeros >= (a.stopAfterZero ?? 2)) break;
     } else zeros = 0;
+  }
+  return out;
+}
+
+export interface LossPoint {
+  snr: number;
+  sent: number;
+  synced: number;
+  headerOk: number;
+  /** Full receiver: packets decoded correctly. */
+  ok: number;
+  /** Genie-timed payload decode of the same samples (true timing, time scale and carrier). */
+  genieOk: number;
+}
+
+/**
+ * Where a profile's packets are lost: the full receiver's sync, header and payload stages, next to a
+ * genie-timed decode of the same payload samples with the receiver's own normalisation, soft
+ * metric and decoder. The genie knows the payload start and the channel's (constant) time scale,
+ * so it is valid for conditions without motion.
+ */
+export function modemLoss(a: ModemPerArgs): LossPoint[] {
+  const cfg: ModemConfig = { ...DEFAULT_CONFIG, ...(a.cfg ?? {}) };
+  const prof = cfg.profiles.find((p) => p.name === a.profile)!;
+  const cond = allConditions().find((x) => x.id === a.cond)!;
+  const b = bandInfo(cfg.band);
+  const N = 1 << prof.sf;
+  const h = { profile: prof.id, length: a.payloadBytes };
+  const n = payloadSymbolCount(a.payloadBytes, prof.sf, prof.rate);
+  const tPay = ((1 << cfg.sfPre) / b.bw) * (cfg.nUp + cfg.nDown + cfg.nHeader);
+  const zr = new Float64Array(N), zi = new Float64Array(N), re = new Float64Array(N), im = new Float64Array(N);
+  const out: LossPoint[] = [];
+  for (const snr of a.snrs) {
+    const pt: LossPoint = { snr, sent: a.packets, synced: 0, headerOk: 0, ok: 0, genieOk: 0 };
+    for (let k = 0; k < a.packets; k++) {
+      const seed = hashSeed('loss', a.profile, a.cond, snr, k);
+      const rng = new Rng(seed);
+      const data = rng.bytes(a.payloadBytes);
+      const x = modulatePacket(data, prof, a.fsTx, cfg, { level: 0.5, padSec: 0 });
+      const lead = 0.3 + rng.next() * 1.0;
+      const chan = cond.make(seed, a.fsTx);
+      const { y } = applyChannel(x, { fsTx: a.fsTx, fsRx: a.fsRx, snrDb: snr, txPeak: 0.5, leadSec: lead, tailSec: 0.5, seed, ...chan });
+      const rx = new Receiver(a.fsRx, cfg);
+      const ev: RxEvent[] = [];
+      for (let i = 0; i < y.length; i += 4096) ev.push(...rx.push(y.subarray(i, i + 4096)));
+      ev.push(...rx.flush());
+      if (ev.some((e) => e.type === 'sync')) pt.synced++;
+      if (ev.some((e) => e.type === 'header')) pt.headerOk++;
+      const pk = ev.find((e) => e.type === 'packet' && e.ok) as Extract<RxEvent, { type: 'packet'; ok: true }> | undefined;
+      if (pk && pk.data.every((v, i) => v === data[i])) pt.ok++;
+      // genie: transmitter time t arrives at receiver time t/s (constant velocity and clock offset)
+      const s = (1 + (chan.velocity ?? 0) / 343) / (1 + (chan.clockPpm ?? 0) * 1e-6);
+      const t0 = Math.round(lead * a.fsRx) / a.fsRx;
+      const Ts = N / b.bw / s;
+      const cfoBins = b.fc * (s - 1) * Ts;
+      const bb = Baseband.of(y, a.fsRx, cfg.band);
+      const syms: SymbolResult[] = [];
+      for (let m = 0; m < n; m++) {
+        bb.sample(t0 + tPay / s + m * Ts, Ts / N, N, zr, zi);
+        dechirpFft(zr, zi, prof.sf, 'up', re, im, cfoBins);
+        const p = new Float64Array(N);
+        let peak = 0;
+        for (let i = 0; i < N; i++) {
+          p[i] = re[i] * re[i] + im[i] * im[i];
+          if (p[i] > p[peak]) peak = i;
+        }
+        // the receiver's normalisation: noise mean excluding the peak and its sidelobes
+        let mu = 0;
+        for (let i = 0; i < N; i++) mu += p[i];
+        for (let d = -2; d <= 2; d++) mu -= p[(peak + d + N) % N];
+        mu /= N - 5;
+        for (let i = 0; i < N; i++) p[i] /= mu;
+        syms.push({ power: p, peak, ratio: p[peak], frac: 0 });
+      }
+      const g = decodePayload(h, softBits(syms, prof.sf), prof.rate);
+      if (g.data && g.data.every((v, i) => v === data[i])) pt.genieOk++;
+    }
+    out.push(pt);
   }
   return out;
 }

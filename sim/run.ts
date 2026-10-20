@@ -6,14 +6,14 @@ import { allConditions } from './conditions.ts';
 import type { BerPoint } from './jobs.ts';
 import { paprDb, leakageDbc } from './metrics.ts';
 import { svgPlot } from './plot.ts';
-import { runModem, runPreamble, runFalseAlarm, runFec, runTracking } from './modem-sim.ts';
+import { runModem, runPreamble, runFalseAlarm, runFec, runTracking, runLoss } from './modem-sim.ts';
 import { Rng } from '../src/dsp/prng.ts';
 
 /**
  * Simulator entry point.
  *   npm run sim            full sweep (minutes; results committed under sim/results/)
  *   npm run sim:quick      reduced sweep for CI
- *   npm run sim -- --only candidates|modem
+ *   npm run sim -- --only candidates|modem|preamble|falsealarm|fec|tracking|loss|smoothing
  */
 const args = process.argv.slice(2);
 const quick = args.includes('--quick');
@@ -121,6 +121,7 @@ try {
   if (only === 'all' || only === 'falsealarm') await runFalseAlarm(pool, { quick, outDir });
   if (only === 'all' || only === 'fec') await runFec(pool, { quick, outDir });
   if (only === 'all' || only === 'tracking') await runTracking(pool, { quick, outDir });
+  if (only === 'all' || only === 'loss') await runLoss(pool, { quick, outDir });
 } finally {
   await pool.close();
 }
