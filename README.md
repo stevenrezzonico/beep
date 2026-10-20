@@ -24,9 +24,21 @@ packet, and reports per-packet diagnostics. Why these choices: see
 [MODULATION_EVALUATION.md](docs/MODULATION_EVALUATION.md) and
 [DECISIONS.md](docs/DECISIONS.md).
 
-> **Status.** Everything below is backed by simulation. Real-device results come from the bench
-> and are logged in `docs/PLATFORMS.md` as they are measured. Until then, distance and
-> reliability figures are simulated, not measured.
+> **Status.** Everything is implemented and unit-tested, and validated **in simulation only**.
+>
+> Simulated packet error rate ≤ 10% (32-byte packets, SNR in the 1.5 kHz band, peak-referenced):
+>
+> | Profile | AWGN | Simulated rooms |
+> |---|---|---|
+> | long-range | −12.7 dB | −8.3…−10 dB |
+> | balanced | −11.0 dB | −7.5…−8 dB |
+> | fast | −5.2 dB | −1.3…+2 dB |
+>
+> - No silent corruption occurred in any simulated condition.
+> - No false packets occurred in a 3-hour noise soak.
+>
+> **No real-device measurements exist yet.** Distance claims must come from the bench and are
+> pending ([PLATFORMS.md](docs/PLATFORMS.md)).
 
 ## Run locally
 
