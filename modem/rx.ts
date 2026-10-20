@@ -266,9 +266,11 @@ export class Receiver {
     let ex = 0;
     for (let d = -2; d <= 2; d++) ex += S2[(best + d + N) % N];
     const mu = (sum - ex) / (N - 5) / (2 * K);
-    const stat = S2[best] / mu;
-    this.lastRatioDb = 10 * Math.log10(stat / this.thrDet);
-    if (stat < this.thrDet) return true;
+    // Exact digital silence (a muted or interrupted mic track delivers zeros) gives 0/0: treat it as
+    // "nothing here" rather than letting NaN slip past the comparison and trigger every window.
+    const stat = mu > 0 ? S2[best] / mu : 0;
+    this.lastRatioDb = stat > 0 ? 10 * Math.log10(stat / this.thrDet) : -Infinity;
+    if (!(stat >= this.thrDet)) return true;
     // the peak pair (best, best+1): pick the stronger bin as integer estimate
     let b = this.hist.reduce((a, h) => a + h.pw[best], 0) >= this.hist.reduce((a, h) => a + h.pw[(best + 1) % N], 0) ? best : (best + 1) % N;
     // consistency: at least two windows individually peak within ±1 bin of b
@@ -438,14 +440,15 @@ export class Receiver {
     const ratio = p[m] / mu;
     const r = fracPeak(this.fr.subarray(0, N) as Float64Array, this.fi.subarray(0, N) as Float64Array, m);
     for (let k = 0; k < N; k++) p[k] /= mu;
-    // tracking (type-2 loop on the bin offset; integrator acts on the time-scale ε so the
-    // window timing follows Doppler/clock drift). Gate on confidence: wrong decisions carry
-    // a random fraction. Gains: D-012.
+    // Tracking: type-2 loop on the residual bin offset r. The proportional path corrects the
+    // carrier (de-rotation), the integral path the time-scale ε, so window timing follows
+    // Doppler/clock drift. Only confident decisions update it (peak ≥ 4·ln N × noise mean: a
+    // noise bin exceeds that with probability ≈ N·N^-4 per symbol), because a wrong decision
+    // carries a random fractional offset. Gains: D-012.
     if (ratio > 4 * Math.log(N)) {
-      const a = 0.3, bgain = 0.03;
-      this.cfoHz += (a * r) / Ts;
-      this.nuEps += (bgain * r) / N;
-      this.eps += (bgain * r) / N;
+      this.cfoHz += (this.cfg.trackP * r) / Ts;
+      this.nuEps += (this.cfg.trackI * r) / N;
+      this.eps += (this.cfg.trackI * r) / N;
     }
     this.tNext += Ts;
     this.trackT += Ts * this.nuEps;

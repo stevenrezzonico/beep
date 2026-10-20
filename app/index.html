@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#0f1115" />
+    <meta name="description" content="Send text and files between devices over near-ultrasonic sound (17–18.5 kHz)." />
+    <title>beep</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <link rel="stylesheet" href="../web/style.css" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div id="banner" class="banner hidden">Audio is paused — tap here to resume</div>
+    <header class="appbar">
+      <span class="brand">beep</span>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="send" aria-selected="true">Send</button>
+        <button role="tab" data-tab="receive" aria-selected="false">Receive</button>
+        <button role="tab" data-tab="help" aria-selected="false">Help</button>
+      </nav>
+    </header>
+    <main id="root">
+      <noscript>This app needs JavaScript.</noscript>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

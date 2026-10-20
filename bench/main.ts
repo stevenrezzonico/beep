@@ -664,33 +664,46 @@ function audibilitySection(): HTMLElement {
 }
 
 function berSection(): HTMLElement {
-  if (!berModem) {
-    return el('details', { class: 'card', id: 'ber' },
-      el('summary', {}, '7. Modem BER/PER (pending)'),
-      el('p', { class: 'muted' }, 'Placeholder: enabled once the modem (modem/) is wired into bench/tests/ber.ts. It will send a known pseudo-random payload with any implemented profile and log BER/PER per profile, distance and SNR.'),
-    );
-  }
   const modem = berModem;
-  const profSel = el('select', {}, ...modem.profiles().map((p) => el('option', { value: p.id }, `${p.label}${p.netBps ? ` (${p.netBps.toFixed(0)} bps)` : ''}`)));
+  const profSel = el('select', {}, ...modem.profiles().map((p) => el('option', { value: p.id }, `${p.label}${p.netBps ? ` — ${p.netBps.toFixed(0)} b/s net` : p.rawBps ? ` — ${p.rawBps.toFixed(0)} b/s raw` : ''}`)));
   const packets = el('input', { type: 'number', min: 1, max: 200, value: BER_DEFAULTS.packets, style: 'width:5em' });
-  const bytes = el('input', { type: 'number', min: 1, max: 255, value: BER_DEFAULTS.payloadBytes, style: 'width:5em' });
+  const bytes = el('input', { type: 'number', min: 3, max: 256, value: BER_DEFAULTS.payloadBytes, style: 'width:5em' });
   const seed = el('input', { type: 'number', min: 0, value: BER_DEFAULTS.seed, style: 'width:5em' });
   const dist = el('input', { type: 'number', min: 0, step: 0.1, value: 1, style: 'width:5em' });
+  const dur = el('span', { class: 'muted' });
   const opts = () => ({ packets: Number(packets.value), payloadBytes: Number(bytes.value), seed: Number(seed.value) });
+  const showDur = () => (dur.textContent = `≈ ${modem.durationSec(profSel.value, opts()).toFixed(1)} s of audio`);
+  for (const i of [profSel, packets, bytes]) i.addEventListener('change', showDur);
+  showDur();
   const t = testCard({
     id: 'ber-card',
     title: '7. Modem BER/PER',
-    intro: 'Known pseudo-random payload; both devices must use the same profile, packet count, size and seed.',
+    intro:
+      'Known pseudo-random payload; both devices must use the same profile, packet count, size and seed. "Modem" profiles run the full modem (sync, FEC, CRC): PER is what users see, raw BER is the channel error rate before FEC, and corrupt must stay 0. "Uncoded" rows compare bare modulations with marker timing.',
     signal: (f) => modem.txSignal(f, profSel.value, opts()),
     duration: () => modem.durationSec(profSel.value, opts()),
     analyze: (rec, f) => {
       results.ber.push({ ...modem.analyze(rec, f, profSel.value, opts()), distanceM: Number(dist.value) });
       render();
     },
-    extra: [el('div', { class: 'row' }, el('label', {}, 'Profile', profSel), el('label', {}, 'Packets', packets), el('label', {}, 'Bytes', bytes), el('label', {}, 'Seed', seed), el('label', {}, 'Distance', dist, 'm'))],
+    extra: [el('div', { class: 'row' }, el('label', {}, 'Profile', profSel), el('label', {}, 'Packets', packets), el('label', {}, 'Bytes', bytes), el('label', {}, 'Seed', seed), el('label', {}, 'Distance', dist, 'm'), dur)],
   });
   const render = () => {
-    t.out.replaceChildren(el('div', { class: 'table-wrap' }, rowsTable(results.ber.map((r) => ({ profile: r.profile, distanceM: r.distanceM, sent: r.packetsSent, detected: r.packetsDetected, ok: r.packetsOk, ber: r.ber.toExponential(2), per: r.per.toFixed(3), snr: r.meanSnrDb?.toFixed(1) })))));
+    t.out.replaceChildren(
+      el('div', { class: 'table-wrap' },
+        rowsTable(results.ber.map((r) => ({
+          profile: r.profile,
+          distanceM: r.distanceM,
+          sent: r.packetsSent,
+          detected: r.packetsDetected,
+          ok: r.packetsOk,
+          per: r.per.toFixed(3),
+          ber: Number.isFinite(r.ber) ? r.ber.toExponential(2) : '—',
+          rawBer: r.rawBer === undefined ? '—' : r.rawBer.toExponential(2),
+          corrupt: r.corrupt ?? '—',
+          snrDb: r.meanSnrDb?.toFixed(1),
+        })))),
+    );
   };
   render();
   return t.card;
