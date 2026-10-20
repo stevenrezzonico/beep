@@ -324,20 +324,14 @@ export class Receiver {
       if (dd <= 1 && p[m] / (mu / N) > UP_AGREE_RATIO) this.bUpWins.push({ t: tLast + i * Ts, b: this.refine(this.fr.slice(0, N), this.fi.slice(0, N), p, this.bUp) });
     }
     const dMax = Math.ceil((MAX_VELOCITY / SOUND) * this.fc * Ts);
-    let best = { score: -1, down: 0, B: 0, delta: 0 };
-    let tests = 0;
-    // ¼-bin grid: the down-chirp peak moves by 2·(Δ−Δ0), so ¼ bin keeps it within ½ bin of bin 0
-    // (scalloping loss ≤ 0.9 dB; a ½-bin grid would cost up to 3.9 dB)
-    for (let delta = -dMax; delta <= dMax; delta += 0.25) {
-      // Doppler and clock offset are a time scaling 1+ε of the whole signal, so each carrier
-      // hypothesis implies ε0 = Δ0/(fc·Ts): windows are spaced Ts/(1+ε0) and sampled at the scaled
-      // chip rate, otherwise the boundary drifts ε·N chips per symbol across the preamble and
-      // biases the estimate. On the unscaled search grid the up-peak sits at Δ·f1/fc − d.
-      const sc = 1 + delta / (this.fc * Ts);
-      const P = Ts / sc; // received symbol period under this hypothesis
-      // Each agreeing up window w implies a boundary at t_w + d_w/BW (mod P), with
-      // d_w = Δ0·f1/fc − b_w; the windows sit on the unscaled grid, so combine them as phases
-      // modulo P (circular mean) rather than averaging the raw peak positions.
+    const lim = tLast + (span + 0.5) * Ts;
+    // Doppler and clock offset are a time scaling 1+ε of the whole signal, so each carrier
+    // hypothesis Δ0 implies ε0 = Δ0/(fc·Ts): windows are spaced Ts/(1+ε0) and sampled at the scaled
+    // chip rate, otherwise the boundary drifts ε·N chips per symbol across the preamble and biases
+    // the estimate. On the unscaled detection grid the up-peak sits at Δ·f1/fc − d; each agreeing
+    // window then implies a boundary phase modulo the scaled period, combined by circular mean.
+    const geometry = (delta: number) => {
+      const P = Ts / (1 + delta / (this.fc * Ts));
       let cr = 0, ci = 0;
       for (const w of this.bUpWins) {
         const d = mod((delta * (this.fc + this.bw / 2)) / this.fc - w.b, N);
@@ -345,23 +339,70 @@ export class Receiver {
         cr += Math.cos(ph);
         ci += Math.sin(ph);
       }
-      const phase = mod((Math.atan2(ci, cr) / (2 * Math.PI)) * P, P);
+      return { P, phase: mod((Math.atan2(ci, cr) / (2 * Math.PI)) * P, P) };
+    };
+    // Score = all aligned up-chirps before B + all down-chirps after it. Adjacent boundary
+    // hypotheses then differ by about two full symbols of evidence (one up, one down), not by the
+    // difference of two noisy windows.
+    const score = (delta: number, B: number, P: number) => {
+      let up = 0, down = 0;
+      for (let k = 1; k < this.cfg.nUp; k++) up += this.alignedPeak(B - k * P, 'up', delta);
+      for (let k = 0; k < this.cfg.nDown; k++) down += this.alignedPeak(B + k * P, 'down', delta);
+      return { up, down };
+    };
+    // Coarse pass (Δ0 = 0 geometry): for each candidate boundary the summed down-chirp spectrum
+    // peaks near bin Δ·(1 + f1/fc) — the misalignment and the carrier offset add up — which gives
+    // the carrier offset directly instead of scoring every Δ0 separately (≈100× fewer FFTs).
+    // At low SNR detection may fire only once the last window already holds down-chirp energy, so
+    // the boundary can also lie up to two symbols before the last detection window.
+    const kDelta = 1 + (this.fc + this.bw / 2) / this.fc;
+    const pMax = Math.ceil(kDelta * dMax) + 1;
+    const coarsePass = (guess: number, range: number) => {
+      const g = geometry(guess);
+      const sc = 1 + guess / (this.fc * Ts);
+      let c = { score: -1, B: 0, delta: guess };
       for (let j = -2; j <= span; j++) {
-        // at low SNR detection may fire only once the last window already holds down-chirp
-        // energy, so the boundary can also lie up to two symbols before the last detection window
-        const B = tLast + phase + j * P;
-        if (B > tLast + (span + 0.5) * Ts) continue;
-        tests++;
-        // Score = all aligned up-chirps before B + all down-chirps after it. Adjacent boundary
-        // hypotheses then differ by about two full symbols of evidence (one up, one down), not by
-        // the difference of two noisy windows.
+        const B = tLast + g.phase + j * g.P;
+        if (B > lim) continue;
         let up = 0;
-        for (let k = 1; k < this.cfg.nUp; k++) up += this.alignedPeak(B - k * P, 'up', delta);
-        let down = 0;
-        for (let k = 0; k < this.cfg.nDown; k++) down += this.alignedPeak(B + k * P, 'down', delta);
+        for (let k = 1; k < this.cfg.nUp; k++) up += this.alignedPeak(B - k * g.P, 'up', guess);
+        const S = new Float64Array(N);
+        for (let k = 0; k < this.cfg.nDown; k++) {
+          this.window(B + k * g.P, this.cfg.sfPre, 'down', 1 / (this.bw * sc), guess / sc);
+          const pw = this.power(N);
+          let mu = 0;
+          for (let i = 0; i < N; i++) mu += pw[i];
+          for (let i = 0; i < N; i++) S[i] += (pw[i] * N) / mu;
+        }
+        for (let p = -range; p <= range; p++) {
+          const v = S[mod(p, N)] + S[mod(p + 1, N)];
+          const pk = S[mod(p, N)] >= S[mod(p + 1, N)] ? p : p + 1;
+          if (up + v > c.score) c = { score: up + v, B, delta: guess + pk / kDelta };
+        }
+      }
+      return c;
+    };
+    // second pass re-centred on the first estimate, so its windows use the right time scale
+    const c1 = coarsePass(0, pMax);
+    const coarse = coarsePass(Math.max(-dMax, Math.min(dMax, Math.round(c1.delta * 4) / 4)), 8);
+    // Fine pass: exact aligned, time-scaled scoring on a ¼-bin grid around the coarse estimate
+    // (the down-chirp peak moves by 2·(Δ−Δ0), so ¼ bin keeps the scalloping loss ≤ 0.9 dB).
+    let best = { score: -1, down: 0, B: 0, delta: 0 };
+    const dc = Math.round(coarse.delta * 4) / 4;
+    for (let delta = dc - 1.5; delta <= dc + 1.5; delta += 0.25) {
+      if (Math.abs(delta) > dMax) continue;
+      const g = geometry(delta);
+      // the boundary under this hypothesis nearest the coarse one, and its neighbours
+      const j0 = Math.round((coarse.B - tLast - g.phase) / g.P);
+      for (let j = j0 - 1; j <= j0 + 1; j++) {
+        const B = tLast + g.phase + j * g.P;
+        if (B > lim) continue;
+        const { up, down } = score(delta, B, g.P);
         if (up + down > best.score) best = { score: up + down, down, B, delta };
       }
     }
+    // the threshold accounts for the full hypothesis space the coarse pass searched
+    const tests = (Math.floor((2 * dMax) / 0.25) + 1) * (span + 3);
     // validation on the down-chirps alone (the up-chirps already passed detection): nDown windows,
     // best of 3 bins each (3^nDown bin choices), union bound over all hypotheses, false alarm 1e-3
     const thr = cfarThreshold(this.cfg.nDown, 3 ** this.cfg.nDown * Math.max(1, tests), 1e-3);
