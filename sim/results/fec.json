@@ -1786,5 +1786,369 @@
     "meanAbsVelErr": null
    }
   ]
+ },
+ {
+  "scheme": "conv12",
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -13,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -14,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 100,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 87,
+    "corrupt": 0,
+    "per": 0.13,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -16,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 16,
+    "corrupt": 0,
+    "per": 0.84,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -17,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "scheme": "conv12",
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": 0,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 84,
+    "corrupt": 0,
+    "per": 0.16000000000000003,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -1,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 85,
+    "corrupt": 0,
+    "per": 0.15000000000000002,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -2,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 82,
+    "corrupt": 0,
+    "per": 0.18000000000000005,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -3,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 88,
+    "corrupt": 0,
+    "per": 0.12,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -4,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 82,
+    "corrupt": 0,
+    "per": 0.18000000000000005,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -5,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 72,
+    "corrupt": 0,
+    "per": 0.28,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -6,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 59,
+    "corrupt": 0,
+    "per": 0.41000000000000003,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -7,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0.5,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -8,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 26,
+    "corrupt": 0,
+    "per": 0.74,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -9,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 5,
+    "corrupt": 0,
+    "per": 0.95,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -10,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.99,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -11,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -12,
+    "sent": 100,
+    "synced": 100,
+    "headerOk": 100,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
  }
 ]

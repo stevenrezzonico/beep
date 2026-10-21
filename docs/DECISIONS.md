@@ -235,8 +235,25 @@ it the boundary drifts ε·N chips per symbol and biases the estimate (measured:
 | timing only 0.3/0.02 (8) | 16 / 16 / 11 | 12/12 | 12/12 |
 | **timing only 0.3/0.02 (4), chosen** | **16 / 15 / 16** | **12/12** | **12/12** |
 
-The full sweep (`tracking.md`, 20 packets per point, 2 dB steps) points the same way. These
-statistics resolve differences of about 1 dB, not finer.
+These statistics resolve differences of about 1 dB, not finer. The table predates the ε and
+1/g changes below.
+
+**Re-measured after those changes** ([`tracking.md`](../sim/results/tracking.md), 20 packets per
+point, 2 dB steps): the loop settings no longer matter for long-range in AWGN (−14.0 to −14.1
+dB), except the fast gains 1/0.1 (−11.0 dB). On fast under hand-held sway, however, the
+integral path now hurts. A targeted check (60 packets, fast, hand-held, packets OK at
+4 / 0 / −3 dB):
+
+| Timing loop | 4 dB | 0 dB | −3 dB |
+|---|---|---|---|
+| 0.3 / 0.02 (current default) | 58 | 44 | 34 |
+| 0.3 / 0 (no integral) | 60 | 60 | 56 |
+| off | 60 | 58 | 56 |
+
+With ε now accurate to ≈ 1 ppm, the integral has little left to follow, and under sway it lags
+the oscillating velocity. **Open item:** set `trackTI` to 0, after a full `--only modem` sweep
+(doppler and room columns) confirms nothing else depends on it. The default is unchanged here,
+so this change stays limited to the long-range fix.
 
 **Rejected.**
 - A per-symbol **carrier loop** (de-rotation driven by the residual fractional bin offset). It
@@ -295,8 +312,8 @@ column). Long-range and balanced need the devices roughly at rest.
 
 ### D-013 Payload FEC: K=7 rate-½ convolutional, soft Viterbi, bit-interleaved (BICM) — *sim*
 
-**Evidence.** [`sim/results/fec.md`](../sim/results/fec.md): SF7 CSS with genie timing,
-32-byte payloads, 100 packets per point. Cells are the SNR (dB) for PER ≤ 10%:
+**Evidence.** [`sim/results/fec.md`](../sim/results/fec.md): CSS with genie timing (SF7 unless
+noted), 32-byte payloads, 100 packets per point. Cells are the SNR (dB) for PER ≤ 10%:
 
 | Scheme | rate | AWGN | far room |
 |---|---|---|---|
@@ -306,6 +323,18 @@ column). Long-range and balanced need the devices roughly at rest.
 | K=7 conv ½, soft Viterbi, **no** interleaver | 0.5 | −10.5 | −4.0 |
 | **K=7 conv ½, soft Viterbi + interleaver** | 0.5 | **−12.1** | **−7.1** |
 | K=7 conv ⅔ (punctured) + interleaver | 0.67 | −11.2 | −6.3 |
+| K=7 conv ½ + interleaver, **SF8** (the long-range payload) | 0.5 | −14.8 | n/a¹ |
+
+¹ The genie candidate demodulator compensates neither timing drift nor carrier offset. The
+far-room condition carries a 50 ppm clock offset: ≈ 0.85 chip of drift over the 13 s SF8 block,
+plus 0.9 Hz. SF7 tolerates that, SF8 does not (checked: 30/30 packets at −10 dB without the clock
+offset, 11/30 at −6 dB with it). So this cell measures the candidate, not the code. `loss.md` has
+the SF8 far-room payload limit with the true time scale: −11.1 dB.
+
+SF8 is 2.7 dB better than SF7 with the same code, as expected from twice the symbol energy at
+one more bit per symbol. The full long-range modem reaches −14.2 dB, 0.6 dB from this row:
+0.3 dB is the frame (CRC-16 and tail bits, the receiver's per-symbol normalisation, see
+`loss.md` genie −14.5 dB) and 0.3 dB is sync and header (D-012).
 
 Soft decisions over non-coherent M-ary metrics, combined with interleaving, win by 0.9 dB over RS
 in AWGN and by 1.7 dB in reverb. RS works on hard byte decisions. One wrong chirp corrupts 1–2
