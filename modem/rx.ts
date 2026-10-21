@@ -112,6 +112,13 @@ const MAX_VELOCITY = 2;
  */
 const UP_AGREE_RATIO = 4;
 
+/**
+ * Minimum coherence of the chirp-to-chirp carrier phasors for the phase-based CFO refinement.
+ * Measured (20 packets each): static channels ≥ 0.64 down to −17 dB (median 0.89–0.97), hand-held
+ * sway 0.14–0.16, waving ≤ 0.5. Below the threshold the fractional-bin estimate is kept.
+ */
+const FINE_CFO_COHERENCE = 0.7;
+
 /** Window's own argmax lies within ±1 bin of b. */
 function agreesWith(pw: Float64Array, b: number): boolean {
   const N = pw.length;
@@ -443,21 +450,30 @@ export class Receiver {
     // Consecutive identical chirps differ only by the carrier phase advance 2π·Δf·P over one
     // period P, so the phase of Σ X_{k+1}·X_k* over the aligned windows measures Δf modulo 1/P
     // ≈ 5 Hz about ten times more precisely; the estimate above resolves the ambiguity.
+    // That only holds while the carrier stays within ±½/P of its mean across the preamble. Hand
+    // sway (±0.1 m/s ⇒ ±5 Hz) wraps the per-chirp phase advance, so the pairwise phasors are kept
+    // only if they agree: coherence |Σ c|/Σ|c| ≥ FINE_CFO_COHERENCE, else the fractional
+    // estimate stands (D-012).
     {
       const sc = 1 + delta / (this.fc * Ts);
       const P = Ts / sc;
-      let cr = 0, ci = 0;
+      let cr = 0, ci = 0, mag = 0;
       const acc = (starts: number[], kind: ChirpKind) => {
         let pr: Float64Array | null = null, pi: Float64Array | null = null;
         for (const t of starts) {
           this.window(t, this.cfg.sfPre, kind, 1 / (this.bw * sc), delta / sc);
           const xr = Float64Array.of(this.fr[N - 1], this.fr[0], this.fr[1]);
           const xi = Float64Array.of(this.fi[N - 1], this.fi[0], this.fi[1]);
-          if (pr && pi)
+          if (pr && pi) {
+            let r = 0, i = 0;
             for (let j = 0; j < 3; j++) {
-              cr += xr[j] * pr[j] + xi[j] * pi[j];
-              ci += xi[j] * pr[j] - xr[j] * pi[j];
+              r += xr[j] * pr[j] + xi[j] * pi[j];
+              i += xi[j] * pr[j] - xr[j] * pi[j];
             }
+            cr += r;
+            ci += i;
+            mag += Math.hypot(r, i);
+          }
           pr = xr;
           pi = xi;
         }
@@ -468,9 +484,11 @@ export class Receiver {
       const downs: number[] = [];
       for (let k = 0; k < this.cfg.nDown; k++) downs.push(B + k * P);
       acc(downs, 'down');
-      const cyc = Math.atan2(ci, cr) / (2 * Math.PI); // Δf·P modulo 1
-      const coarseCyc = (delta * this.bw * P) / N;
-      delta = ((cyc + Math.round(coarseCyc - cyc)) * N) / (this.bw * P);
+      if (Math.hypot(cr, ci) >= FINE_CFO_COHERENCE * mag) {
+        const cyc = Math.atan2(ci, cr) / (2 * Math.PI); // Δf·P modulo 1
+        const coarseCyc = (delta * this.bw * P) / N;
+        delta = ((cyc + Math.round(coarseCyc - cyc)) * N) / (this.bw * P);
+      }
     }
     this.cfoHz = (delta * this.bw) / N;
     this.cfoHz0 = this.cfoHz;
