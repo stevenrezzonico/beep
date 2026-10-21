@@ -30,9 +30,9 @@ packet, and reports per-packet diagnostics. Why these choices: see
 >
 > | Profile | AWGN | Simulated rooms |
 > |---|---|---|
-> | long-range | −12.7 dB | −8.3…−10 dB |
-> | balanced | −11.0 dB | −7.5…−8 dB |
-> | fast | −5.2 dB | −1.3…+2 dB |
+> | long-range | −14.2 dB | −10.8…−11.2 dB |
+> | balanced | −12.2 dB | −8.1…−8.8 dB |
+> | fast | −5.0 dB | −2.1…+2.5 dB |
 >
 > - No silent corruption occurred in any simulated condition.
 > - No false packets occurred in a 3-hour noise soak.
@@ -82,7 +82,7 @@ npm run build        # static site in dist/ (any static host works)
 ```sh
 npm run sim                          # all studies, full statistics (tens of minutes), writes sim/results/
 npm run sim:quick                    # reduced sweeps (what CI runs), writes sim/out/
-npm run sim -- --only candidates     # or: modem | preamble | falsealarm | smoothing
+npm run sim -- --only candidates     # or: modem | preamble | falsealarm | fec | tracking | loss | smoothing
 npx tsx protocol/text/eval.ts        # text codec comparison
 ```
 

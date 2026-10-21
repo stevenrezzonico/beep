@@ -308,9 +308,10 @@ Result, against the final pre-fix sweep: long-range −12.7 → −14.2 dB (PER 
 2.0 dB (AWGN) to 2.7 dB (far room) more sensitive than balanced. Hand-held sway performance is
 unchanged.
 
-**Limit.** Long symbols (SF7/SF8, 98–197 ms) cannot follow sway of ±0.1 m/s every 2 s: the
-velocity changes within one symbol. Only the fast profile survives that (`modem.md`, hand-held
-column). Long-range and balanced need the devices roughly at rest.
+**Limit.** Long-range's 197 ms symbols cannot follow sway of ±0.1 m/s every 2 s: the velocity
+changes within one symbol. Balanced and fast decode under that sway at about 0 dB (`modem.md`,
+hand-held column; fast's 1.7 dB cell differs from the pre-fix −0.0 dB by one packet of 30 at
+2 dB). Long-range needs the devices roughly at rest.
 
 ### D-013 Payload FEC: K=7 rate-½ convolutional, soft Viterbi, bit-interleaved (BICM) — *sim*
 
