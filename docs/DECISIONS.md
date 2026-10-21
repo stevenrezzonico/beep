@@ -250,8 +250,10 @@ it the boundary drifts ε·N chips per symbol and biases the estimate (measured:
 These statistics resolve differences of about 1 dB, not finer. The table predates the ε and
 1/g changes below.
 
-**Re-checked after those changes** ([`tracking.md`](../sim/results/tracking.md) has the full
-sweep). Targeted runs, 30 packets each, packets OK at 0 / −3 dB for fast under hand-held sway:
+**Re-checked after those changes.** In the full sweep ([`tracking.md`](../sim/results/tracking.md),
+20 packets per point, 2 dB steps), the chosen loop is best or tied in every column: long-range
+AWGN −14.1 dB, balanced under sway −0.4 dB, fast under sway −2.0 dB. Only the fast gains
+1/0.1 lose at long range (−11.0 dB). Targeted runs, 30 packets each, packets OK at 0 / −3 dB for fast under hand-held sway:
 the original receiver 27 / 17, the current one 26 / 16, the current one without the timing
 integral (`trackTI` = 0) 18 / 8. The integral is still needed under sway, and the defaults stay.
 
