@@ -251,9 +251,9 @@ These statistics resolve differences of about 1 dB, not finer. The table predate
 1/g changes below.
 
 **Re-checked after those changes.** In the full sweep ([`tracking.md`](../sim/results/tracking.md),
-20 packets per point, 2 dB steps), the chosen loop is best or tied in every column: long-range
-AWGN −14.1 dB, balanced under sway −0.4 dB, fast under sway −2.0 dB. Only the fast gains
-1/0.1 lose at long range (−11.0 dB). Targeted runs, 30 packets each, packets OK at 0 / −3 dB for fast under hand-held sway:
+20 packets per point, 2 dB steps), the chosen loop reaches long-range AWGN −14.1 dB, balanced
+under sway −0.4 dB and fast under sway −2.0 dB. The fast gains 1/0.1 do better on balanced under
+sway (−2.0 dB) but lose 3 dB at long range (−11.0 dB), and distance comes first. Targeted runs, 30 packets each, packets OK at 0 / −3 dB for fast under hand-held sway:
 the original receiver 27 / 17, the current one 26 / 16, the current one without the timing
 integral (`trackTI` = 0) 18 / 8. The integral is still needed under sway, and the defaults stay.
 
