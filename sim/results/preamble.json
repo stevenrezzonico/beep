@@ -18,30 +18,30 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -8.30005769313974,
-    "meanAbsVelErr": 0.0034735362564592355
+    "meanSnrEst": -8.306230559931901,
+    "meanAbsVelErr": 0.002578322780374162
    },
    {
     "snr": -9,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 49,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -9.33333415284489,
-    "meanAbsVelErr": 0.004986950911755695
+    "per": 0,
+    "meanSnrEst": -9.338343787593246,
+    "meanAbsVelErr": 0.0030864134310294488
    },
    {
     "snr": -10,
     "sent": 50,
     "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -10.337216664276378,
-    "meanAbsVelErr": 0.005366765538162749
+    "per": 0,
+    "meanSnrEst": -10.368916985033188,
+    "meanAbsVelErr": 0.0038344472057960976
    },
    {
     "snr": -11,
@@ -51,69 +51,69 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -11.346999078503597,
-    "meanAbsVelErr": 0.0060063119929818646
+    "meanSnrEst": -11.384428610364534,
+    "meanAbsVelErr": 0.004621030588394229
    },
    {
     "snr": -12,
     "sent": 50,
-    "synced": 48,
-    "headerOk": 45,
-    "ok": 45,
+    "synced": 47,
+    "headerOk": 47,
+    "ok": 47,
     "corrupt": 0,
-    "per": 0.09999999999999998,
-    "meanSnrEst": -12.479212615999522,
-    "meanAbsVelErr": 0.005071961593713514
+    "per": 0.06000000000000005,
+    "meanSnrEst": -12.494978526184958,
+    "meanAbsVelErr": 0.006104486768402943
    },
    {
     "snr": -13,
     "sent": 50,
-    "synced": 46,
-    "headerOk": 45,
-    "ok": 45,
+    "synced": 48,
+    "headerOk": 48,
+    "ok": 48,
     "corrupt": 0,
-    "per": 0.09999999999999998,
-    "meanSnrEst": -13.42954411340299,
-    "meanAbsVelErr": 0.005735894593423887
+    "per": 0.040000000000000036,
+    "meanSnrEst": -13.435085557410753,
+    "meanAbsVelErr": 0.005650870002979185
    },
    {
     "snr": -14,
     "sent": 50,
-    "synced": 30,
-    "headerOk": 30,
-    "ok": 30,
+    "synced": 31,
+    "headerOk": 31,
+    "ok": 31,
     "corrupt": 0,
-    "per": 0.4,
-    "meanSnrEst": -14.322132912023909,
-    "meanAbsVelErr": 0.005573467163912217
+    "per": 0.38,
+    "meanSnrEst": -14.275273817526493,
+    "meanAbsVelErr": 0.005738320133743185
    },
    {
     "snr": -15,
     "sent": 50,
-    "synced": 22,
-    "headerOk": 22,
+    "synced": 24,
+    "headerOk": 24,
     "ok": 14,
     "corrupt": 0,
     "per": 0.72,
-    "meanSnrEst": -15.095677800238986,
-    "meanAbsVelErr": 0.004260034565314252
+    "meanSnrEst": -15.161753635033978,
+    "meanAbsVelErr": 0.004559066131938913
    },
    {
     "snr": -16,
     "sent": 50,
-    "synced": 7,
+    "synced": 8,
     "headerOk": 6,
     "ok": 1,
     "corrupt": 0,
     "per": 0.98,
-    "meanSnrEst": -15.909316406629731,
+    "meanSnrEst": -15.946675265812736,
     "meanAbsVelErr": 0.00760888729749501
    },
    {
     "snr": -17,
     "sent": 50,
     "synced": 3,
-    "headerOk": 2,
+    "headerOk": 1,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -148,23 +148,23 @@
     "snr": -8,
     "sent": 50,
     "synced": 50,
-    "headerOk": 48,
-    "ok": 48,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -12.234274076485455,
-    "meanAbsVelErr": 0.03345000563649687
+    "per": 0,
+    "meanSnrEst": -12.229014662870416,
+    "meanAbsVelErr": 0.033480618469777665
    },
    {
     "snr": -9,
     "sent": 50,
-    "synced": 46,
-    "headerOk": 45,
-    "ok": 45,
+    "synced": 47,
+    "headerOk": 47,
+    "ok": 47,
     "corrupt": 0,
-    "per": 0.09999999999999998,
-    "meanSnrEst": -13.126871702317414,
-    "meanAbsVelErr": 0.03317009879774981
+    "per": 0.06000000000000005,
+    "meanSnrEst": -13.156575601928566,
+    "meanAbsVelErr": 0.03335351578726293
    },
    {
     "snr": -10,
@@ -174,36 +174,36 @@
     "ok": 35,
     "corrupt": 0,
     "per": 0.30000000000000004,
-    "meanSnrEst": -14.034219742404916,
-    "meanAbsVelErr": 0.034246976073163515
+    "meanSnrEst": -14.029980341407612,
+    "meanAbsVelErr": 0.035843963873709216
    },
    {
     "snr": -11,
     "sent": 50,
-    "synced": 26,
+    "synced": 28,
     "headerOk": 26,
     "ok": 22,
     "corrupt": 0,
     "per": 0.56,
-    "meanSnrEst": -14.794563518186397,
-    "meanAbsVelErr": 0.03624037301137323
+    "meanSnrEst": -14.787273906791222,
+    "meanAbsVelErr": 0.03648018954629346
    },
    {
     "snr": -12,
     "sent": 50,
     "synced": 14,
-    "headerOk": 14,
-    "ok": 4,
+    "headerOk": 13,
+    "ok": 5,
     "corrupt": 0,
-    "per": 0.92,
-    "meanSnrEst": -15.59279680449448,
-    "meanAbsVelErr": 0.0333507135018845
+    "per": 0.9,
+    "meanSnrEst": -15.58409272100506,
+    "meanAbsVelErr": 0.03559477096969749
    },
    {
     "snr": -13,
     "sent": 50,
-    "synced": 4,
-    "headerOk": 4,
+    "synced": 3,
+    "headerOk": 3,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -242,8 +242,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -8.282884632677778,
-    "meanAbsVelErr": 0.003881266860340255
+    "meanSnrEst": -8.29821805037473,
+    "meanAbsVelErr": 0.0032849413246016767
    },
    {
     "snr": -9,
@@ -253,8 +253,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -9.396839190619,
-    "meanAbsVelErr": 0.0049673913975995425
+    "meanSnrEst": -9.42236571737185,
+    "meanAbsVelErr": 0.0032296972296557524
    },
    {
     "snr": -10,
@@ -264,180 +264,79 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -10.302174139475344,
-    "meanAbsVelErr": 0.004379610842428595
+    "meanSnrEst": -10.337003617456435,
+    "meanAbsVelErr": 0.002851868067952931
    },
    {
     "snr": -11,
     "sent": 50,
     "synced": 50,
-    "headerOk": 47,
-    "ok": 46,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.07999999999999996,
-    "meanSnrEst": -11.347521947869705,
-    "meanAbsVelErr": 0.0059684184861937386
+    "per": 0,
+    "meanSnrEst": -11.394085560103967,
+    "meanAbsVelErr": 0.003211574241694433
    },
    {
     "snr": -12,
     "sent": 50,
     "synced": 50,
-    "headerOk": 49,
-    "ok": 49,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -12.344758151745902,
-    "meanAbsVelErr": 0.00585580714059959
+    "per": 0,
+    "meanSnrEst": -12.402537252700485,
+    "meanAbsVelErr": 0.004765747100111647
    },
    {
     "snr": -13,
     "sent": 50,
     "synced": 50,
-    "headerOk": 47,
-    "ok": 46,
+    "headerOk": 50,
+    "ok": 49,
     "corrupt": 0,
-    "per": 0.07999999999999996,
-    "meanSnrEst": -13.522059395992104,
-    "meanAbsVelErr": 0.005628375107512963
+    "per": 0.020000000000000018,
+    "meanSnrEst": -13.504926661833272,
+    "meanAbsVelErr": 0.005057237419558464
    },
    {
     "snr": -14,
     "sent": 50,
-    "synced": 46,
-    "headerOk": 42,
-    "ok": 42,
+    "synced": 48,
+    "headerOk": 44,
+    "ok": 43,
     "corrupt": 0,
-    "per": 0.16000000000000003,
-    "meanSnrEst": -14.453623873031503,
-    "meanAbsVelErr": 0.005593376399814158
+    "per": 0.14,
+    "meanSnrEst": -14.411594557560655,
+    "meanAbsVelErr": 0.004876129917183674
    },
    {
     "snr": -15,
     "sent": 50,
-    "synced": 35,
-    "headerOk": 31,
-    "ok": 24,
+    "synced": 37,
+    "headerOk": 33,
+    "ok": 26,
     "corrupt": 0,
-    "per": 0.52,
-    "meanSnrEst": -15.112719175507882,
-    "meanAbsVelErr": 0.005471400002141747
+    "per": 0.48,
+    "meanSnrEst": -15.106096381335792,
+    "meanAbsVelErr": 0.006325398327260923
    },
    {
     "snr": -16,
     "sent": 50,
     "synced": 24,
-    "headerOk": 21,
-    "ok": 4,
+    "headerOk": 18,
+    "ok": 3,
     "corrupt": 0,
-    "per": 0.92,
-    "meanSnrEst": -15.746931614974253,
-    "meanAbsVelErr": 0.0011998252728021097
+    "per": 0.94,
+    "meanSnrEst": -15.79529340401965,
+    "meanAbsVelErr": 0.0010246224930989438
    },
    {
     "snr": -17,
     "sent": 50,
     "synced": 6,
-    "headerOk": 6,
-    "ok": 0,
-    "corrupt": 0,
-    "per": 1,
-    "meanSnrEst": null,
-    "meanAbsVelErr": null
-   },
-   {
-    "snr": -18,
-    "sent": 50,
-    "synced": 0,
-    "headerOk": 0,
-    "ok": 0,
-    "corrupt": 0,
-    "per": 1,
-    "meanSnrEst": null,
-    "meanAbsVelErr": null
-   }
-  ]
- },
- {
-  "label": "SF8 6↑ 4↓ hdr 6",
-  "cfg": {
-   "sfPre": 8,
-   "nUp": 6,
-   "nDown": 4,
-   "nHeader": 6,
-   "detWindows": 5
-  },
-  "cond": "room-far",
-  "pts": [
-   {
-    "snr": -8,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 50,
-    "ok": 50,
-    "corrupt": 0,
-    "per": 0,
-    "meanSnrEst": -12.248042331507266,
-    "meanAbsVelErr": 0.03229075976710447
-   },
-   {
-    "snr": -9,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 48,
-    "ok": 48,
-    "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -13.168345479916082,
-    "meanAbsVelErr": 0.033506646840623294
-   },
-   {
-    "snr": -10,
-    "sent": 50,
-    "synced": 48,
-    "headerOk": 47,
-    "ok": 46,
-    "corrupt": 0,
-    "per": 0.07999999999999996,
-    "meanSnrEst": -13.980931576573099,
-    "meanAbsVelErr": 0.034230555584009614
-   },
-   {
-    "snr": -11,
-    "sent": 50,
-    "synced": 47,
-    "headerOk": 42,
-    "ok": 38,
-    "corrupt": 0,
-    "per": 0.24,
-    "meanSnrEst": -14.83961697141754,
-    "meanAbsVelErr": 0.03340302124252091
-   },
-   {
-    "snr": -12,
-    "sent": 50,
-    "synced": 27,
-    "headerOk": 25,
-    "ok": 11,
-    "corrupt": 0,
-    "per": 0.78,
-    "meanSnrEst": -15.384147041336655,
-    "meanAbsVelErr": 0.03322432257853444
-   },
-   {
-    "snr": -13,
-    "sent": 50,
-    "synced": 11,
-    "headerOk": 10,
-    "ok": 1,
-    "corrupt": 0,
-    "per": 0.98,
-    "meanSnrEst": -15.594137741254816,
-    "meanAbsVelErr": 0.029574589114224427
-   },
-   {
-    "snr": -14,
-    "sent": 50,
-    "synced": 2,
     "headerOk": 2,
     "ok": 0,
     "corrupt": 0,
@@ -446,6 +345,107 @@
     "meanAbsVelErr": null
    },
    {
+    "snr": -18,
+    "sent": 50,
+    "synced": 0,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 6↑ 4↓ hdr 6",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 6,
+   "nDown": 4,
+   "nHeader": 6,
+   "detWindows": 5
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -12.278365115896975,
+    "meanAbsVelErr": 0.035354214523937874
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -13.17954488153685,
+    "meanAbsVelErr": 0.03363121892473197
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 49,
+    "headerOk": 49,
+    "ok": 49,
+    "corrupt": 0,
+    "per": 0.020000000000000018,
+    "meanSnrEst": -14.008322635487618,
+    "meanAbsVelErr": 0.034130238135519644
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 47,
+    "headerOk": 43,
+    "ok": 39,
+    "corrupt": 0,
+    "per": 0.21999999999999997,
+    "meanSnrEst": -14.784942885241835,
+    "meanAbsVelErr": 0.03396087736651807
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 27,
+    "headerOk": 21,
+    "ok": 12,
+    "corrupt": 0,
+    "per": 0.76,
+    "meanSnrEst": -15.515666821656884,
+    "meanAbsVelErr": 0.03244518359001374
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 11,
+    "headerOk": 6,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -15.597590501331663,
+    "meanAbsVelErr": 0.029574589114224427
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 3,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
     "snr": -15,
     "sent": 50,
     "synced": 0,
@@ -477,8 +477,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -8.273614311115008,
-    "meanAbsVelErr": 0.004305598341550272
+    "meanSnrEst": -8.286117673978715,
+    "meanAbsVelErr": 0.0028191936649564434
    },
    {
     "snr": -9,
@@ -488,8 +488,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -9.279949391146484,
-    "meanAbsVelErr": 0.003354484030616609
+    "meanSnrEst": -9.28543922914985,
+    "meanAbsVelErr": 0.0021337478979719577
    },
    {
     "snr": -10,
@@ -499,80 +499,80 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -10.238607616690489,
-    "meanAbsVelErr": 0.005448707113111973
+    "meanSnrEst": -10.266449024176195,
+    "meanAbsVelErr": 0.003330165206949937
    },
    {
     "snr": -11,
     "sent": 50,
     "synced": 50,
-    "headerOk": 47,
-    "ok": 46,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.07999999999999996,
-    "meanSnrEst": -11.293491513404843,
-    "meanAbsVelErr": 0.005089142019233386
+    "per": 0,
+    "meanSnrEst": -11.35038311713711,
+    "meanAbsVelErr": 0.004245412714135113
    },
    {
     "snr": -12,
     "sent": 50,
     "synced": 50,
-    "headerOk": 48,
-    "ok": 45,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.09999999999999998,
-    "meanSnrEst": -12.454346781070525,
-    "meanAbsVelErr": 0.00560645712844984
+    "per": 0,
+    "meanSnrEst": -12.480601440045014,
+    "meanAbsVelErr": 0.0037646723497551456
    },
    {
     "snr": -13,
     "sent": 50,
     "synced": 50,
-    "headerOk": 47,
-    "ok": 46,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.07999999999999996,
-    "meanSnrEst": -13.366312740885867,
-    "meanAbsVelErr": 0.0052371409678960016
+    "per": 0,
+    "meanSnrEst": -13.361581742878895,
+    "meanAbsVelErr": 0.004662654809496099
    },
    {
     "snr": -14,
     "sent": 50,
     "synced": 47,
-    "headerOk": 44,
-    "ok": 42,
+    "headerOk": 47,
+    "ok": 45,
     "corrupt": 0,
-    "per": 0.16000000000000003,
-    "meanSnrEst": -14.411086719670797,
-    "meanAbsVelErr": 0.005127547020396357
+    "per": 0.09999999999999998,
+    "meanSnrEst": -14.418922723239406,
+    "meanAbsVelErr": 0.004412555457504691
    },
    {
     "snr": -15,
     "sent": 50,
-    "synced": 39,
+    "synced": 40,
     "headerOk": 33,
-    "ok": 24,
+    "ok": 21,
     "corrupt": 0,
-    "per": 0.52,
-    "meanSnrEst": -15.264038210700603,
-    "meanAbsVelErr": 0.004761875294121518
+    "per": 0.5800000000000001,
+    "meanSnrEst": -15.158687342812124,
+    "meanAbsVelErr": 0.0045147388653616295
    },
    {
     "snr": -16,
     "sent": 50,
     "synced": 21,
-    "headerOk": 19,
-    "ok": 6,
+    "headerOk": 13,
+    "ok": 5,
     "corrupt": 0,
-    "per": 0.88,
-    "meanSnrEst": -15.662320693157625,
-    "meanAbsVelErr": 0.0029974005808845725
+    "per": 0.9,
+    "meanSnrEst": -15.668950200103279,
+    "meanAbsVelErr": 0.0028101733621136047
    },
    {
     "snr": -17,
     "sent": 50,
     "synced": 8,
-    "headerOk": 8,
+    "headerOk": 2,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -607,302 +607,78 @@
     "snr": -8,
     "sent": 50,
     "synced": 50,
-    "headerOk": 48,
-    "ok": 47,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.06000000000000005,
-    "meanSnrEst": -12.234753242240751,
-    "meanAbsVelErr": 0.032496873256628526
+    "per": 0,
+    "meanSnrEst": -12.228516467543663,
+    "meanAbsVelErr": 0.033554352766520676
    },
    {
     "snr": -9,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 49,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -13.165420874277425,
-    "meanAbsVelErr": 0.032868653871154445
+    "per": 0,
+    "meanSnrEst": -13.15247872740029,
+    "meanAbsVelErr": 0.03345602661725684
    },
    {
     "snr": -10,
     "sent": 50,
     "synced": 47,
-    "headerOk": 44,
-    "ok": 42,
+    "headerOk": 47,
+    "ok": 47,
     "corrupt": 0,
-    "per": 0.16000000000000003,
-    "meanSnrEst": -13.990496114830343,
-    "meanAbsVelErr": 0.03436694471657919
+    "per": 0.06000000000000005,
+    "meanSnrEst": -14.02508892150442,
+    "meanAbsVelErr": 0.03465062585402469
    },
    {
     "snr": -11,
     "sent": 50,
-    "synced": 44,
-    "headerOk": 40,
-    "ok": 35,
+    "synced": 45,
+    "headerOk": 43,
+    "ok": 36,
     "corrupt": 0,
-    "per": 0.30000000000000004,
-    "meanSnrEst": -14.86206804378781,
-    "meanAbsVelErr": 0.034307339021073385
+    "per": 0.28,
+    "meanSnrEst": -14.89767935791995,
+    "meanAbsVelErr": 0.03316565089903826
    },
    {
     "snr": -12,
     "sent": 50,
-    "synced": 25,
-    "headerOk": 22,
-    "ok": 8,
+    "synced": 27,
+    "headerOk": 24,
+    "ok": 12,
     "corrupt": 0,
-    "per": 0.84,
-    "meanSnrEst": -15.515976149677929,
-    "meanAbsVelErr": 0.031094734651403867
+    "per": 0.76,
+    "meanSnrEst": -15.517758750152701,
+    "meanAbsVelErr": 0.035562183554018904
    },
    {
     "snr": -13,
     "sent": 50,
     "synced": 10,
-    "headerOk": 9,
-    "ok": 0,
+    "headerOk": 5,
+    "ok": 1,
     "corrupt": 0,
-    "per": 1,
-    "meanSnrEst": null,
-    "meanAbsVelErr": null
+    "per": 0.98,
+    "meanSnrEst": -16.028217526429138,
+    "meanAbsVelErr": 0.032157754594039765
    },
    {
     "snr": -14,
     "sent": 50,
     "synced": 5,
-    "headerOk": 3,
+    "headerOk": 1,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
     "meanSnrEst": null,
     "meanAbsVelErr": null
-   }
-  ]
- },
- {
-  "label": "SF8 8↑ 4↓ hdr 8",
-  "cfg": {
-   "sfPre": 8,
-   "nUp": 8,
-   "nDown": 4,
-   "nHeader": 8,
-   "detWindows": 7
-  },
-  "cond": "awgn",
-  "pts": [
-   {
-    "snr": -8,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 50,
-    "ok": 49,
-    "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -8.290815617749223,
-    "meanAbsVelErr": 0.004623029264151857
-   },
-   {
-    "snr": -9,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 49,
-    "ok": 49,
-    "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -9.265044581623485,
-    "meanAbsVelErr": 0.004323008893104989
-   },
-   {
-    "snr": -10,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
-    "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -10.343902749409008,
-    "meanAbsVelErr": 0.005076599613501111
-   },
-   {
-    "snr": -11,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 49,
-    "ok": 47,
-    "corrupt": 0,
-    "per": 0.06000000000000005,
-    "meanSnrEst": -11.341908227617933,
-    "meanAbsVelErr": 0.005331903434359147
-   },
-   {
-    "snr": -12,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
-    "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -12.308826265886816,
-    "meanAbsVelErr": 0.004843941999731587
-   },
-   {
-    "snr": -13,
-    "sent": 50,
-    "synced": 49,
-    "headerOk": 47,
-    "ok": 47,
-    "corrupt": 0,
-    "per": 0.06000000000000005,
-    "meanSnrEst": -13.397272484223427,
-    "meanAbsVelErr": 0.004818115686392268
-   },
-   {
-    "snr": -14,
-    "sent": 50,
-    "synced": 49,
-    "headerOk": 48,
-    "ok": 46,
-    "corrupt": 0,
-    "per": 0.07999999999999996,
-    "meanSnrEst": -14.451784641572646,
-    "meanAbsVelErr": 0.004300825333745759
-   },
-   {
-    "snr": -15,
-    "sent": 50,
-    "synced": 45,
-    "headerOk": 42,
-    "ok": 34,
-    "corrupt": 0,
-    "per": 0.31999999999999995,
-    "meanSnrEst": -15.229377744704754,
-    "meanAbsVelErr": 0.005431353209701243
-   },
-   {
-    "snr": -16,
-    "sent": 50,
-    "synced": 34,
-    "headerOk": 31,
-    "ok": 11,
-    "corrupt": 0,
-    "per": 0.78,
-    "meanSnrEst": -15.764862010410651,
-    "meanAbsVelErr": 0.003543618599274269
-   },
-   {
-    "snr": -17,
-    "sent": 50,
-    "synced": 7,
-    "headerOk": 6,
-    "ok": 0,
-    "corrupt": 0,
-    "per": 1,
-    "meanSnrEst": null,
-    "meanAbsVelErr": null
-   },
-   {
-    "snr": -18,
-    "sent": 50,
-    "synced": 3,
-    "headerOk": 3,
-    "ok": 0,
-    "corrupt": 0,
-    "per": 1,
-    "meanSnrEst": null,
-    "meanAbsVelErr": null
-   }
-  ]
- },
- {
-  "label": "SF8 8↑ 4↓ hdr 8",
-  "cfg": {
-   "sfPre": 8,
-   "nUp": 8,
-   "nDown": 4,
-   "nHeader": 8,
-   "detWindows": 7
-  },
-  "cond": "room-far",
-  "pts": [
-   {
-    "snr": -8,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
-    "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -12.246232423337979,
-    "meanAbsVelErr": 0.034624532762076825
-   },
-   {
-    "snr": -9,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
-    "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -13.150222120757993,
-    "meanAbsVelErr": 0.03426516191176078
-   },
-   {
-    "snr": -10,
-    "sent": 50,
-    "synced": 50,
-    "headerOk": 48,
-    "ok": 47,
-    "corrupt": 0,
-    "per": 0.06000000000000005,
-    "meanSnrEst": -14.080854452768715,
-    "meanAbsVelErr": 0.03401911113973777
-   },
-   {
-    "snr": -11,
-    "sent": 50,
-    "synced": 47,
-    "headerOk": 42,
-    "ok": 41,
-    "corrupt": 0,
-    "per": 0.18000000000000005,
-    "meanSnrEst": -14.805698839823009,
-    "meanAbsVelErr": 0.033394009418915085
-   },
-   {
-    "snr": -12,
-    "sent": 50,
-    "synced": 37,
-    "headerOk": 33,
-    "ok": 14,
-    "corrupt": 0,
-    "per": 0.72,
-    "meanSnrEst": -15.379575768642122,
-    "meanAbsVelErr": 0.035536792263566985
-   },
-   {
-    "snr": -13,
-    "sent": 50,
-    "synced": 19,
-    "headerOk": 14,
-    "ok": 1,
-    "corrupt": 0,
-    "per": 0.98,
-    "meanSnrEst": -16.36098946886423,
-    "meanAbsVelErr": 0.031843263872442476
-   },
-   {
-    "snr": -14,
-    "sent": 50,
-    "synced": 3,
-    "headerOk": 3,
-    "ok": 1,
-    "corrupt": 0,
-    "per": 0.98,
-    "meanSnrEst": -15.815657246660294,
-    "meanAbsVelErr": 0.042388897559620345
    },
    {
     "snr": -15,
@@ -914,11 +690,235 @@
     "per": 1,
     "meanSnrEst": null,
     "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 8↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 8,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 7
+  },
+  "cond": "awgn",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -8.317469494381589,
+    "meanAbsVelErr": 0.0033689387872047755
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -9.285978909305328,
+    "meanAbsVelErr": 0.003102700351133462
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -10.384197569984032,
+    "meanAbsVelErr": 0.003400671068011182
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -11.34099849879726,
+    "meanAbsVelErr": 0.002928676355799542
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -12.38372514518759,
+    "meanAbsVelErr": 0.004452311020064342
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -13.44925865242599,
+    "meanAbsVelErr": 0.00426150385789811
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 49,
+    "headerOk": 49,
+    "ok": 46,
+    "corrupt": 0,
+    "per": 0.07999999999999996,
+    "meanSnrEst": -14.483768713690989,
+    "meanAbsVelErr": 0.0038660631708872517
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 45,
+    "headerOk": 38,
+    "ok": 32,
+    "corrupt": 0,
+    "per": 0.36,
+    "meanSnrEst": -15.203337000520103,
+    "meanAbsVelErr": 0.004595923031019215
    },
    {
     "snr": -16,
     "sent": 50,
-    "synced": 0,
+    "synced": 33,
+    "headerOk": 22,
+    "ok": 8,
+    "corrupt": 0,
+    "per": 0.84,
+    "meanSnrEst": -15.681649092533625,
+    "meanAbsVelErr": 0.004523022197721488
+   },
+   {
+    "snr": -17,
+    "sent": 50,
+    "synced": 7,
+    "headerOk": 4,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -18,
+    "sent": 50,
+    "synced": 3,
+    "headerOk": 0,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   }
+  ]
+ },
+ {
+  "label": "SF8 8↑ 4↓ hdr 8",
+  "cfg": {
+   "sfPre": 8,
+   "nUp": 8,
+   "nDown": 4,
+   "nHeader": 8,
+   "detWindows": 7
+  },
+  "cond": "room-far",
+  "pts": [
+   {
+    "snr": -8,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -12.2401405971505,
+    "meanAbsVelErr": 0.03388542530163659
+   },
+   {
+    "snr": -9,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -13.165526820436218,
+    "meanAbsVelErr": 0.03477181767989118
+   },
+   {
+    "snr": -10,
+    "sent": 50,
+    "synced": 50,
+    "headerOk": 50,
+    "ok": 50,
+    "corrupt": 0,
+    "per": 0,
+    "meanSnrEst": -14.057774244283616,
+    "meanAbsVelErr": 0.03359967424677618
+   },
+   {
+    "snr": -11,
+    "sent": 50,
+    "synced": 47,
+    "headerOk": 46,
+    "ok": 42,
+    "corrupt": 0,
+    "per": 0.16000000000000003,
+    "meanSnrEst": -14.820594359288872,
+    "meanAbsVelErr": 0.0336458803867646
+   },
+   {
+    "snr": -12,
+    "sent": 50,
+    "synced": 36,
+    "headerOk": 27,
+    "ok": 12,
+    "corrupt": 0,
+    "per": 0.76,
+    "meanSnrEst": -15.414278022325066,
+    "meanAbsVelErr": 0.03680832674038425
+   },
+   {
+    "snr": -13,
+    "sent": 50,
+    "synced": 18,
+    "headerOk": 5,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -16.083640600777176,
+    "meanAbsVelErr": 0.023090933523512408
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 5,
+    "headerOk": 2,
+    "ok": 0,
+    "corrupt": 0,
+    "per": 1,
+    "meanSnrEst": null,
+    "meanAbsVelErr": null
+   },
+   {
+    "snr": -15,
+    "sent": 50,
+    "synced": 2,
     "headerOk": 0,
     "ok": 0,
     "corrupt": 0,
@@ -944,105 +944,105 @@
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 49,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -8.284546615854866,
-    "meanAbsVelErr": 0.004611491382382382
+    "per": 0,
+    "meanSnrEst": -8.318720098431163,
+    "meanAbsVelErr": 0.004091568994648376
    },
    {
     "snr": -9,
     "sent": 50,
     "synced": 50,
-    "headerOk": 48,
-    "ok": 48,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -9.288926001694742,
-    "meanAbsVelErr": 0.00430875292573708
+    "per": 0,
+    "meanSnrEst": -9.308824880089599,
+    "meanAbsVelErr": 0.004303419665453504
    },
    {
     "snr": -10,
     "sent": 50,
     "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -10.35252520023174,
-    "meanAbsVelErr": 0.004850943708342587
+    "per": 0,
+    "meanSnrEst": -10.417447557818724,
+    "meanAbsVelErr": 0.0038943177063471314
    },
    {
     "snr": -11,
     "sent": 50,
     "synced": 50,
-    "headerOk": 46,
-    "ok": 44,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.12,
-    "meanSnrEst": -11.32239035488343,
-    "meanAbsVelErr": 0.006710785739677583
+    "per": 0,
+    "meanSnrEst": -11.360752901319056,
+    "meanAbsVelErr": 0.004668319443140344
    },
    {
     "snr": -12,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 48,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -12.407831789036747,
-    "meanAbsVelErr": 0.0056368678986588525
+    "per": 0,
+    "meanSnrEst": -12.473883567470187,
+    "meanAbsVelErr": 0.004792176375336139
    },
    {
     "snr": -13,
     "sent": 50,
     "synced": 50,
-    "headerOk": 46,
-    "ok": 44,
+    "headerOk": 50,
+    "ok": 48,
     "corrupt": 0,
-    "per": 0.12,
-    "meanSnrEst": -13.51933775054685,
-    "meanAbsVelErr": 0.006036974887233606
+    "per": 0.040000000000000036,
+    "meanSnrEst": -13.536627313893282,
+    "meanAbsVelErr": 0.0055381920473436255
    },
    {
     "snr": -14,
     "sent": 50,
     "synced": 49,
-    "headerOk": 44,
-    "ok": 42,
+    "headerOk": 49,
+    "ok": 49,
     "corrupt": 0,
-    "per": 0.16000000000000003,
-    "meanSnrEst": -14.345041478574025,
-    "meanAbsVelErr": 0.005305269886372299
+    "per": 0.020000000000000018,
+    "meanSnrEst": -14.387179282876945,
+    "meanAbsVelErr": 0.005521573395990254
    },
    {
     "snr": -15,
     "sent": 50,
-    "synced": 46,
-    "headerOk": 42,
-    "ok": 28,
+    "synced": 47,
+    "headerOk": 43,
+    "ok": 31,
     "corrupt": 0,
-    "per": 0.43999999999999995,
-    "meanSnrEst": -15.124453582706623,
-    "meanAbsVelErr": 0.0044607217301079
+    "per": 0.38,
+    "meanSnrEst": -15.212194289459926,
+    "meanAbsVelErr": 0.004558873201191109
    },
    {
     "snr": -16,
     "sent": 50,
-    "synced": 33,
-    "headerOk": 31,
-    "ok": 12,
+    "synced": 34,
+    "headerOk": 17,
+    "ok": 8,
     "corrupt": 0,
-    "per": 0.76,
-    "meanSnrEst": -15.791032413766535,
-    "meanAbsVelErr": 0.004301110255030848
+    "per": 0.84,
+    "meanSnrEst": -15.783798022165406,
+    "meanAbsVelErr": 0.003355744869379667
    },
    {
     "snr": -17,
     "sent": 50,
-    "synced": 16,
-    "headerOk": 12,
+    "synced": 17,
+    "headerOk": 8,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1053,7 +1053,7 @@
     "snr": -18,
     "sent": 50,
     "synced": 6,
-    "headerOk": 3,
+    "headerOk": 1,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1077,62 +1077,73 @@
     "snr": -8,
     "sent": 50,
     "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -12.30036799062473,
-    "meanAbsVelErr": 0.033709652817773446
+    "per": 0,
+    "meanSnrEst": -12.354713252396008,
+    "meanAbsVelErr": 0.03552024769881181
    },
    {
     "snr": -9,
     "sent": 50,
     "synced": 50,
-    "headerOk": 48,
-    "ok": 47,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.06000000000000005,
-    "meanSnrEst": -13.158970832781177,
-    "meanAbsVelErr": 0.0327163044003619
+    "per": 0,
+    "meanSnrEst": -13.172135684994586,
+    "meanAbsVelErr": 0.03273343813410624
    },
    {
     "snr": -10,
     "sent": 50,
     "synced": 50,
-    "headerOk": 43,
-    "ok": 43,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.14,
-    "meanSnrEst": -14.08233410504595,
-    "meanAbsVelErr": 0.034675275607462454
+    "per": 0,
+    "meanSnrEst": -14.121315071612987,
+    "meanAbsVelErr": 0.03416744475979301
    },
    {
     "snr": -11,
     "sent": 50,
     "synced": 48,
-    "headerOk": 43,
-    "ok": 38,
+    "headerOk": 44,
+    "ok": 40,
     "corrupt": 0,
-    "per": 0.24,
-    "meanSnrEst": -14.809267807493667,
-    "meanAbsVelErr": 0.03301292143630928
+    "per": 0.19999999999999996,
+    "meanSnrEst": -14.835335281999761,
+    "meanAbsVelErr": 0.03343229756677864
    },
    {
     "snr": -12,
     "sent": 50,
-    "synced": 36,
-    "headerOk": 33,
-    "ok": 18,
+    "synced": 37,
+    "headerOk": 24,
+    "ok": 13,
     "corrupt": 0,
-    "per": 0.64,
-    "meanSnrEst": -15.402249800828875,
-    "meanAbsVelErr": 0.03371375622279297
+    "per": 0.74,
+    "meanSnrEst": -15.432179375193915,
+    "meanAbsVelErr": 0.035671374967461415
    },
    {
     "snr": -13,
     "sent": 50,
-    "synced": 21,
-    "headerOk": 18,
+    "synced": 24,
+    "headerOk": 13,
+    "ok": 1,
+    "corrupt": 0,
+    "per": 0.98,
+    "meanSnrEst": -16.46365146208366,
+    "meanAbsVelErr": 0.05491506290846821
+   },
+   {
+    "snr": -14,
+    "sent": 50,
+    "synced": 13,
+    "headerOk": 2,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1140,10 +1151,10 @@
     "meanAbsVelErr": null
    },
    {
-    "snr": -14,
+    "snr": -15,
     "sent": 50,
-    "synced": 11,
-    "headerOk": 8,
+    "synced": 2,
+    "headerOk": 0,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1171,8 +1182,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -8.327435964977353,
-    "meanAbsVelErr": 0.0033408229929271327
+    "meanSnrEst": -8.330331045602428,
+    "meanAbsVelErr": 0.0008043756110461161
    },
    {
     "snr": -9,
@@ -1182,8 +1193,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -9.242920431111674,
-    "meanAbsVelErr": 0.00378281785908525
+    "meanSnrEst": -9.244826761292668,
+    "meanAbsVelErr": 0.0012927160917186099
    },
    {
     "snr": -10,
@@ -1193,8 +1204,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -10.332077856168494,
-    "meanAbsVelErr": 0.004986668572692021
+    "meanSnrEst": -10.348393425639006,
+    "meanAbsVelErr": 0.001326062175916034
    },
    {
     "snr": -11,
@@ -1204,8 +1215,8 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -11.342939348816238,
-    "meanAbsVelErr": 0.0051983066236666745
+    "meanSnrEst": -11.362736905264377,
+    "meanAbsVelErr": 0.0014113225181517862
    },
    {
     "snr": -12,
@@ -1215,69 +1226,69 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -12.209499196662378,
-    "meanAbsVelErr": 0.004920405021195573
+    "meanSnrEst": -12.218408812258824,
+    "meanAbsVelErr": 0.001514628315829578
    },
    {
     "snr": -13,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 49,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -13.289905284207856,
-    "meanAbsVelErr": 0.0039914975127121185
+    "per": 0,
+    "meanSnrEst": -13.307333794124206,
+    "meanAbsVelErr": 0.0015598479989020794
    },
    {
     "snr": -14,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 49,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -14.272891712673013,
-    "meanAbsVelErr": 0.0031883898051881083
+    "per": 0,
+    "meanSnrEst": -14.293614772517223,
+    "meanAbsVelErr": 0.002618285101751662
    },
    {
     "snr": -15,
     "sent": 50,
     "synced": 49,
-    "headerOk": 45,
-    "ok": 37,
+    "headerOk": 49,
+    "ok": 40,
     "corrupt": 0,
-    "per": 0.26,
-    "meanSnrEst": -15.193768864179471,
-    "meanAbsVelErr": 0.0026919687993193675
+    "per": 0.19999999999999996,
+    "meanSnrEst": -15.188660009011235,
+    "meanAbsVelErr": 0.0022872085973969425
    },
    {
     "snr": -16,
     "sent": 50,
-    "synced": 46,
-    "headerOk": 43,
-    "ok": 14,
+    "synced": 47,
+    "headerOk": 47,
+    "ok": 16,
     "corrupt": 0,
-    "per": 0.72,
-    "meanSnrEst": -15.594306629225906,
-    "meanAbsVelErr": 0.0029688367140601854
+    "per": 0.6799999999999999,
+    "meanSnrEst": -15.685263422932278,
+    "meanAbsVelErr": 0.002144209624439909
    },
    {
     "snr": -17,
     "sent": 50,
     "synced": 39,
-    "headerOk": 36,
-    "ok": 1,
+    "headerOk": 39,
+    "ok": 3,
     "corrupt": 0,
-    "per": 0.98,
-    "meanSnrEst": -15.473344580542301,
-    "meanAbsVelErr": 0.001312661574834922
+    "per": 0.94,
+    "meanSnrEst": -16.076394334363084,
+    "meanAbsVelErr": 0.0038357797423374824
    },
    {
     "snr": -18,
     "sent": 50,
-    "synced": 22,
-    "headerOk": 19,
+    "synced": 21,
+    "headerOk": 17,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1288,7 +1299,7 @@
     "snr": -19,
     "sent": 50,
     "synced": 8,
-    "headerOk": 7,
+    "headerOk": 6,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1316,69 +1327,69 @@
     "ok": 50,
     "corrupt": 0,
     "per": 0,
-    "meanSnrEst": -12.194854544363672,
-    "meanAbsVelErr": 0.03426796368371612
+    "meanSnrEst": -12.218231685796871,
+    "meanAbsVelErr": 0.034453412690139566
    },
    {
     "snr": -9,
     "sent": 50,
     "synced": 50,
-    "headerOk": 49,
-    "ok": 48,
+    "headerOk": 50,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.040000000000000036,
-    "meanSnrEst": -13.129291751646683,
-    "meanAbsVelErr": 0.0345137673464429
+    "per": 0,
+    "meanSnrEst": -13.134657302684184,
+    "meanAbsVelErr": 0.03393638289309689
    },
    {
     "snr": -10,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 49,
+    "ok": 50,
     "corrupt": 0,
-    "per": 0.020000000000000018,
-    "meanSnrEst": -13.93763389977425,
-    "meanAbsVelErr": 0.03317994045920917
+    "per": 0,
+    "meanSnrEst": -13.923187536911406,
+    "meanAbsVelErr": 0.03354973082074184
    },
    {
     "snr": -11,
     "sent": 50,
     "synced": 50,
     "headerOk": 50,
-    "ok": 41,
+    "ok": 44,
     "corrupt": 0,
-    "per": 0.18000000000000005,
-    "meanSnrEst": -14.746753515710278,
-    "meanAbsVelErr": 0.03424841735761885
+    "per": 0.12,
+    "meanSnrEst": -14.772471147780236,
+    "meanAbsVelErr": 0.03411718883161866
    },
    {
     "snr": -12,
     "sent": 50,
-    "synced": 46,
-    "headerOk": 44,
-    "ok": 33,
+    "synced": 47,
+    "headerOk": 47,
+    "ok": 37,
     "corrupt": 0,
-    "per": 0.33999999999999997,
-    "meanSnrEst": -15.511742770977682,
-    "meanAbsVelErr": 0.03485810302803219
+    "per": 0.26,
+    "meanSnrEst": -15.506475452888122,
+    "meanAbsVelErr": 0.033866302736542786
    },
    {
     "snr": -13,
     "sent": 50,
-    "synced": 40,
-    "headerOk": 38,
-    "ok": 6,
+    "synced": 42,
+    "headerOk": 41,
+    "ok": 8,
     "corrupt": 0,
-    "per": 0.88,
-    "meanSnrEst": -15.980866789522965,
-    "meanAbsVelErr": 0.03461109267424376
+    "per": 0.84,
+    "meanSnrEst": -16.163729840925157,
+    "meanAbsVelErr": 0.03480842073581665
    },
    {
     "snr": -14,
     "sent": 50,
-    "synced": 25,
-    "headerOk": 24,
+    "synced": 27,
+    "headerOk": 22,
     "ok": 0,
     "corrupt": 0,
     "per": 1,
@@ -1388,7 +1399,7 @@
    {
     "snr": -15,
     "sent": 50,
-    "synced": 9,
+    "synced": 11,
     "headerOk": 8,
     "ok": 0,
     "corrupt": 0,

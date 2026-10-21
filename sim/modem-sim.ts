@@ -92,7 +92,7 @@ export async function runPreamble(pool: Pool, o: { quick: boolean; outDir: strin
   const jobs = [];
   for (const v of variants)
     for (const c of conds)
-      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: 'long-range', cond: c, snrs, packets: o.quick ? 25 : 50, payloadBytes: 8, cfg: v.cfg, fsTx: 48000, fsRx: 44100, stopAfterZero: 2 }).then((pts) => ({ v, c, pts })));
+      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: 'long-range', cond: c, snrs, packets: o.quick ? 8 : 50, payloadBytes: 8, cfg: v.cfg, fsTx: 48000, fsRx: 44100, stopAfterZero: 2 }).then((pts) => ({ v, c, pts })));
   const res = await Promise.all(jobs);
   const rows = ['| Preamble | preamble+header s | ' + conds.map((c) => `${c}: SNR sync ≥90% / header ≥90% / PER≤10% (8 B)`).join(' | ') + ' |', '|---|---|' + conds.map(() => '---|').join('')];
   const at = (pts: PerPoint[], key: 'synced' | 'headerOk' | 'ok') => {
@@ -111,7 +111,7 @@ export async function runPreamble(pool: Pool, o: { quick: boolean; outDir: strin
 }
 
 export async function runFalseAlarm(pool: Pool, o: { quick: boolean; outDir: string }) {
-  const minutes = o.quick ? 2 : 30;
+  const minutes = o.quick ? 1 : 30;
   const kinds = ['white', 'tone', 'clicks'] as const;
   const res = await Promise.all(
     kinds.flatMap((kind) => [44100, 48000].map((fs) => pool.run<Record<string, number>>('falseAlarms', { seconds: minutes * 60, fs, kind, seed: fs + kind.length }).then((c) => ({ kind, fs, c })))),
@@ -138,7 +138,7 @@ export async function runFec(pool: Pool, o: { quick: boolean; outDir: string }) 
   for (let s = 0; s >= -22; s -= 1) snrs.push(s);
   const jobs = [];
   for (const sc of schemes)
-    for (const c of conds) jobs.push(pool.run<PerPoint[]>('fecPer', { scheme: sc.id, sf: sc.sf ?? 7, cond: c, snrs, packets: o.quick ? 20 : 100, payloadBytes: 32 }).then((pts) => ({ sc, c, pts })));
+    for (const c of conds) jobs.push(pool.run<PerPoint[]>('fecPer', { scheme: sc.id, sf: sc.sf ?? 7, cond: c, snrs, packets: o.quick ? 10 : 100, payloadBytes: 32 }).then((pts) => ({ sc, c, pts })));
   const res = await Promise.all(jobs);
   const rows = [
     'Payload FEC comparison on CSS with genie timing (32-byte payloads), SF7 unless noted. Cells: SNR (dB) for PER ≤ 10% / ≤ 1%, and the code rate.',
@@ -174,7 +174,7 @@ export async function runTracking(pool: Pool, o: { quick: boolean; outDir: strin
   const jobs = [];
   for (const g of gains)
     for (const c of cases)
-      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: c.profile, cond: c.cond, snrs, packets: o.quick ? 10 : 20, payloadBytes: 32, cfg: g.cfg, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, pts })));
+      jobs.push(pool.run<PerPoint[]>('modemPer', { profile: c.profile, cond: c.cond, snrs, packets: o.quick ? 5 : 20, payloadBytes: 32, cfg: g.cfg, fsTx: 48000, fsRx: 44100 }).then((pts) => ({ g, c, pts })));
   const res = await Promise.all(jobs);
   const rows = [
     'Tracking loops vs PER for 32-byte packets. Carrier loop = proportional/integral on the residual bin offset; timing loop = early/late gate. Cells: SNR (dB) for PER ≤ 10% (n/a = never reached).',
@@ -203,7 +203,7 @@ export async function runLoss(pool: Pool, o: { quick: boolean; outDir: string })
     cases.map(async (c) => {
       const snrs: number[] = [];
       for (let s = c.hi; s >= c.hi - 8; s -= o.quick ? 2 : 1) snrs.push(s);
-      const pts = await Promise.all(snrs.map((snr) => pool.run<LossPoint[]>('modemLoss', { profile: c.profile, cond: c.cond, snrs: [snr], packets: o.quick ? 20 : 100, payloadBytes: 32, fsTx: 48000, fsRx: 44100 })));
+      const pts = await Promise.all(snrs.map((snr) => pool.run<LossPoint[]>('modemLoss', { profile: c.profile, cond: c.cond, snrs: [snr], packets: o.quick ? 8 : 100, payloadBytes: 32, fsTx: 48000, fsRx: 44100 })));
       return { c, pts: pts.flat() };
     }),
   );

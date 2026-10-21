@@ -282,7 +282,7 @@ The convolutional code with soft decisions and interleaving wins in both conditi
 Measured modem performance (own synchronisation, header, tracking and FEC):
 [`sim/results/modem.md`](../sim/results/modem.md).
 
-**Simulated modem PER.** Packet error rate of the full modem (own sync, header, tracking, Viterbi, CRC) for 32-byte payloads, 48 kHz TX → 44.1 kHz RX. SNR is peak-referenced in the 1.5 kHz band (sim/channel.ts). Cells: SNR for PER ≤ 10% / ≤ 1%.
+**Simulated modem PER.** packet error rate of the full modem (own sync, header, tracking, Viterbi, CRC) for 32-byte payloads, 48 kHz TX → 44.1 kHz RX. SNR is peak-referenced in the 1.5 kHz band (sim/channel.ts). Cells: SNR for PER ≤ 10% / ≤ 1%.
 
 | Profile | SF | code | net bit/s | air time 32 B (s) | awgn | room-near | room-far | doppler | hand-held | motion-room | silent corruptions |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -294,31 +294,31 @@ Reading the table:
 
 - **Static devices.** In AWGN the profiles reach PER ≤ 10% at −14.2 (long-range), −12.2
   (balanced) and −5.0 dB (fast). In the simulated rooms, where reverb and the speaker model
-  apply, long-range and balanced reach −8.1 to −11.2 dB. No packet in any condition passed CRC with wrong
-  content.
-- **Constant motion** (0.5 m/s) costs nothing: Doppler is estimated and tracked.
-- **Hand-held sway** (±0.1 m/s every 2 s) is tolerated only by the fast profile (1.6 dB), whose
-  25 ms symbols see almost no Doppler change. Long symbols (SF7/SF8, 98–197 ms) smear when the
-  velocity changes within a symbol. **The long-range and balanced profiles need the phones
-  roughly at rest**, for example on a table or held still. In separate runs (D-012), sway of
-  ±0.05 m/s with a 4 s period decoded 12/12 packets on balanced.
+  apply, long-range and balanced reach −8.1 to −11.2 dB. Fast drops to +2.5 dB in the far room: its
+  25 ms symbols are short against a 0.6 s reverberation.
+- **No silent corruption.** No packet in any condition passed its CRC with wrong content.
+- **Constant motion** (0.5 m/s) costs nothing: Doppler is estimated from the preamble and
+  compensated as a time scaling.
+- **Hand-held sway** (±0.1 m/s every 2 s) is tolerated by balanced and fast, at about 0 dB. The
+  long-range profile's 197 ms symbols smear when the velocity changes within a symbol, so
+  **long-range needs the phones at rest** (e.g. on a table). Slower sway (±0.05 m/s) decodes 12/12
+  on balanced and fast in targeted runs (D-012). Long-range was not tested under sway.
 - **Waving** (±0.3 m/s every 2 s) defeats every profile, because the SF8 preamble and header
   cannot follow it.
 - **Implementation loss.** The full modem is within 0.3 dB of a genie-timed payload decode for
   long-range, and within 0 dB for balanced ([`sim/results/loss.md`](../sim/results/loss.md)).
-  Long-range is 2.0–2.7 dB more sensitive than balanced. An earlier 1.2 dB loss in the SF8 path
+  Long-range is 2.0–2.7 dB more sensitive than balanced. An earlier 1.5 dB loss in the SF8 path
   came from a noisy time-scale estimate; D-012 has the breakdown and the fix. Sync and header now
   co-limit long-range at about −14.5 dB.
 
 **Fallback: interleaved-hopping MFSK.** 16-FSK with 2 hop groups at 24.6 ms, wrapped in the same
-preamble, header and FEC. The case for it:
+preamble, header and FEC.
 
-- it is the best non-CSS candidate in the reverberant conditions and under Doppler;
-- it tolerates more motion at short symbols;
-- the tone-set approach is simpler to tune per device if the bench finds narrow dead spots in a
-  device pair's response;
-- the modem's preamble, header, FEC and protocol are independent of the payload modulation, so
-  switching costs one demodulator.
+- **Why it.** It is the best non-CSS candidate across the board: near room (0.4 dB), uncorrected
+  Doppler (1.7 dB) and hand motion (−3.7 dB). In the far room all MFSK variants hit an error
+  floor. Only DSSS also survives there, and DSSS collapses under any Doppler.
+- **Switching cost.** The modem's preamble, header, FEC and protocol are independent of the
+  payload modulation, so switching costs one demodulator.
 
 Choose it if the bench shows CSS failing in a way the simulator missed: for example a speaker
 whose response collapses across part of the band, which a CSS chirp must cross and an MFSK

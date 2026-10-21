@@ -106,21 +106,27 @@ below 16 kHz, and smoothed transitions −105 dBc.
 ### D-008 Preamble: SF8, 8 up-chirps + 4 down-chirps, 8-chirp header, no LoRa quarter chirp — *sim*
 
 **Evidence.** [`sim/results/preamble.md`](../sim/results/preamble.md): the long-range profile
-with 8-byte payloads, 50 packets per point. The SNR where ≥ 90% of packets decode:
+with 8-byte payloads, 50 packets per point, final receiver. Cells are the SNR (dB) where
+≥ 90% of packets sync / decode the header / decode the packet:
 
 | Preamble (+ header) | air time | AWGN | far room |
 |---|---|---|---|
-| 6↑ 2↓, header 5 | 2.56 s | −13 dB | −9 dB |
-| 6↑ 4↓, header 6 | 3.15 s | −13 dB | −10 dB |
-| **8↑ 4↓, header 8 (chosen)** | **3.94 s** | **−14 dB** | **−10 dB** |
-| 10↑ 4↓, header 8 | 4.33 s | −12 dB | −9 dB |
-| SF9 5↑ 3↓, header 5 | 5.12 s | −14 dB | −10 dB |
+| 6↑ 2↓, header 5 | 2.56 s | −13 / −13 / −13 | −9 / −9 / −9 |
+| 6↑ 4↓, header 6 | 3.15 s | −14 / −13 / −13 | −11 / −10 / −10 |
+| 6↑ 4↓, header 8 | 3.54 s | −14 / −14 / −14 | −11 / −10 / −10 |
+| **8↑ 4↓, header 8 (chosen)** | **3.94 s** | **−15 / −14 / −14** | **−11 / −11 / −10** |
+| 10↑ 4↓, header 8 | 4.33 s | −15 / −14 / −14 | −11 / −10 / −10 |
+| SF9 5↑ 3↓, header 5 | 5.12 s | −16 / −16 / −14 | −12 / −12 / −10 |
 
-The chosen setting is the most sensitive SF8 option. With 32-byte packets, sync and header now
-pass 90% at −14.8 / −14.5 dB, the same SNR as the genie-timed SF8 payload (−14.5 dB,
-[`loss.md`](../sim/results/loss.md)), so preamble and payload are balanced (D-012). The SF9 preamble syncs 1 dB lower, but the packet is then limited by the
-SF8 payload anyway, and it costs 1.2 s more per packet. Differences of ±1 dB are within the
-study's resolution (1 dB steps, 50 packets).
+- Going from 2 to 4 down-chirps and from 5 to 8 header chirps buys about 1 dB each.
+- 8 up-chirps sync 1 dB below 6, a margin for longer packets and for real rooms. They decode
+  8-byte packets at the same SNR, and cost 0.4 s more per packet. Distance comes first, so 8.
+  The difference is at the edge of the study's resolution (1 dB steps, 50 packets).
+- An SF9 preamble syncs 1 dB lower again, but the packet is then limited by the SF8 payload and
+  it costs 1.2 s more.
+- With 32-byte packets and the receiver fixes of D-012, sync and header pass 90% at −14.8 /
+  −14.5 dB. The genie-timed SF8 payload passes at the same SNR (−14.5 dB,
+  [`loss.md`](../sim/results/loss.md)), so preamble and payload are now balanced.
 
 The up-chirps give detection and Δ−d (carrier offset minus timing). The down-chirps give Δ+d.
 More down-chirps help most: two down-chirps were the bottleneck, because sync must choose among
@@ -208,6 +214,12 @@ it the boundary drifts ε·N chips per symbol and biases the estimate (measured:
    fractional estimate resolves the ambiguity, since it is accurate to 0.3 Hz against a ±2.5 Hz
    window. Measured at −12 dB in AWGN: carrier error ≈ 0.03 Hz instead of 0.1–0.5 Hz, and
    estimated-velocity error 0.001 instead of 0.004 m/s (`modem-estimators.md`).
+   The refinement is valid only while the carrier stays within ±2.5 Hz of its mean across the
+   preamble. Hand-held sway (±0.1 m/s ⇒ ±5 Hz) wraps the per-chirp phase advance. An unguarded
+   first version cut balanced under sway from 27/30 to 17/30 packets. The phasors are therefore
+   used only if their coherence |Σ c_k| / Σ |c_k| is ≥ 0.7. Measured coherence, 20 packets each:
+   static channels ≥ 0.64 down to −17 dB (median 0.89–0.97), sway 0.14–0.16, waving ≤ 0.5.
+   Below the threshold, the fractional estimate stands, as before.
 2. **Carrier.** Re-anchored once on the decoded header (common bin offset + residual, D-011).
 3. **Timing.** A decision-directed type-2 **early/late gate** runs on confident symbols (peak ≥
    4·ln N × noise mean). It compares the energy around the decided peak in windows ¼ chip early
@@ -238,22 +250,10 @@ it the boundary drifts ε·N chips per symbol and biases the estimate (measured:
 These statistics resolve differences of about 1 dB, not finer. The table predates the ε and
 1/g changes below.
 
-**Re-measured after those changes** ([`tracking.md`](../sim/results/tracking.md), 20 packets per
-point, 2 dB steps): the loop settings no longer matter for long-range in AWGN (−14.0 to −14.1
-dB), except the fast gains 1/0.1 (−11.0 dB). On fast under hand-held sway, however, the
-integral path now hurts. A targeted check (60 packets, fast, hand-held, packets OK at
-4 / 0 / −3 dB):
-
-| Timing loop | 4 dB | 0 dB | −3 dB |
-|---|---|---|---|
-| 0.3 / 0.02 (current default) | 58 | 44 | 34 |
-| 0.3 / 0 (no integral) | 60 | 60 | 56 |
-| off | 60 | 58 | 56 |
-
-With ε now accurate to ≈ 1 ppm, the integral has little left to follow, and under sway it lags
-the oscillating velocity. **Open item:** set `trackTI` to 0, after a full `--only modem` sweep
-(doppler and room columns) confirms nothing else depends on it. The default is unchanged here,
-so this change stays limited to the long-range fix.
+**Re-checked after those changes** ([`tracking.md`](../sim/results/tracking.md) has the full
+sweep). Targeted runs, 30 packets each, packets OK at 0 / −3 dB for fast under hand-held sway:
+the original receiver 27 / 17, the current one 26 / 16, the current one without the timing
+integral (`trackTI` = 0) 18 / 8. The integral is still needed under sway, and the defaults stay.
 
 **Rejected.**
 - A per-symbol **carrier loop** (de-rotation driven by the residual fractional bin offset). It
@@ -267,7 +267,8 @@ so this change stays limited to the long-range fix.
   near the sensitivity limit. Distance comes first.
 
 **Long-range implementation loss (found and fixed).** Before the two changes above, long-range
-reached PER ≤ 10% at −13.0 dB in AWGN, only 1 dB better than balanced. Theory, and the
+reached PER ≤ 10% at −13.0 dB in AWGN (−12.7 dB in the final pre-fix sweep), only 1–1.7 dB
+better than balanced. Theory, and the
 genie-timed SF8 row of `fec.md`, put it about 2.5–3 dB better. Diagnosis: the receiver and a
 genie-timed decode ran on the same noisy samples (120 packets per point, AWGN). The genie used
 the true payload start, time scale and carrier, and the receiver's own normalisation, soft metric
@@ -301,10 +302,11 @@ and Viterbi. Results:
   would gain < 0.1 dB at the cost of false-header protection, so it stays. Further gains need a
   longer preamble or header (D-008), not receiver changes.
 
-Result: long-range −13.0 → −14.2 dB (PER ≤ 10%) and −11.3 → −13.3 dB (≤ 1%) in AWGN, and
-−8.4 → −10.8 dB in the far room ([`modem.md`](../sim/results/modem.md)). Long-range is now
-2.0 dB (AWGN) to 2.7 dB (far room) more sensitive than balanced. Fast under hand-held sway
-improved from 11.0 to 1.6 dB.
+Result, against the final pre-fix sweep: long-range −12.7 → −14.2 dB (PER ≤ 10%) and −11.3 →
+−13.3 dB (≤ 1%) in AWGN, and −8.3 → −10.8 dB in the far room
+([`modem.md`](../sim/results/modem.md)). Balanced gains about 1 dB as well. Long-range is now
+2.0 dB (AWGN) to 2.7 dB (far room) more sensitive than balanced. Hand-held sway performance is
+unchanged.
 
 **Limit.** Long symbols (SF7/SF8, 98–197 ms) cannot follow sway of ±0.1 m/s every 2 s: the
 velocity changes within one symbol. Only the fast profile survives that (`modem.md`, hand-held
@@ -353,13 +355,13 @@ profile, where speed is the point.
   packets (D-016) already turn residual errors into erasures, which is the efficient way to use
   extra redundancy here.
 
-### D-014 Profiles — *sim* **(from [`sim/results/modem.md`](../sim/results/modem.md))**
+### D-014 Profiles — *sim* ([`sim/results/modem.md`](../sim/results/modem.md))
 
-| Profile | Payload | Why |
-|---|---|---|
-| long-range | SF8, r=½ | The most robust setting that keeps a short message near the ≈10 s soft ceiling. SF9 is about 2.5–3 dB better but doubles air time. |
-| balanced | SF7, r=½ | About 2–2.7 dB less sensitive (AWGN / far room), 1.75× faster. |
-| fast | SF5, r=⅔ | About 4× faster than balanced. It also tolerates hand motion: its 25 ms symbols are short enough that Doppler barely changes within one. |
+| Profile | Payload | Net bit/s | PER ≤ 10%: AWGN / far room / hand-held | Why |
+|---|---|---|---|---|
+| long-range | SF8, r=½ | 20 | −14.2 / −10.8 / — dB | The most robust setting that keeps a short message near the ≈10 s soft ceiling (11 s). SF9 would gain about 2.5–3 dB but double the air time. |
+| balanced | SF7, r=½ | 36 | −12.2 / −8.1 / ≈ 0 dB | 2.0–2.7 dB less sensitive than long-range, 1.75× faster, and tolerates hand-held sway. |
+| fast | SF5, r=⅔ | 135 | −5.0 / +2.5 / ≈ 0 dB | About 4× faster than balanced, for close range. Short symbols tolerate motion; long reverb hurts it. |
 
 The preamble and header are identical for all profiles, at SF8, so any receiver decodes any
 profile without configuration.

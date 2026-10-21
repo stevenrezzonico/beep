@@ -118,7 +118,8 @@ export function modemPer(a: ModemPerArgs): PerPoint[] {
         if (same) {
           ok++;
           snrSum += pk.diag.snrDb;
-          const v = (chan.velocity ?? 0) + 343 * (chan.clockPpm ?? 0) * 1e-6;
+          // a receiver clock that runs fast by ppm compresses the time scale like receding motion
+          const v = (chan.velocity ?? 0) - 343 * (chan.clockPpm ?? 0) * 1e-6;
           velErr += Math.abs(pk.diag.velocity - v);
         } else corrupt++;
       }
